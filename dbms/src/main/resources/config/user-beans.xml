@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    <context:component-scan base-package="com.dbms" />
+    <context:annotation-config />
+   
+    <bean id="userdao" class="com.dbms.dao.UserdaoImpl" />
+    <bean id="categorydao" class="com.dbms.dao.CategorydaoImpl" />
+    <bean id="productdao" class="com.dbms.dao.ProductdaoImpl" />
+    <bean id="myproductdao" class="com.dbms.dao.myproductdaoImpl" />
+    <bean id="employeedao" class="com.dbms.dao.EmployeedaoImpl" />
+    <bean id="offerdao" class="com.dbms.dao.OfferdaoImpl" />
+    <bean id="wholesalesellerdao" class="com.dbms.dao.WholeSaleSellerdaoImp" />
+    <bean id="cartdao" class="com.dbms.dao.CartdaoImpl" />
+    <bean id="usercartdao" class="com.dbms.dao.UserCartdaoImpl" />
+    <bean id="orderdao" class="com.dbms.dao.OrderdaoImpl" />
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+</beans>
