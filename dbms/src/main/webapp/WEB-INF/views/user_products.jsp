@@ -10,17 +10,23 @@
 <body>
 	<h3>My Cart</h3>
 	 <br>
-	 <% if (request.getParameter("message")!=null){%>
-	 <b><%= request.getParameter("message") %></b>!
-	 <%} %>
 		<% if (request.getAttribute("flag")=="true") { %>
 		<c:forEach items="${products}" var="item">
 		    <tr>      
 		    	<td>${item.product_id}</td><br>
 		        <td>${item.product_name}</td>
+		        <td><button type="button"><a href="/dbms/dashboard/my_cart/remove/${item.product_id}">Remove</a></button></td>
 		    </tr>
-		    <br>
-		</c:forEach> 
+		    <br><br>
+		</c:forEach>
+		Current Coupon: ${offer.offerId}<br>
+		<form method="POST" action="/dbms/dashboard/my_cart/apply_offer">
+		Enter Coupon code: <input type="text" name="coupon"><br>
+		<input type="submit" value="Apply">
+		</form>
+		<% if (request.getParameter("message")!=null){%>
+	 <b><%= request.getParameter("message") %></b>!
+	 <%} %><br> 
 		<%} else { %>
 		<br>
 	<br>

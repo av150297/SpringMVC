@@ -129,4 +129,32 @@ public class myproductdaoImpl implements myproductdao{
 		String sql="update myproduct M set M.status=1 where M.product_id in (select U.product_id from user_cart U where U.order_id = ?)";
 		jdbcTemplate.update(sql,new Object[] {order_id});
 	}
+
+	@Override
+	public myproduct getAvailableProductByName(String product_name,String category) {
+		String sql="select * from myproduct M where product_name='"+product_name+"' and category='"+category+"' and product_id not in (Select distinct product_id from user_cart)";
+		return jdbcTemplate.query(sql,new ResultSetExtractor<myproduct>() {
+			
+			public myproduct extractData(ResultSet rs) throws SQLException,DataAccessException{
+				if(rs.next()) {
+					myproduct product = new myproduct();
+					product.setProduct_id(rs.getInt("product_id"));
+					product.setProduct_name(rs.getString("product_name"));
+					product.setCategory(rs.getString("category"));
+					product.setCost_price((double)rs.getInt("cost_price"));
+					product.setGold((double)rs.getInt("gold"));
+					product.setSilver((double)rs.getInt("silver"));
+					product.setPlatinum((double)rs.getInt("platinum"));
+					product.setSeller_id(rs.getString("seller_id"));
+					product.setDescription(rs.getString("description"));
+					product.setMaking_charges((double)rs.getInt("making_charges"));
+					product.setStones(rs.getString("stones"));
+					product.setProduct_type(rs.getString("product_type"));
+					return product;
+				}
+				return null;
+			}
+			
+		});
+	}
 }

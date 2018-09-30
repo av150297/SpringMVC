@@ -15,5 +15,6 @@ public interface myproductdao {
 	public boolean checkproductnameexists(myproduct product);
 	public List<myproduct> getAllCategories();
 	public void updateProductStatus(int order_id);
+	public myproduct getAvailableProductByName(String product_name, String category);
 
 }

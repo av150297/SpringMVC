@@ -21,6 +21,5 @@
 	<br>
 	<h3>${message}</h3>
 	<a href="/dbms/admin/">Dashboard</a><br>
-	<a href="/dbms/admin/">Delete user</a>
 </body>
 </html>

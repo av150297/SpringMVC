@@ -110,7 +110,8 @@ public class UserController {
 	@RequestMapping(value="/dashboard/my_cart/apply_offer")
 	public String apply_offer(Model model,HttpServletRequest request,HttpServletResponse response, Principal principal)
 	{
-		String offer_id=request.getParameter("id");
+		String offer_id=request.getParameter("coupon");
+		System.out.println(offer_id);
 		if(offerdao.checkOffer(offer_id)==true)
 		{
 			String username=principal.getName();

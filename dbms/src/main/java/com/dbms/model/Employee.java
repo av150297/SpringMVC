@@ -8,6 +8,13 @@ public class Employee {
 	private String email;
 	private String address;
 	private int number_of_order=0;
+	private int status=1;
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public String getEmpId() {
 		return empId;
 	}

@@ -2,15 +2,15 @@ package com.dbms.model;
 
 public class Offer
 { 
-	private String offerId;
+	private String offer_id;
 	private String name;
 	private int discount;
 	private int status;
-	public String getOfferId() {
-		return offerId;
+	public String getOffer_id() {
+		return offer_id;
 	}
-	public void setOfferId(String offerId) {
-		this.offerId = offerId;
+	public void setOffer_id(String offerId) {
+		this.offer_id = offerId;
 	}
 	public String getName() {
 		return name;

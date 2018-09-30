@@ -2,15 +2,18 @@ package com.dbms.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
 import com.dbms.model.Employee;
+import com.dbms.model.Offer;
 import com.dbms.model.Product;
 
 public class EmployeedaoImpl implements Employeedao{
@@ -35,6 +38,7 @@ public class EmployeedaoImpl implements Employeedao{
 					employee.setContact(rs.getInt("contact"));
 					employee.setAddress(rs.getString("address"));
 					employee.setNumber_of_order(rs.getInt("number_of_orders"));
+					employee.setStatus(rs.getInt("status"));
 					return employee;
 				}
 				return null;
@@ -45,7 +49,7 @@ public class EmployeedaoImpl implements Employeedao{
 	@Override
 	public Employee allocateEmployee()
 	{
-		String sql="select * from employee where emp_id !='offline' order by number_of_orders";
+		String sql="select * from employee where emp_id !='offline' and status=1 order by number_of_orders";
 		return jdbcTemplate.query(sql,new ResultSetExtractor<Employee>() {
 			
 			public Employee extractData(ResultSet rs) throws SQLException,DataAccessException{
@@ -83,6 +87,17 @@ public class EmployeedaoImpl implements Employeedao{
 	public void addNewEmployee(Employee employee) {
 		String sql="insert into employee values(?,?,?,?,?,?,?)";
 		jdbcTemplate.update(sql,new Object[] {employee.getEmpId(),employee.getName(),employee.getType(),employee.getContact(),employee.getEmail(),employee.getAddress(),0});
+	}
+	@Override
+	public List<Employee> getAllEmployee() {
+		String sql="select * from employee where emp_id !='offline'";
+		List<Employee> employees= jdbcTemplate.query(sql, new BeanPropertyRowMapper<Employee>(Employee.class));
+		return employees;
+	}
+	@Override
+	public void toggle(String emp_id) {
+		String sql="update employee set status=1-status where emp_id=?";
+		jdbcTemplate.update(sql, new Object[] {emp_id});
 	}
 
 }

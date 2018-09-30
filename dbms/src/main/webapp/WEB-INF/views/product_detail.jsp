@@ -12,7 +12,9 @@
 	Product name: ${product.product_name} <br>
 	Product type: ${product.product_type} <br>
 	Product description: ${product.description}<br>
-	Product Price: ${product.making_charges+product.cost_price}
+	Product Price: ${product.making_charges+product.cost_price}<br>
+	Product Category: ${product.category}<br>
+	<button type="button"><a href="/dbms/dashboard/my_cart/add_in_cart/${product.category}/${product.product_name}">Add to Cart</a></button>
 	
 	
 	<br>

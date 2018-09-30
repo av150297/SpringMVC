@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dbms.dao.Categorydao;
 import com.dbms.dao.Employeedao;
+import com.dbms.dao.Offerdao;
 import com.dbms.dao.Orderdao;
 import com.dbms.dao.Userdao;
 import com.dbms.dao.WholeSaleSellerdao;
@@ -27,6 +28,7 @@ import com.dbms.dao.myproductdao;
 import com.dbms.dao.Productdao;
 import com.dbms.model.Category;
 import com.dbms.model.Employee;
+import com.dbms.model.Offer;
 import com.dbms.model.Order;
 import com.dbms.model.Product;
 import com.dbms.model.User;
@@ -51,6 +53,8 @@ public class AdminController {
 	Orderdao orderdao;
 	@Autowired
 	Employeedao employeedao;
+	@Autowired
+	Offerdao offerdao;
 	
 	
 	@RequestMapping("")
@@ -64,15 +68,6 @@ public class AdminController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/addproduct")
-	  public ModelAndView allcategories(HttpServletRequest request, HttpServletResponse response) {
-	    ModelAndView mav = new ModelAndView("addcategoryproduct");
-	    
-	    List<Category> allcategories = categorydao.showallcategories();
-	    mav.addObject("allcategories", allcategories);
-	
-	    return mav;
-	  }
 	
 	@RequestMapping(value = "/add_product",method = RequestMethod.GET)
 	public ModelAndView add_product(HttpServletRequest request,HttpServletResponse response)
@@ -144,11 +139,74 @@ public class AdminController {
 		if(employeedao.checkEmployee(employee))
 		{
 			model.addAttribute("error", "Employee already exists");
-			return "redirect:/admin/add_seller";
+			return "redirect:/admin/add_employee";
 		}
 		employeedao.addNewEmployee(employee);
 		return "redirect:/admin";
 	}
+	
+	@RequestMapping(value="/employees")
+	public ModelAndView allEmployees()
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("all_employee");
+		List<Employee> employees=employeedao.getAllEmployee();
+		mv.addObject("employees",employees);
+		return mv;
+	}
+	
+	@RequestMapping("/employees/{emp_id}")
+	public String toggleEmployee(@PathVariable(value="emp_id") String emp_id)
+	{
+		employeedao.toggle(emp_id);
+		return "redirect:/admin/employees";
+	}
+	
+	
+	@RequestMapping(value="/add_offer",method=RequestMethod.GET)
+	public ModelAndView addOffer(HttpServletRequest request,HttpServletResponse response)
+	{
+		ModelAndView mv=new ModelAndView("add_offer");
+		Offer offer= new Offer();
+		mv.addObject("offer",offer);
+		return mv;
+	}
+	
+	@RequestMapping(value="/add_offer",method=RequestMethod.POST)
+	public String addOfferProcess(Model model,@Valid @ModelAttribute("offer") Offer offer,BindingResult result)
+	{
+		if(result.hasErrors())
+		{
+			return "redirect:/admin/add_offer";
+		}
+		if(offerdao.checkOffer(offer.getOffer_id()))
+		{
+			model.addAttribute("error", "Offer already exists");
+			return "redirect:/admin/add_offer";
+		}
+		offerdao.addNewOffer(offer);
+		return "redirect:/admin";
+	}
+	
+	@RequestMapping("/offers")
+	public ModelAndView allOffers()
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("all_offers");
+		List<Offer> offers=offerdao.getAllOffers();
+		mv.addObject("offers",offers);
+		return mv;
+	}
+	
+	@RequestMapping("/offers/{offer_id}")
+	public String toggleOffers(@PathVariable(value="offer_id") String offer_id)
+	{
+		offerdao.toggle(offer_id);
+		return "redirect:/admin/offers";
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/all_orders")
 	public ModelAndView all_orders()
@@ -172,50 +230,6 @@ public class AdminController {
 		return mv;
 	}
 	
-	
-	@RequestMapping(value = "/allcategories")
-	public ModelAndView adminallcategories(HttpServletRequest request, HttpServletResponse response) {
-	    ModelAndView mav = new ModelAndView("adminallcategories");
-	    
-	    List<Category> allcategories = categorydao.showallcategories();
-	    mav.addObject("allcategories", allcategories);
-	
-	    return mav;
-	  }
-	
-	@RequestMapping(value = "/allcategories/{categoryid}")
-	  public ModelAndView categoryproducts(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "categoryid") int categoryid, Principal principal) {
-	    ModelAndView mav = new ModelAndView("admincategoryproducts");
-	    
-	    List<Product> categoryproducts = productdao.showallproductsbycategory(categoryid);
-	    mav.addObject("category",categorydao.getcategorybyid(categoryid));
-	    mav.addObject("admincategoryproducts",categoryproducts); 
-	    return mav;
-	  }
-	
-	@RequestMapping(value = "/addnewcategory", method = RequestMethod.GET)
-	public ModelAndView addnewcategory(HttpServletRequest request, HttpServletResponse response) {
-	    ModelAndView mav = new ModelAndView("addnewcategory");
-	    Category category = new Category();
-		mav.addObject("category",category);
-	    return mav;
-	  }
-	@RequestMapping(value="/addnewcategory",method=RequestMethod.POST)
-	public String addnewcategoryProcess(Model model, @Valid @ModelAttribute("category") Category category, BindingResult result) {
-			
-		if(result.hasErrors()) {
-			return "redirect:/admin/addnewcategory";
-		}
-		if(categorydao.checkcategoryexists(category)) {
-			model.addAttribute("error", "Category already exists");
-			return "redirect:/admin/addnewcategory";
-		}
-		categorydao.addcategory(category);
-		model.addAttribute("success", "category added successfully");
-		return "redirect:/admin/allcategories";
-		
-	}
-
 	@RequestMapping("/manageusers")
 	public ModelAndView manageusers(Principal principal) {
 

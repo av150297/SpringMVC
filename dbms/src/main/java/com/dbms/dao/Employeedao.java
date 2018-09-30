@@ -1,5 +1,7 @@
 package com.dbms.dao;
 
+import java.util.List;
+
 import com.dbms.model.Employee;
 
 public interface Employeedao {
@@ -13,5 +15,9 @@ public interface Employeedao {
 	public boolean checkEmployee(Employee employee);
 
 	public void addNewEmployee(Employee employee);
+
+	public List<Employee> getAllEmployee();
+
+	public void toggle(String emp_id);
 	
 }

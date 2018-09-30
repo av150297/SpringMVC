@@ -9,11 +9,15 @@
         <h2>
             Welcome : ${user} | 
         </h2>
-        <a href="add_product">Add a new Product</a><br>
-        <a href="add_employee">Add Employee</a><br>
+        <a href="/dbms/admin/add_product">Add a new Product</a><br>
+        <a href="/dbms/admin/add_employee">Add Employee</a><br>
+        <a href="/dbms/admin/employees">All Employees</a><br>
         <a href="/dbms/admin/manageusers">Manage users</a><br>
-        <a href="add_seller">Add Whole Seller</a><br>
-        <a href="all_orders">Find All orders</a><br>
+        <a href="/dbms/admin/add_seller">Add Whole Seller</a><br>
+        <a href="/dbms/admin/add_offer">Add Offer</a><br>
+        <a href="/dbms/admin/offers">All Offer</a><br>
+        <a href="/dbms/admin/all_orders">Find All orders</a><br>
+        
         <a href="<c:url value="/j_spring_security_logout" />"> Logout</a>
     </c:if>
 </body>

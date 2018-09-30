@@ -36,7 +36,7 @@ public class UserCartController {
 	Offerdao offerdao;
 	
 	
-	@RequestMapping(value="/my_cart")
+	@RequestMapping(value="/dashboard/my_cart")
 	public ModelAndView showcart(Principal principal) {
 		
 		ModelAndView model = new ModelAndView();
@@ -56,6 +56,7 @@ public class UserCartController {
 			Offer offer=offerdao.getOffer(usercart.getOfferId());
 			discount=(amount*offer.getDiscount())/100;
 			model.addObject("products",products);
+			model.addObject("offer",offer);
 			System.out.println("I m here "+offer.getDiscount());
 		}
 		System.out.println("I m here again");
@@ -65,22 +66,21 @@ public class UserCartController {
 		return model;
 	}
 	
-	@RequestMapping(value="/add_in_cart/{productid}")
-	public String addtocart(Principal principal, @PathVariable(value="productid") int productid) {
+	@RequestMapping(value="/dashboard/my_cart/add_in_cart/{category}/{product_name}")
+	public String addtocart(Principal principal, @PathVariable(value="product_name") String product_name,@PathVariable(value="category") String category) {
 		
 		String username = principal.getName();
-		myproduct product = myproduct_dao.getproductbyid(productid);
-		
+		myproduct product = myproduct_dao.getAvailableProductByName(product_name,category);
 		usercartdao.addToCart(username, product.getProduct_id());
-		return "redirect:/my_cart";
+		return "redirect:/dashboard/my_cart";
 	}
 	
-	@RequestMapping(value="/delete/{productid}")
+	@RequestMapping(value="/dashboard/my_cart/remove/{productid}")
 	public String removefromcart(Model model, Principal principal, @PathVariable(value="productid") int productid) {
 		String username = principal.getName();
 		System.out.println(username+' '+productid);
 		usercartdao.removeFromCart(username, productid);
-		return "redirect:/my_cart";
+		return "redirect:/dashboard/my_cart";
 	}
 	
 	@RequestMapping(value="/add_in_reserve")
@@ -88,7 +88,7 @@ public class UserCartController {
 	{
 		String username=principal.getName();
 		usercartdao.addToReserve(username);
-		return "redirect:/my_cart";
+		return "redirect:/dashboard/my_cart";
 	}
 	
 }
