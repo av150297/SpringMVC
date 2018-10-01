@@ -17,7 +17,7 @@
 	<%
 		String errorString = (String) request.getAttribute("error");
 		if (errorString != null && errorString.trim().equals("true")) {
-			out.println("<span class=\"errorblock\">Incorrect login name or password. Please try again");
+			out.println("<span class=\"errorblock\">Incorrect login name or password or the account has been disabled by the admin. Please try again");
 		}
 	%>
 
@@ -39,5 +39,8 @@
 		</table>
 
 	</form>
+	<% if (request.getParameter("message")!=null) {%>
+	<%= request.getParameter("message") %>
+	<% } %>
 </body>
 </html>

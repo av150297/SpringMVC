@@ -18,19 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dbms.dao.Categorydao;
 import com.dbms.dao.Employeedao;
 import com.dbms.dao.Offerdao;
 import com.dbms.dao.Orderdao;
 import com.dbms.dao.Userdao;
 import com.dbms.dao.WholeSaleSellerdao;
 import com.dbms.dao.myproductdao;
-import com.dbms.dao.Productdao;
-import com.dbms.model.Category;
 import com.dbms.model.Employee;
 import com.dbms.model.Offer;
 import com.dbms.model.Order;
-import com.dbms.model.Product;
 import com.dbms.model.User;
 import com.dbms.model.WholeSaleSeller;
 import com.dbms.model.myproduct;
@@ -39,10 +35,7 @@ import com.dbms.model.myproduct;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	@Autowired
-	Categorydao categorydao;
-	@Autowired
-	Productdao productdao;
+
 	@Autowired
 	Userdao userdao;
 	@Autowired
@@ -238,6 +231,13 @@ public class AdminController {
 	    model.addObject("allusers", allusers);
 	    
 	    return model;
+	}
+	
+	@RequestMapping("/manageusers/{username}")
+	public String manageusers(@PathVariable(value="username") String username) {
+
+		userdao.toggle(username);
+	    return "redirect:/admin/manageusers";
 	}
 	
 	@RequestMapping("/reserved_users/{username}/placed")

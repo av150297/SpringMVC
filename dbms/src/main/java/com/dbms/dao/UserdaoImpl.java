@@ -76,6 +76,7 @@ public class UserdaoImpl implements Userdao{
 			user.setCity(rs.getString("city"));
 			user.setState(rs.getString("state"));
 			user.setMail(rs.getString("email"));
+			user.setStatus(rs.getInt("status"));
 			return user;
 		}
 		return null;
@@ -84,8 +85,13 @@ public class UserdaoImpl implements Userdao{
 	}
 	@Override
 	  public List<User> showallusers() {
-	    String sql = "select * from USERS";
+	    String sql = "select * from USERS where username !='root'";
 	    List<User> allusers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<User>(User.class));
 	    return allusers;
 	 }
+	@Override
+	public void toggle(String username) {
+		String sql="update USERS set status=1-status where username=?";
+		jdbcTemplate.update(sql,new Object[] {username});
+	}
 }

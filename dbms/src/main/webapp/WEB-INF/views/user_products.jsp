@@ -13,13 +13,12 @@
 		<% if (request.getAttribute("flag")=="true") { %>
 		<c:forEach items="${products}" var="item">
 		    <tr>      
-		    	<td>${item.product_id}</td><br>
-		        <td>${item.product_name}</td>
-		        <td><button type="button"><a href="/dbms/dashboard/my_cart/remove/${item.product_id}">Remove</a></button></td>
+		    	<td>${item.product_id}</td>&emsp;<a href="/dbms/dashboard/my_cart/remove/${item.product_id}"><button class="close">&times;</button></a>
+		        <br><td>${item.product_name}</td>
 		    </tr>
 		    <br><br>
 		</c:forEach>
-		Current Coupon: ${offer.offerId}<br>
+		Current Coupon: ${offer.offer_id}<br>
 		<form method="POST" action="/dbms/dashboard/my_cart/apply_offer">
 		Enter Coupon code: <input type="text" name="coupon"><br>
 		<input type="submit" value="Apply">
@@ -35,7 +34,8 @@
 	Amount = ${amount} <br>
 	Discount = ${discount} <br>
 	Total = ${amount-discount}<br>
-	
-	<a href="/dbms/dashboard">Dashboard</a><br>
+	<% if (request.getAttribute("flag")=="true") { %>
+	<a href="/dbms/dashboard/my_cart/place_order"><button type="button">Place Order</button></a><br>
+	<% } %><a href="/dbms/dashboard">Dashboard</a><br>
 </body>
 </html>

@@ -13,8 +13,13 @@
 		    <tr>
 		    	<td>Username: ${user.username}</td>
 		    	<br>
-		    	<td> Password:${user.password}</td>
-		     </tr>
+		    	<td> Password:${user.password}</td><br>
+		    	<c:if test="${user.status==1}">
+		        <a href="/dbms/admin/manageusers/${user.username}"><button type="button">Disable</button></a>
+		        </c:if>
+		        <c:if test="${user.status==0}">
+		        <a href="/dbms/admin/manageusers/${user.username}"><button type="button">Enable</button></a>
+		        </c:if>
 		    <br>
 		    <br>
 		</c:forEach>

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dbms.dao.Cartdao;
 import com.dbms.dao.Offerdao;
+import com.dbms.dao.Orderdao;
 import com.dbms.dao.Productdao;
 import com.dbms.dao.UserCartdao;
 import com.dbms.dao.myproductdao;
@@ -34,6 +35,8 @@ public class UserCartController {
 	Productdao product_dao;
 	@Autowired
 	Offerdao offerdao;
+	@Autowired
+	Orderdao orderdao;
 	
 	
 	@RequestMapping(value="/dashboard/my_cart")
@@ -46,20 +49,16 @@ public class UserCartController {
 		double amount=0.0;
 		double discount=0.0;
 		UserCart usercart=new UserCart();
-		System.out.println("I m here before");
 		if(usercartdao.getCountInCart(username)!=0) {
 			flag="true";
 			usercart=usercartdao.getCartbyusername(username);
 			List<myproduct> products=usercart.getProducts();
 			amount = usercartdao.getamount(username);
-			System.out.println(usercart.getOfferId());
 			Offer offer=offerdao.getOffer(usercart.getOfferId());
 			discount=(amount*offer.getDiscount())/100;
 			model.addObject("products",products);
 			model.addObject("offer",offer);
-			System.out.println("I m here "+offer.getDiscount());
 		}
-		System.out.println("I m here again");
 		model.addObject("flag",flag);
 		model.addObject("amount", amount);
 		model.addObject("discount",discount);
@@ -81,6 +80,15 @@ public class UserCartController {
 		System.out.println(username+' '+productid);
 		usercartdao.removeFromCart(username, productid);
 		return "redirect:/dashboard/my_cart";
+	}
+	
+	@RequestMapping(value="/dashboard/my_cart/place_order")
+	public String order_placed(Principal principal)
+	{
+		//ModelAndView mv=new ModelAndView();
+		String username=principal.getName();
+		orderdao.placeorder(username);
+		return "redirect:/dashboard/order_history";
 	}
 	
 	@RequestMapping(value="/add_in_reserve")

@@ -14,4 +14,5 @@ public interface Userdao{
 	public User getCustomerbyusername(String username);
 	public void saveOrUpdateCustomer(User user);
 	public List<User> showallusers();
+	public void toggle(String username);
 }

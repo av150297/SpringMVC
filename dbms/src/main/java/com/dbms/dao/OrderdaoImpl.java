@@ -165,7 +165,7 @@ public class OrderdaoImpl implements Orderdao{
 	
 	@Override
 	public List<Order> getOrdersbyusername(String username) {
-		String sql="Select * from orderandbill where username='"+username+"'";
+		String sql="Select * from orderandbill where username='"+username+"' order by order_id desc";
 		List<Order> orders= jdbcTemplate.query(sql, new BeanPropertyRowMapper<Order>(Order.class));
 		return orders;
 	}

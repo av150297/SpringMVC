@@ -41,11 +41,10 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public ModelAndView logout() {
-
-		ModelAndView model = new ModelAndView("logout");
-		model.addObject("message", "You have successfully logged off from application !");
-		return model;
+	public String logout(Model model) {
+		model.addAttribute("message", "You have successfully logged off from application !");
+		return "redirect:/login";
+		//return model;
 
 	}
 

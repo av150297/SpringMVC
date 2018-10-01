@@ -24,12 +24,12 @@ public class User{
 	@NotEmpty(message="required")
 	@Email(message="Invalid mail")
 	private String mail;
-	
+	private int status=1;
 	public User() {
 		
 	}
 	
-	public User(String uname,String pass,String mpass,String name,String house,Long pin,String city,String state,String mail) {
+	public User(String uname,String pass,String mpass,String name,String house,Long pin,String city,String state,String mail,int status) {
 		this.username=uname;
 		this.password=pass;
 		this.mpassword=mpass;
@@ -39,6 +39,7 @@ public class User{
 		this.pin=pin;
 		this.state=state;
 		this.mail=mail;
+		this.status=status;
 	}
 
 	public String getUsername() {
@@ -95,6 +96,14 @@ public class User{
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public String getState() {

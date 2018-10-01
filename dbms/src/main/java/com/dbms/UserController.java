@@ -16,15 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dbms.dao.Cartdao;
 import com.dbms.dao.Offerdao;
 import com.dbms.dao.Orderdao;
 import com.dbms.dao.Userdao;
 import com.dbms.dao.myproductdao;
-import com.dbms.model.Cart;
 import com.dbms.model.Offer;
 import com.dbms.model.Order;
-import com.dbms.model.Product;
 import com.dbms.model.User;
 import com.dbms.model.myproduct;
 
@@ -32,8 +29,6 @@ import com.dbms.model.myproduct;
 @Controller
 public class UserController {
 
-	@Autowired
-	Cartdao cartdao;
 	@Autowired
 	Userdao userdao;
 	@Autowired
@@ -98,14 +93,6 @@ public class UserController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/dashboard/my_cart/place_order")
-	public String order_placed(Principal principal)
-	{
-		//ModelAndView mv=new ModelAndView();
-		String username=principal.getName();
-		orderdao.placeorder(username);
-		return "redirect:/dashboard";
-	}
 	
 	@RequestMapping(value="/dashboard/my_cart/apply_offer")
 	public String apply_offer(Model model,HttpServletRequest request,HttpServletResponse response, Principal principal)
