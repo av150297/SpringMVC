@@ -13,7 +13,7 @@
 	 <c:if test="${products.size()>0}">
 		<c:forEach items="${products}" var="item">
 		    <tr>      
-		    	<td>${item.product_id}</td>&emsp;<a href="/dbms/dashboard/my_cart/remove/${item.product_id}"><button class="close">&times;</button></a>
+		    	<td>${item.product_id}</td>&emsp;<a href="/dbms/admin/reserved_users/${username}/remove/${item.product_id}"><button class="close">&times;</button></a>
 		        <br><td>${item.product_name}</td>
 		    </tr>
 		    <br><br>
@@ -26,9 +26,11 @@
 	<c:if test="${products.size()==0}">
 	<h3>Oops, No item in a Reserve List</h3>
 	</c:if>
+	<c:if test="${products.size()!=0}">
 	Amount = ${amount} <br>
 	Discount = ${discount} <br>
 	Total = ${amount-discount}<br>
 	<a href="/dbms/admin/reserved_users/${username}/placed"><button type="button">Proceed To Confirm</button></a>
+</c:if>
 </body>
 </html>

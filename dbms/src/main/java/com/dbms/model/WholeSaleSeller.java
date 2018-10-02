@@ -5,19 +5,19 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class WholeSaleSeller {
 	@NotEmpty(message="required")
-	private String sellerId;
+	private String seller_id;
 	@NotEmpty(message="required")
 	private String name;
 	@NotEmpty(message="required")
 	@Email(message="invalid email")
-	private String mail;
+	private String email;
 	@NotEmpty(message="required")
 	private String address;
-	public String getSellerId() {
-		return sellerId;
+	public String getSeller_id() {
+		return seller_id;
 	}
-	public void setSellerId(String sellerId) {
-		this.sellerId = sellerId;
+	public void setSeller_id(String sellerId) {
+		this.seller_id = sellerId;
 	}
 	public String getName() {
 		return name;
@@ -25,11 +25,11 @@ public class WholeSaleSeller {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String mail) {
+		this.email = mail;
 	}
 	public String getAddress() {
 		return address;

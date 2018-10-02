@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 	<form:form method="post" modelAttribute="product" action="/dbms/admin/add_product">
 		<table>
@@ -13,7 +14,11 @@
 				
 		<tr><td>
 		Seller id</td><td>
-		<form:input path="seller_id" type="text" required="required"/> </td><!-- bind to user.name-->
+		<form:select path="seller_id">
+		<c:forEach items="${wholesellers}" var="seller">
+		<option value="${seller.seller_id}">${seller.seller_id}</option>
+		</c:forEach>
+		</form:select> </td><!-- bind to user.name-->
 		<td><form:errors path="seller_id" /></td></tr>		
 				
 				
@@ -70,6 +75,5 @@
 			<tr>
 			<td><input type="submit" value="Submit" /></td>
 			</tr>
-		<tr><td>${error}</td></tr>
 		</table>
 	</form:form>

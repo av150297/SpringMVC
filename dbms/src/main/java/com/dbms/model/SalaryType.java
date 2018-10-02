@@ -1,7 +1,11 @@
 package com.dbms.model;
 
+import javax.validation.constraints.NotNull;
+
 public class SalaryType {
+	@NotNull
 	private int type;
+	@NotNull
 	private int salary;
 	public int getType() {
 		return type;

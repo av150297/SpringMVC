@@ -172,8 +172,8 @@ public class UserController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/dashboard/feedback/{product_id}")
-	public String addFeedback(Model model,HttpServletRequest request, Principal principal, @PathVariable(value="product_id") int product_id)
+	@RequestMapping(value="/dashboard/feedback/{order_id}/{product_id}")
+	public String addFeedback(Model model,HttpServletRequest request, Principal principal, @PathVariable(value="product_id") int product_id,@PathVariable(value="order_id")int order_id)
 	{
 		String description=request.getParameter("description");
 		String username=principal.getName();
@@ -183,6 +183,22 @@ public class UserController {
 		feedback.setProductId(product_id);
 		feedbackdao.addFeedack(feedback);
 		model.addAttribute("message","Feedback Added Successfully");
-		return "redirect:/dashboard/order_history";
+		return "redirect:/dashboard/order_history/"+Integer.toString(order_id);
+	}
+	
+	@RequestMapping(value="/welcome/delete/{order_id}/{id}")
+	public String deleteFeedback(Principal principal,@PathVariable(value="id") int feedbackid,@PathVariable(value="order_id") int order_id)
+	{
+		String username=principal.getName();
+		if(username.equals("root"))
+		{
+			feedbackdao.deleteFeedback(feedbackid);
+			return "redirect:/admin/all_orders/"+Integer.toString(order_id);
+		}
+		else
+		{
+			feedbackdao.deleteFeedback(feedbackid);
+			return "redirect:/dashboard/order_history/"+Integer.toString(order_id);
+		}
 	}
 }

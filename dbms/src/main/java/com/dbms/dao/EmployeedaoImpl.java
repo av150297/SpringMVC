@@ -48,7 +48,7 @@ public class EmployeedaoImpl implements Employeedao{
 	@Override
 	public Employee allocateEmployee()
 	{
-		String sql="select * from employee where emp_id !='offline' and status=1 order by number_of_orders";
+		String sql="select * from employee where emp_id !='offline' and status=1 order by number_of_order";
 		return jdbcTemplate.query(sql,new ResultSetExtractor<Employee>() {
 			
 			public Employee extractData(ResultSet rs) throws SQLException,DataAccessException{
@@ -59,7 +59,7 @@ public class EmployeedaoImpl implements Employeedao{
 					employee.setType(rs.getInt("type"));
 					employee.setContact(rs.getString("contact"));
 					employee.setAddress(rs.getString("address"));
-					employee.setNumber_of_order(rs.getInt("number_of_orders"));
+					employee.setNumber_of_order(rs.getInt("number_of_order"));
 					return employee;
 				}
 				return null;
@@ -71,7 +71,7 @@ public class EmployeedaoImpl implements Employeedao{
 	@Override
 	public void updateEmployee(Employee employee)
 	{
-		String sql="update employee set number_of_orders = ? where emp_id = ?";
+		String sql="update employee set number_of_order = ? where emp_id = ?";
 		jdbcTemplate.update(sql,new Object[] {employee.getNumber_of_order()+1,employee.getEmpId()});
 	}
 	@Override

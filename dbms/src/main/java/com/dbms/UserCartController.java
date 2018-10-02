@@ -75,7 +75,6 @@ public class UserCartController {
 	@RequestMapping(value="/dashboard/my_cart/remove/{productid}")
 	public String removefromcart(Model model, Principal principal, @PathVariable(value="productid") int productid) {
 		String username = principal.getName();
-		System.out.println(username+' '+productid);
 		usercartdao.removeFromCart(username, productid);
 		return "redirect:/dashboard/my_cart";
 	}
@@ -83,7 +82,6 @@ public class UserCartController {
 	@RequestMapping(value="/dashboard/my_cart/place_order")
 	public String order_placed(Principal principal)
 	{
-		//ModelAndView mv=new ModelAndView();
 		String username=principal.getName();
 		orderdao.placeorder(username);
 		return "redirect:/dashboard/order_history";

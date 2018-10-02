@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	${error}
 	<form:form method="post" modelAttribute="employee" action="/dbms/admin/add_employee">
 		<table>
@@ -22,7 +22,11 @@
 		
 		<tr><td>
 		Type_id: </td><td>
-		<form:input path="type" type="number" required="required" min="0"/> </td><!-- bind to user.name-->
+		<form:select path="type">
+		<c:forEach items="${types}" var="tp">
+		<option value="${tp.type}">${tp.type}</option>
+		</c:forEach>
+		</form:select> </td><!-- bind to user.name-->
 		<td><form:errors path="type" /></td></tr>
 		
 		<tr><td>

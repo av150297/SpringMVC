@@ -1,6 +1,7 @@
 package com.dbms;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.dbms.dao.Employeedao;
 import com.dbms.dao.Feedbackdao;
 import com.dbms.dao.Offerdao;
 import com.dbms.dao.Orderdao;
+import com.dbms.dao.SalaryTypedao;
 import com.dbms.dao.UserCartdao;
 import com.dbms.dao.Userdao;
 import com.dbms.dao.WholeSaleSellerdao;
@@ -31,6 +33,7 @@ import com.dbms.model.Employee;
 import com.dbms.model.Feedback;
 import com.dbms.model.Offer;
 import com.dbms.model.Order;
+import com.dbms.model.SalaryType;
 import com.dbms.model.User;
 import com.dbms.model.UserCart;
 import com.dbms.model.WholeSaleSeller;
@@ -57,12 +60,16 @@ public class AdminController {
 	UserCartdao usercartdao;
 	@Autowired
 	Feedbackdao feedbackdao;
+	@Autowired
+	WholeSaleSellerdao wholesellerdao;
+	@Autowired
+	SalaryTypedao salarydao;
 	
 	
 	@RequestMapping("")
 	public ModelAndView admin(Principal principal) {
-
-		ModelAndView model = new ModelAndView("admin");
+		ModelAndView model = new ModelAndView();
+		model.setViewName("admin");
 		String loggedInUserName = principal.getName();
 		model.addObject("user", loggedInUserName);
 		model.addObject("name", "Spring Security Custom Login Demo");
@@ -74,9 +81,12 @@ public class AdminController {
 	@RequestMapping(value = "/add_product",method = RequestMethod.GET)
 	public ModelAndView add_product(HttpServletRequest request,HttpServletResponse response)
 	{
-		ModelAndView mv=new ModelAndView("add_product");
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("add_product");
+		List <WholeSaleSeller> wholesellers=wholesellerdao.showallsellers();
 		myproduct product= new myproduct();
 		mv.addObject("product",product);
+		mv.addObject("wholesellers",wholesellers);
 		return mv;
 	}
 	
@@ -125,9 +135,12 @@ public class AdminController {
 	@RequestMapping(value="/add_employee",method=RequestMethod.GET)
 	public ModelAndView addEmployee(HttpServletRequest request,HttpServletResponse response)
 	{
-		ModelAndView mv=new ModelAndView("add_employee");
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("add_employee");
 		Employee employee= new Employee();
+		List <SalaryType> types=salarydao.getAllTypes();
 		mv.addObject("employee",employee);
+		mv.addObject("types",types);
 		return mv;
 	}
 	
@@ -298,10 +311,17 @@ public class AdminController {
 		return mv;
 	}
 	
+	@RequestMapping("/reserved_users/{username}/remove/{product_id}")
+	public String removeFromReserve(@PathVariable(value = "username") String username,@PathVariable(value = "product_id") int product_id)
+	{
+		usercartdao.removeFromCart(username, product_id);
+		return "redirect:/admin/reserved_users/"+username;
+	}
+	
 	@RequestMapping("/reserved_users/{username}/placed")
 	public String reservedToOrder(@PathVariable(value = "username") String username)
 	{
 		orderdao.placeReserveOrder(username);
-		return "redirect:/admin";
+		return "redirect:/admin/all_orders";
 	}
 }

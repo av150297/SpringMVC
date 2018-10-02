@@ -19,12 +19,6 @@ public class FeedbackdaoImpl implements Feedbackdao{
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-	
-	@Override
-	public void addFeedack(Feedback feedback) {
-		String sql="insert into feedback(product_id,username,description) values(?,?,?)";
-		jdbcTemplate.update(sql,new Object[] {feedback.getProductId(),feedback.getUsername(),feedback.getDescription()});
-	}
 
 	@Override
 	public List<Feedback> getFeedbackbyProductId(int productId) {
@@ -34,9 +28,15 @@ public class FeedbackdaoImpl implements Feedbackdao{
 	}
 
 	@Override
-	public List<Feedback> getFeedbackByProductId(int product_id) {
-		String sql="Select * from feedback where product_id='"+Integer.toString(product_id)+"'";
-		List<Feedback> feedbacks= jdbcTemplate.query(sql, new BeanPropertyRowMapper<Feedback>(Feedback.class));
-		return feedbacks;
+	public void addFeedack(Feedback feedback) {
+		String sql="insert into feedback(product_id,username,description) values(?,?,?)";
+		jdbcTemplate.update(sql,new Object[] {feedback.getProductId(),feedback.getUsername(),feedback.getDescription()});
 	}
+
+	@Override
+	public void deleteFeedback(int feedbackid) {
+		String sql="delete from feedback where feedback_id=?";
+		jdbcTemplate.update(sql,new Object[] {feedbackid});
+	}
+	
 }

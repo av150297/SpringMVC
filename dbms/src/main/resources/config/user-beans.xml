@@ -9,6 +9,7 @@
     <bean id="offerdao" class="com.dbms.dao.OfferdaoImpl" />
     <bean id="feedbackdao" class="com.dbms.dao.FeedbackdaoImpl" />
     <bean id="wholesalesellerdao" class="com.dbms.dao.WholeSaleSellerdaoImp" />
+    <bean id="salarydao" class="com.dbms.dao.SalaryTypedaoImpl" />
     <bean id="usercartdao" class="com.dbms.dao.UserCartdaoImpl" />
     <bean id="orderdao" class="com.dbms.dao.OrderdaoImpl" />
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">

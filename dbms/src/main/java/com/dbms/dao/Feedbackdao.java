@@ -7,5 +7,5 @@ import com.dbms.model.Feedback;
 public interface Feedbackdao {
 	public List<Feedback> getFeedbackbyProductId(int productId);
 	public void addFeedack(Feedback feedback);
-	public List<Feedback> getFeedbackByProductId(int product_id);
+	public void deleteFeedback(int feedbackid);
 }

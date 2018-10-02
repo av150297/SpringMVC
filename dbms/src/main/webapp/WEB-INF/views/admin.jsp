@@ -20,6 +20,9 @@
         <a href="/dbms/admin/all_orders">Find All orders</a><br>
         
         <a href="<c:url value="/j_spring_security_logout" />"> Logout</a>
+        <c:forEach items="${ws}" var="x">
+	${x}<br>
+	</c:forEach>
     </c:if>
 </body>
 </html>
