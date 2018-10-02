@@ -8,12 +8,15 @@
 <title>${product.product_name}</title>
 </head>
 <body>
-<h2>Produuct Detail</h2>
+<h2>Product Detail</h2>
 	Product name: ${product.product_name} <br>
 	Product type: ${product.product_type} <br>
 	Product description: ${product.description}<br>
 	Product Price: ${product.making_charges+product.cost_price}<br>
 	Product Category: ${product.category}<br>
+	<%if (request.getParameter("message")!=null) {%>
+	<%= request.getParameter("message")%><br>
+	<%} %>
 	<button type="button"><a href="/dbms/dashboard/my_cart/add_in_cart/${product.category}/${product.product_name}">Add to Cart</a></button>
 	
 	

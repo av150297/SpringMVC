@@ -14,7 +14,6 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 
 import com.dbms.model.Employee;
 import com.dbms.model.Offer;
-import com.dbms.model.Product;
 
 public class EmployeedaoImpl implements Employeedao{
 
@@ -35,7 +34,7 @@ public class EmployeedaoImpl implements Employeedao{
 					employee.setEmpId(rs.getString("emp_id"));
 					employee.setName(rs.getString("name"));
 					employee.setType(rs.getInt("type"));
-					employee.setContact(rs.getInt("contact"));
+					employee.setContact(rs.getString("contact"));
 					employee.setAddress(rs.getString("address"));
 					employee.setNumber_of_order(rs.getInt("number_of_orders"));
 					employee.setStatus(rs.getInt("status"));
@@ -58,7 +57,7 @@ public class EmployeedaoImpl implements Employeedao{
 					employee.setEmpId(rs.getString("emp_id"));
 					employee.setName(rs.getString("name"));
 					employee.setType(rs.getInt("type"));
-					employee.setContact(rs.getInt("contact"));
+					employee.setContact(rs.getString("contact"));
 					employee.setAddress(rs.getString("address"));
 					employee.setNumber_of_order(rs.getInt("number_of_orders"));
 					return employee;
@@ -85,7 +84,7 @@ public class EmployeedaoImpl implements Employeedao{
 	}
 	@Override
 	public void addNewEmployee(Employee employee) {
-		String sql="insert into employee values(?,?,?,?,?,?,?)";
+		String sql="insert into employee values(?,?,?,?,?,?,?,1)";
 		jdbcTemplate.update(sql,new Object[] {employee.getEmpId(),employee.getName(),employee.getType(),employee.getContact(),employee.getEmail(),employee.getAddress(),0});
 	}
 	@Override

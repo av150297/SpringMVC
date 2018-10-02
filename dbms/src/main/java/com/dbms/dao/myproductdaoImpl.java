@@ -68,8 +68,8 @@ public class myproductdaoImpl implements myproductdao{
 	@Override
 	public void addnewproduct(myproduct product) {
 
-		String sql = "insert into myproduct values(?,?,?,?,?,?,?,?,?,?,?,?)";
-		jdbcTemplate.update(sql,new Object[] {product.getProduct_id(),product.getSeller_id(),product.getProduct_name(),product.getProduct_type(),product.getGold(),product.getSilver(),product.getPlatinum(),product.getStones(),product.getCost_price(),product.getMaking_charges(),product.getDescription() ,product.getCategory()});
+		String sql = "insert into myproduct values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		jdbcTemplate.update(sql,new Object[] {product.getProduct_id(),product.getSeller_id(),product.getProduct_name(),product.getProduct_type(),product.getGold(),product.getSilver(),product.getPlatinum(),product.getStones(),product.getCost_price(),product.getMaking_charges(),product.getDescription() ,product.getCategory(),product.getStatus()});
 
 	}
 

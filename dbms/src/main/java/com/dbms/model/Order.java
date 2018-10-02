@@ -1,6 +1,5 @@
 package com.dbms.model;
 
-import com.dbms.model.Cart;
 
 public class Order {
 

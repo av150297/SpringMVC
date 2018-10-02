@@ -15,4 +15,5 @@ public interface Orderdao {
 	void placeReserveOrder(String username);
 	public Order getOrderByOrderId(int orderid);
 	public List<Order> getAllOrders();
+	public List<Order> getOrdersByEmployeeId(String emp_id);
 }

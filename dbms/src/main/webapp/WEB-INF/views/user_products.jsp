@@ -35,7 +35,12 @@
 	Discount = ${discount} <br>
 	Total = ${amount-discount}<br>
 	<% if (request.getAttribute("flag")=="true") { %>
-	<a href="/dbms/dashboard/my_cart/place_order"><button type="button">Place Order</button></a><br>
+	<%if (request.getParameter("Reserve_error")!=null) {%>
+	<%= request.getParameter("Reserve_error")%><br>
+	<%} %>
+	<a href="/dbms/dashboard/my_cart/place_order"><button type="button">Place Order</button></a>&emsp;
+	<a href="/dbms/dashboard/my_cart/add_in_reserve"><button type="button">Reserve Order</button></a><br>
+	
 	<% } %><a href="/dbms/dashboard">Dashboard</a><br>
 </body>
 </html>

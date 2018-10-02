@@ -12,6 +12,7 @@
         <a href="/dbms/dashboard/my_cart">My Cart</a><br>
         <a href="/dbms/dashboard/profile">View Profile</a><br>
         <a href="/dbms/dashboard/order_history">Order History</a><br>
+        <a href="/dbms/dashboard/my_cart/reserved_products">Reserved Products</a><br>
         <a href="<c:url value="/j_spring_security_logout" />"> Logout</a>
     </c:if>
 </body>

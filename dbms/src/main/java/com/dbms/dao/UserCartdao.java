@@ -1,6 +1,9 @@
 package com.dbms.dao;
 
+import java.util.List;
+
 import com.dbms.model.UserCart;
+import com.dbms.model.myproduct;
 
 public interface UserCartdao {
 
@@ -13,4 +16,7 @@ public interface UserCartdao {
 	public void addToReserve(String username);
 	public UserCart getReservedCartbyusername(String username);
 	public int getReservedAmount(String username);
+	public List<myproduct> getReservedOrdersByUsername(String username);
+	int getReserveCountInCart(String username);
+	public boolean checkReserveOrder(String username);
 }

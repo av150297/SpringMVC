@@ -13,13 +13,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-import com.dbms.model.Cart;
-import com.dbms.model.CartItem;
 import com.dbms.model.Employee;
 import com.dbms.model.Feedback;
 import com.dbms.model.Offer;
 import com.dbms.model.Order;
-import com.dbms.model.Product;
 import com.dbms.model.UserCart;
 import com.dbms.model.myproduct;
 
@@ -34,82 +31,7 @@ public class OrderdaoImpl implements Orderdao{
 	@Autowired
 	myproductdao productdao;
 	@Autowired
-	Employeedao employeedao;
-//	@Override
-//	public void placeorder(Order order) {
-//		
-//		Cart cart = order.getCart();
-//		Double amount = cartdao.getamount(cart);
-//		List<CartItem> cartitems = cart.getCartitems();
-//		
-//		String sql;
-//		
-//		sql = "insert into USERORDERS(orderid,username,amount) values (?,?,?)";
-//		jdbcTemplate.update(sql,new Object[] {order.getOrderid(), order.getUsername(), amount});
-//		
-//	
-//		
-//		for(CartItem cartitem:cartitems) {
-//			sql = "insert into ORDERPRODUCTS values(?,?,?)";
-//			jdbcTemplate.update(sql,new Object[] {order.getOrderid(), cartitem.getProduct().getProductid(), cartitem.getQuantity()});
-//		}
-//	}
-//	@Override
-//	public int getordercount() {
-//		String sql = "select count(*) from USERORDERS";
-//		int ordercount = jdbcTemplate.queryForObject(sql, new Object [] {}, Integer.class);
-//		return ordercount;
-//	}
-////	class Sortbyorderid implements Comparator<Object> 
-////	{ 
-////	    // Used for sorting in ascending order of 
-////	    // roll number 
-////	    public int compare(Student a, Student b) 
-////	    { 
-////	        return a.rollno - b.rollno; 
-////	    } 
-////	} 
-//	@Override
-//	public List<Order> getOrdersbyusername(String username) { 
-//		String sql = "select * from USERORDERS where username='"+username+"' order by orderid desc";
-//		return jdbcTemplate.query(sql,new ResultSetExtractor<List<Order>>() {	
-//		
-//		public List<Order> extractData(ResultSet rs) throws SQLException,DataAccessException{
-//			List<Order> myorders = new ArrayList<Order>();
-//			while(rs.next()) {
-//				Order order = new Order();
-//				order.setUsername(username);
-//				order.setOrderid(rs.getInt("orderid"));
-//				myorders.add(order);
-//			}
-////			Collections.sort(myorders,);
-//			return myorders;
-//		}
-//	});
-//	}
-//	@Override
-//	public Cart getCartbyorderid(int orderid, String username) {
-//		String sql = "select * from ORDERPRODUCTS where orderid="+Integer.toString(orderid);
-//		return jdbcTemplate.query(sql,new ResultSetExtractor<Cart>() {	
-//		
-//		public Cart extractData(ResultSet rs) throws SQLException,DataAccessException{
-//			Cart cart = new Cart();
-//			List<CartItem> cartitems = new ArrayList<CartItem>();
-//			while(rs.next()) {
-//				int productid = rs.getInt("productid");
-//				Product product = productdao.getproductbyid(productid);
-//				CartItem cartitem = new CartItem();
-//				cartitem.setProduct(product);
-//				cartitem.setQuantity(rs.getInt("orderquantity"));
-//				cartitems.add(cartitem);
-//			}
-//			cart.setCartitems(cartitems);
-//			cart.setUsername(username);
-//			return cart;
-//		}
-//	});
-//	}
-	
+	Employeedao employeedao;	
 	
 	@Override
 	public int getProductCount(int order_id) {
@@ -202,7 +124,13 @@ public class OrderdaoImpl implements Orderdao{
 	}
 	@Override
 	public List<Order> getAllOrders() {
-		String sql="select * from orderandbill";
+		String sql="select * from orderandbill order by order_id desc";
+		List<Order> orders= jdbcTemplate.query(sql, new BeanPropertyRowMapper<Order>(Order.class));
+		return orders;
+	}
+	@Override
+	public List<Order> getOrdersByEmployeeId(String emp_id) {
+		String sql="select * from orderandbill where delivered_by ='"+emp_id+"' order by order_id desc";
 		List<Order> orders= jdbcTemplate.query(sql, new BeanPropertyRowMapper<Order>(Order.class));
 		return orders;
 	}

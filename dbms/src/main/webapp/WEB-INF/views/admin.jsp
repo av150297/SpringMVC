@@ -16,6 +16,7 @@
         <a href="/dbms/admin/add_seller">Add Whole Seller</a><br>
         <a href="/dbms/admin/add_offer">Add Offer</a><br>
         <a href="/dbms/admin/offers">All Offer</a><br>
+        <a href="/dbms/admin/reserved_users">Reserved Users</a><br>
         <a href="/dbms/admin/all_orders">Find All orders</a><br>
         
         <a href="<c:url value="/j_spring_security_logout" />"> Logout</a>

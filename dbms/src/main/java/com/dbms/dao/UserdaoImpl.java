@@ -76,7 +76,7 @@ public class UserdaoImpl implements Userdao{
 			user.setCity(rs.getString("city"));
 			user.setState(rs.getString("state"));
 			user.setMail(rs.getString("email"));
-			user.setStatus(rs.getInt("status"));
+			user.setStatus(1);
 			return user;
 		}
 		return null;
@@ -93,5 +93,18 @@ public class UserdaoImpl implements Userdao{
 	public void toggle(String username) {
 		String sql="update USERS set status=1-status where username=?";
 		jdbcTemplate.update(sql,new Object[] {username});
+	}
+	@Override
+	public List<User> getAllReservedUsers() {
+		String sql = "select * from USERS where username !='root' and username in (Select Distinct username from user_cart where order_id is null and reserved_status=1)";
+	    List<User> allusers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<User>(User.class));
+	    return allusers;
+	}
+	@Override
+	public int UpdateCustomer(String username, String name, String house, String state, String city, String email,
+			int pin) {
+		String sql="update customer set name=?,house=?,state=?,city=?,email=?,pincode=? where username=?";
+		jdbcTemplate.update(sql,new Object[] {name,house,state,city,email,pin, username});
+		return 0;
 	}
 }

@@ -5,20 +5,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Categories</title>
+<title>Reserved Users</title>
 </head>
 <body>
-	<h3>Categories</h3>
-		<c:forEach items="${allcategories}" var="category">
-		    <tr>   
-		        <td><a href="/dbms/admin/allcategories/${category.categoryid}">${category.categoryname}</a></td>
-		    </tr>
+	<h3>Users</h3>
+		<c:forEach items="${users}" var="user">
+		    <tr>
+		    	<td><a href="/dbms/admin/reserved_users/${user.username}">${user.username}</a></td>
+		    	<br>
 		    <br>
 		</c:forEach>
 	<br>
 	<h3>${message}</h3>
-	<a href="/dbms/admin/addnewcategory">Add a new category</a><br>${success}
-	<br>
-	<a href="/dbms/admin/">Dashboard</a>
+	<a href="/dbms/admin/">Dashboard</a><br>
 </body>
 </html>

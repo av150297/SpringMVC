@@ -106,7 +106,7 @@ public class UserCartdaoImpl implements UserCartdao {
 		UserCart usercart=new UserCart();
 		usercart.setUsername(username);
 		usercart.setProducts(products);
-		sql="select * from user_cart where username='"+username+"' and order_id is null and reserved_status=0";
+		sql="select * from user_cart where username='"+username+"' and order_id is null and reserved_status=1";
 		usercart.setOfferId(jdbcTemplate.query(sql,new ResultSetExtractor<String>() {
 			
 			public String extractData(ResultSet rs) throws SQLException,DataAccessException{
@@ -121,14 +121,37 @@ public class UserCartdaoImpl implements UserCartdao {
 	}
 
 	@Override
+	public int getReserveCountInCart(String username) {
+		String sql="select count(*) from user_cart where username=? and order_id is NULL and reserved_status=1";
+		int count = jdbcTemplate.queryForObject(sql, new Object[] {username}, Integer.class);
+		return count;
+	}
+	
+	@Override
 	public int getReservedAmount(String username) {
 		int count=0;
-		if(getCountInCart(username)!=0) 
+		if(getReserveCountInCart(username)!=0) 
 		{
 			String sql="select sum(M.making_charges+M.cost_price) from myproduct M where M.product_id in (select A.product_id from user_cart A where A.username=? and A.order_id is NULL and A.reserved_status=1) ";
 			count = jdbcTemplate.queryForObject(sql, new Object[] {username}, Integer.class);
 		}
 		return count;
 	}
-	
+
+	@Override
+	public List<myproduct> getReservedOrdersByUsername(String username) {
+		String sql="select * from myproduct where product_id in (select product_id from user_cart where username='"+username+"' and reserved_status=1 and order_id is null)";
+		List<myproduct> products= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
+		return products;
+	}
+
+	@Override
+	public boolean checkReserveOrder(String username) {
+		String sql="select count(*) from user_cart where username=? and order_id is NULL and reserved_status=1";
+		int count = jdbcTemplate.queryForObject(sql, new Object[] {username}, Integer.class);
+		if(count>0)
+			return true;
+		else
+			return false;
+	}
 }

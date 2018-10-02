@@ -10,34 +10,34 @@
 				
 		<tr><td>
 		Employee id</td><td>
-		<form:input path="empId" type="text" /> </td><!-- bind to user.name-->
+		<form:input path="empId" type="text" required="required" /> </td><!-- bind to user.name-->
 		<td><form:errors path="empId" /></td></tr>		
 				
 				
 		<tr><td>
 		Employee Name</td><td>
-		<form:input path="name" type="text" /> </td><!-- bind to user.name-->
+		<form:input path="name" type="text" required="required"/> </td><!-- bind to user.name-->
 		<td><form:errors path="name" /></td></tr>
 		
 		
 		<tr><td>
 		Type_id: </td><td>
-		<form:input path="type" type="text" /> </td><!-- bind to user.name-->
+		<form:input path="type" type="number" required="required" min="0"/> </td><!-- bind to user.name-->
 		<td><form:errors path="type" /></td></tr>
 		
 		<tr><td>
 		Contact</td><td>
-		<form:input path="contact" type="text" /> </td><!-- bind to user.name-->
+		<form:input path="contact" type="text" required="required" pattern="[0-9]{10}"/> </td><!-- bind to user.name-->
 		<td><form:errors path="contact" /></td></tr>
 		
 		<tr><td>
 		Address</td><td>
-		<form:input path="address" type="text" /> </td><!-- bind to user.name-->
+		<form:input path="address" type="text" required="required"/> </td><!-- bind to user.name-->
 		<td><form:errors path="address" /></td></tr>
 		
 		<tr><td>
 		Email </td><td>
-		<form:input path="email" type="text" /> </td><!-- bind to user.name-->
+		<form:input path="email" type="email" required="required"/> </td><!-- bind to user.name-->
 		<td><form:errors path="email" /></td></tr>
 
 			<tr>

@@ -1,11 +1,23 @@
 package com.dbms.model;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Employee {
+	@NotEmpty(message="required")
 	private String empId;
+	@NotEmpty(message="required")
 	private String name;
+	@NotNull
 	private int type;
-	private int contact;
+	@NotNull
+	private String contact;
+	@NotEmpty(message="required")
+	@Email(message="Invalid Email")
 	private String email;
+	@NotEmpty(message="required")
 	private String address;
 	private int number_of_order=0;
 	private int status=1;
@@ -33,10 +45,10 @@ public class Employee {
 	public void setType(int type) {
 		this.type = type;
 	}
-	public int getContact() {
+	public String getContact() {
 		return contact;
 	}
-	public void setContact(int contact) {
+	public void setContact(String contact) {
 		this.contact = contact;
 	}
 	public String getEmail() {

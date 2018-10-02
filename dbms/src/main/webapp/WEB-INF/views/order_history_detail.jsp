@@ -13,6 +13,20 @@ ${order.order_id }<br>
 		    <tr>      
 		    	Product Id: <td>${product.product_id}</td><br>
 		        Product: <td>${product.product_name}</td><br>
+		        <c:if test="${flag==null}">
+		        <form method="get" action="/dbms/dashboard/feedback/${product.product_id}">
+		        <input type="text" name="description" required="required">&emsp;
+		        <input type="submit" value="Submit">
+		        </form>
+		        </c:if>
+		        <br>
+		        All Feedbacks related to ${product.product_id}<br>
+		        <br>
+		        <c:forEach items="${mp}" var="feedback">
+		        <c:forEach items="${feedback.value}" var="fb">
+		        <td>${fb.description}</td><br><br>
+		        </c:forEach>
+		        </c:forEach>
 		    </tr>
 		    <br><br>
 		</c:forEach>

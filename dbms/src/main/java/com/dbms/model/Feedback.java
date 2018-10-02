@@ -1,9 +1,12 @@
 package com.dbms.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Feedback {
 	private int productId;
 	private int feedbackId;
 	private String username;
+	@NotEmpty
 	private String description;
 	public int getProductId() {
 		return productId;

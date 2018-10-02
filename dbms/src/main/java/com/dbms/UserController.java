@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dbms.dao.Feedbackdao;
 import com.dbms.dao.Offerdao;
 import com.dbms.dao.Orderdao;
 import com.dbms.dao.Userdao;
 import com.dbms.dao.myproductdao;
+import com.dbms.model.Feedback;
 import com.dbms.model.Offer;
 import com.dbms.model.Order;
 import com.dbms.model.User;
@@ -37,6 +39,8 @@ public class UserController {
 	myproductdao productdao;
 	@Autowired
 	Offerdao offerdao;
+	@Autowired
+	Feedbackdao feedbackdao;
 	
 	@RequestMapping("/dashboard")
 	public ModelAndView user(Principal principal) {
@@ -58,6 +62,22 @@ public class UserController {
 		model.addObject("userinfo", user);
 		return model;
 	}
+	
+	@RequestMapping(value="/dashboard/edit_profile")
+	public String viewprofile(HttpServletRequest request,Model model,Principal principal) {
+		String username = principal.getName();
+		String name=request.getParameter("name");
+		String house=request.getParameter("house");
+		String state=request.getParameter("state");
+		String city=request.getParameter("city");
+		String email=request.getParameter("mail");
+		int pin=Integer.parseInt(request.getParameter("pin"));
+		userdao.UpdateCustomer(username,name,house,state,city,email,pin);
+		model.addAttribute("message","Profile Edit Successfully");
+		return "redirect:/dashboard/profile";
+	}
+	
+	
 	
 	@RequestMapping(value="/dashboard/product_category/{category}")
 	public ModelAndView product_category(@PathVariable(value="category") String category)
@@ -98,7 +118,6 @@ public class UserController {
 	public String apply_offer(Model model,HttpServletRequest request,HttpServletResponse response, Principal principal)
 	{
 		String offer_id=request.getParameter("coupon");
-		System.out.println(offer_id);
 		if(offerdao.checkOffer(offer_id)==true)
 		{
 			String username=principal.getName();
@@ -134,6 +153,7 @@ public class UserController {
 		mv.addObject("offers",offers);
 		return mv;
 	}
+	
 	@RequestMapping(value="/dashboard/order_history/{order_id}")
 	public ModelAndView userOrderDetail(Principal principal,@PathVariable(value="order_id") int order_id)
 	{
@@ -141,9 +161,28 @@ public class UserController {
 		mv.setViewName("order_history_detail");
 		Order order=orderdao.getOrderByOrderId(order_id);
 		List<myproduct> products=orderdao.getCartbyorderid(order_id);
+		Map <Integer,List<Feedback> > mp=new HashMap<>();
+		for(myproduct product:products)
+		{
+			mp.put(product.getProduct_id(),feedbackdao.getFeedbackbyProductId(product.getProduct_id()));
+		}
 		mv.addObject("order", order);
 		mv.addObject("products",products);
+		mv.addObject("mp",mp);
 		return mv;
 	}
 	
+	@RequestMapping(value="/dashboard/feedback/{product_id}")
+	public String addFeedback(Model model,HttpServletRequest request, Principal principal, @PathVariable(value="product_id") int product_id)
+	{
+		String description=request.getParameter("description");
+		String username=principal.getName();
+		Feedback feedback=new Feedback();
+		feedback.setUsername(username);
+		feedback.setDescription(description);
+		feedback.setProductId(product_id);
+		feedbackdao.addFeedack(feedback);
+		model.addAttribute("message","Feedback Added Successfully");
+		return "redirect:/dashboard/order_history";
+	}
 }

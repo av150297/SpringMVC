@@ -8,22 +8,61 @@
 <title>Profile</title>
 </head>
 <body>
-	<h3>Profile Details</h3>
-	<table>   
-		 <tr>
-		 	<td>USERNAME : ${userinfo.username}</td>
-		 </tr>
-		 <tr>
-		 	<td>NAME : ${userinfo.name}</td>
-		 </tr>
-		 <tr>
-		 	<td>EMAILID : ${userinfo.mail}</td>
-		 </tr>
-		 <tr>
-		 	<td>CITY : ${userinfo.city}</td>
-		 </tr>
-	</table>
-	<br>
-	<a href="/dbms/dashboard">Dashboard</a>
-</body>
-</html>
+
+      
+      <!-- edit form column -->
+        <h3>Personal info</h3>
+        
+        <form class="form-horizontal" role="form" action="/dbms/dashboard/edit_profile">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="${userinfo.name}" name="name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">House:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="${userinfo.house}" name="house">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">State:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="${ userinfo.state}" name="state">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">City:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="${ userinfo.city}" name="city">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-md-3 control-label">Pincode:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="${userinfo.pin}" name="pin">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="${userinfo.mail }" name="mail">
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="submit" class="btn btn-primary" value="Save Changes">
+              <span></span>
+              <input type="reset" class="btn btn-default" value="Cancel">
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
+<hr>

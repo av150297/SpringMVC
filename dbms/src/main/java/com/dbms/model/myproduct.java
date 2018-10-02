@@ -1,12 +1,13 @@
 package com.dbms.model;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.*;
+
 public class myproduct {
-	@javax.validation.constraints.NotNull
 	@Range(min=0,max=9999999,message="Enter a id between 0 to 9999999 ")
 	private int product_id;
 	@NotEmpty(message="required")
@@ -17,15 +18,14 @@ public class myproduct {
 	private String product_type;
 	@NotEmpty(message="required")
 	private String category;
+	@Range(min=0,max=1000,message="Enter a appropiate weight ")
+	private Double gold=0.0;
+	@NotNull
+	@Range(min=0,max=1000,message="Enter a appropiate weight ")
+	private Double silver=0.0;
 	//@NotEmpty(message="required")
 	@Range(min=0,max=1000,message="Enter a appropiate weight ")
-	private Double gold;
-	//@NotEmpty(message="required")
-	@Range(min=0,max=1000,message="Enter a appropiate weight ")
-	private Double silver;
-	//@NotEmpty(message="required")
-	@Range(min=0,max=1000,message="Enter a appropiate weight ")
-	private Double platinum;
+	private Double platinum=0.0;
 	
 	private String stones;
 	//@NotEmpty(message="required")
@@ -36,7 +36,7 @@ public class myproduct {
 	private Double making_charges;
 	@NotEmpty(message="required")
 	private String description;
-	private int status;
+	private int status=0;
 	public int getStatus() {
 		return status;
 	}

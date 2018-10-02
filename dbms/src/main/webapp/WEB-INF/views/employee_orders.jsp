@@ -5,22 +5,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Order History</title>
+<title>${emp_id}</title>
 </head>
 <body>
-	<c:if test="${request.getParameter(\"message\")!=null}">
-	<%= request.getParameter("message")%>
+	<c:if test="${message!=null}">
+	${message}
 	</c:if><br>
 	<c:forEach items="${orders}" var="order">
 		    <tr>      
 		    	Order Id: <td>${order.order_id}</td><br>
+		    	Customer Id: <td> ${order.username} </td><br>
 		        Address: <td>${order.address}</td><br>
 		        Coupon Code Applied: <td>${order.offer_id}</td><br>
 		        Subtotal: <td>${order.subtotal} </td><br>
-		        Discount: <td>${(offers.get(order.order_id).discount)*(order.subtotal/100)}</td><br>
-		        Total: ${order.subtotal - (offers.get(order.order_id).discount)*(order.subtotal/100) }<br>
-		        Order Count: <td> ${orderCounts.get(order.order_id)}</td><br>
-		        <a href="/dbms/dashboard/order_history/${order.order_id}">Details: </a>
 		    </tr>
 		    <br><br>
 		</c:forEach>

@@ -3,6 +3,7 @@ package com.dbms;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,15 +20,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dbms.dao.Employeedao;
+import com.dbms.dao.Feedbackdao;
 import com.dbms.dao.Offerdao;
 import com.dbms.dao.Orderdao;
+import com.dbms.dao.UserCartdao;
 import com.dbms.dao.Userdao;
 import com.dbms.dao.WholeSaleSellerdao;
 import com.dbms.dao.myproductdao;
 import com.dbms.model.Employee;
+import com.dbms.model.Feedback;
 import com.dbms.model.Offer;
 import com.dbms.model.Order;
 import com.dbms.model.User;
+import com.dbms.model.UserCart;
 import com.dbms.model.WholeSaleSeller;
 import com.dbms.model.myproduct;
 
@@ -48,6 +53,10 @@ public class AdminController {
 	Employeedao employeedao;
 	@Autowired
 	Offerdao offerdao;
+	@Autowired
+	UserCartdao usercartdao;
+	@Autowired
+	Feedbackdao feedbackdao;
 	
 	
 	@RequestMapping("")
@@ -149,6 +158,16 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/employees/{emp_id}")
+	public ModelAndView EmployeeOrders(@PathVariable(value="emp_id") String emp_id)
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("employee_orders");
+		List <Order> orders=orderdao.getOrdersByEmployeeId(emp_id);
+		mv.addObject("orders",orders);
+		mv.addObject("emp_id",emp_id);
+		return mv;
+	}
+	@RequestMapping("/employees/toggle/{emp_id}")
 	public String toggleEmployee(@PathVariable(value="emp_id") String emp_id)
 	{
 		employeedao.toggle(emp_id);
@@ -218,8 +237,15 @@ public class AdminController {
 		mv.setViewName("order_history_detail");
 		Order order=orderdao.getOrderByOrderId(order_id);
 		List<myproduct> products=orderdao.getCartbyorderid(order_id);
+		Map <Integer,List<Feedback> > mp=new HashMap<>();
+		for(myproduct product:products)
+		{
+			mp.put(product.getProduct_id(),feedbackdao.getFeedbackbyProductId(product.getProduct_id()));
+		}
 		mv.addObject("order", order);
 		mv.addObject("products",products);
+		mv.addObject("mp",mp);
+		mv.addObject("flag","true");
 		return mv;
 	}
 	
@@ -229,7 +255,6 @@ public class AdminController {
 		ModelAndView model = new ModelAndView("manageusers");
 		List<User> allusers = userdao.showallusers();
 	    model.addObject("allusers", allusers);
-	    
 	    return model;
 	}
 	
@@ -238,6 +263,39 @@ public class AdminController {
 
 		userdao.toggle(username);
 	    return "redirect:/admin/manageusers";
+	}
+	
+	@RequestMapping("/reserved_users")
+	public ModelAndView reserved_users()
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("reserved_users");
+		List<User> allReservedUsers = userdao.getAllReservedUsers();
+	    mv.addObject("users", allReservedUsers);
+	    return mv;
+	}
+	
+	@RequestMapping("/reserved_users/{username}")
+	public ModelAndView reservedProducts(@PathVariable(value = "username") String username)
+	{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("admin_reserved_orders");
+		String flag="false";
+		double amount=0.0;
+		double discount=0.0;
+		UserCart usercart=new UserCart();
+		usercart=usercartdao.getReservedCartbyusername(username);
+		List<myproduct> products=usercart.getProducts();
+		amount = usercartdao.getReservedAmount(username);
+		Offer offer=offerdao.getOffer(usercart.getOfferId());
+		discount=(amount*offer.getDiscount())/100;
+		mv.addObject("username",username);
+		mv.addObject("products",products);
+		mv.addObject("offer",offer);
+		mv.addObject("flag",flag);
+		mv.addObject("amount", amount);
+		mv.addObject("discount",discount);
+		return mv;
 	}
 	
 	@RequestMapping("/reserved_users/{username}/placed")
