@@ -17,7 +17,7 @@
 	
 	<!-- Table Starts here -->	
 <div class="container" >
-<a href="/dbms/admin/add_employee"><button class="btn btn-primary" style="margin-top:50px;float: right;">Add An Employee</button></a>
+<a href="/dbms/admin/add_employee"><button class="btn btn-primary" style="margin-top:40px;float: right;">Add An Employee</button></a>
 <div class="row">
 		        
 <div class="col-md-12">

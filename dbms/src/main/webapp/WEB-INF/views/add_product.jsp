@@ -15,18 +15,75 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link href="${style}/css/Emp_form.css" rel="stylesheet">
+	<link href="${style}/css/seller.css" rel="stylesheet">
 </head>
+
+<!--  Model Starts here-->
+
+
 
 
 <!-- Form starts here -->
 
+
+	
+
+
+	<div class="container">
+
+	<!-- Trigger/Open The Modal -->
+<button id="myBtn" class="btn btn-primary" style="margin-top:30px;float: right;">Add A Seller</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Add A WholeSeller Details</h2>
+    </div>
+    <div style="position: relative; margin-left: 20px; margin-right: 20px">
+    <form:form method="post" modelAttribute="seller" action="/dbms/admin/add_seller">
+    
+    <label for="Sellerid"><b>Seller Id</b></label>
+    <form:input path="seller_id" type="text" required="required" placeholder="Seller ID"/>
+    <form:errors path="seller_id" />
+    
+    <label for="Name"><b>Seller Name</b></label>
+    <form:input path="name" type="text" required="required" placeholder="Seller Name"/>
+    <form:errors path="name" />
+    
+    <label for="Address"><b>Address</b></label>
+    <form:input path="address" type="text" required="required" placeholder="Address"/>
+    <form:errors path="address" />
+    
+    <label for="email"><b>E-mail</b></label>
+    <form:input path="email" pattern="*@*" type="text" required="required" placeholder="Email" class="form-control"/>
+    <form:errors path="email" />
+    
+    </form:form>
+    </div>
+    
+    <div class="modal-footer">
+      <h3><button class="btn btn-primary">Submit</button></h3>
+    </div>
+  </div>
+	</div>
+</div>
+
+
+<!--  Model Ends here-->
+	
+	
 	<form:form method="post" modelAttribute="product" action="/dbms/admin/add_product">
-  	<div class="container"> <a href="/dbms/admin/add_employee"><button class="btn btn-primary" style="margin-top:30px;float: right;">Add An Employee</button></a>
+  	
     <h1>Add Product</h1>
     <hr>
     <label for="Productid"><b>Product Id</b></label>
-    <form:input path="product_id" type="text" min="0" required="required" placeholder="Product ID"/>
-	<form:errors path="product_id" />
+    <form:input path="product_id" type="text" pattern="[0-9]*" min="0" required="required" placeholder="Product ID"/>
+	<form:errors path="product_id" /><br><br>
 	
 	<div class="custom-select" style="width:200px;">
 	<label for="seller_id"><b>Seller ID</b></label>
@@ -166,3 +223,32 @@ function closeAllSelect(elmnt) {
 then close all select boxes:*/
 document.addEventListener("click", closeAllSelect);
 </script>
+
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+

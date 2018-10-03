@@ -89,6 +89,8 @@ public class AdminController {
 		mv.setViewName("add_product");
 		List <WholeSaleSeller> wholesellers=wholesellerdao.showallsellers();
 		myproduct product= new myproduct();
+		WholeSaleSeller seller=new WholeSaleSeller();
+		mv.addObject("seller",seller);
 		mv.addObject("product",product);
 		mv.addObject("wholesellers",wholesellers);
 		mv.addObject("categories",AllCategories);
