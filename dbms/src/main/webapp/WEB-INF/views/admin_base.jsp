@@ -9,9 +9,9 @@
       <a class="navbar-brand" href="/dbms/admin">Sparkle</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="#">Products</a></li>
+      <li><a href="/dbms/admin/add_product">Products</a></li>
       <li><a href="/dbms/admin/employees">Employees</a></li>
-      <li><a href="#">Offers</a></li>
+      <li><a href="/dbms/admin/offers">Offers</a></li>
       <li><a href="#">Manage Users</a></li>
       <li><a href="#">Reserved Orders</a></li>
     </ul>

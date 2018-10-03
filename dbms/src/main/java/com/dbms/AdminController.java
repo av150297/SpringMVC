@@ -38,6 +38,9 @@ import com.dbms.model.User;
 import com.dbms.model.UserCart;
 import com.dbms.model.WholeSaleSeller;
 import com.dbms.model.myproduct;
+import java.util.*;
+
+
 
 @Controller
 @RequestMapping("/admin")
@@ -65,6 +68,7 @@ public class AdminController {
 	@Autowired
 	SalaryTypedao salarydao;
 	
+	List<String> AllCategories = Arrays.asList("Rings", "Earrings", "Necklace","Pendants","Nosepins","Bracelets","Mangalsutras","Bangles","Coins","Kadas","Chains");
 	
 	@RequestMapping("")
 	public ModelAndView admin(Principal principal) {
@@ -87,6 +91,7 @@ public class AdminController {
 		myproduct product= new myproduct();
 		mv.addObject("product",product);
 		mv.addObject("wholesellers",wholesellers);
+		mv.addObject("categories",AllCategories);
 		return mv;
 	}
 	
@@ -157,7 +162,7 @@ public class AdminController {
 			return "redirect:/admin/add_employee";
 		}
 		employeedao.addNewEmployee(employee);
-		return "redirect:/admin";
+		return "redirect:/admin/employees";
 	}
 	
 	@RequestMapping(value="/employees")
@@ -212,7 +217,7 @@ public class AdminController {
 			return "redirect:/admin/add_offer";
 		}
 		offerdao.addNewOffer(offer);
-		return "redirect:/admin";
+		return "redirect:/admin/offers";
 	}
 	
 	@RequestMapping("/offers")
