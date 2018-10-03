@@ -23,13 +23,16 @@ public class LoginController {
 	public Userdao userdao;
 	
 	@RequestMapping(value = "/")
-	public String welcome(Model model, Principal principal) {
+	public ModelAndView welcome(Principal principal) {
+		ModelAndView mv=new ModelAndView();
 		if(principal!=null) {
-			return "redirect:/dashboard";
+			mv.setViewName("dashboard");
+			return mv;
 		}
-		model.addAttribute("name", "Home Page");
-		model.addAttribute("description", "unsecured page !");
-		return "home";
+		mv.setViewName("home");
+		User user=new User();
+		mv.addObject("user",user);
+		return mv;
 
 	}
 	
@@ -43,7 +46,7 @@ public class LoginController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(Model model) {
 		model.addAttribute("message", "You have successfully logged off from application !");
-		return "redirect:/login";
+		return "redirect:/";
 		//return model;
 
 	}

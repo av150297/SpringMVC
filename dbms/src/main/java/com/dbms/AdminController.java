@@ -145,7 +145,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/add_employee",method=RequestMethod.POST)
-	public String addEmployeeProcess(Model model,@Valid @ModelAttribute("employee") Employee employee,BindingResult result)
+	public String addEmployeeProcess(Model model,@Valid @ModelAttribute("emp") Employee employee,BindingResult result)
 	{
 		if(result.hasErrors())
 		{
@@ -165,8 +165,10 @@ public class AdminController {
 	{
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("all_employee");
+		Employee employee=new Employee();
 		List<Employee> employees=employeedao.getAllEmployee();
 		mv.addObject("employees",employees);
+		mv.addObject("emp",employee);
 		return mv;
 	}
 	

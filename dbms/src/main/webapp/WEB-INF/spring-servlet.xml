@@ -10,6 +10,8 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
  
     <context:component-scan base-package="com.dbms" />
+    <mvc:resources mapping="/style/**" location="/style/"
+    />
  	<mvc:annotation-driven></mvc:annotation-driven>
  	  <import resource="classpath:config/user-beans.xml" />
     <bean
