@@ -110,7 +110,7 @@
 <!--  Model Ends here-->
 	
 	
-	<form:form method="post" modelAttribute="product" action="/dbms/admin/add_product">
+	<form:form method="post" modelAttribute="product" action="/dbms/admin/add_product" enctype="multipart/form-data">
     <h1 style="position: center; margin-left: 10px;">Add Product</h1>
     <hr>
     <label for="Productid"><b>Product Id</b></label>
@@ -130,6 +130,10 @@
 	<label for="name"><b>Product Name</b></label>
     <form:input path="product_name" type="text" required="required" placeholder="Product Name"/>
 	<form:errors path="product_name" />
+	
+	<label for="file"><b>Choose a File</b></label>
+    <form:input path="file" type="file" required="required" />
+	<form:errors path="file" />
 	
 	
 	<label for="Product_Type"><b>Product Type</b></label>

@@ -38,6 +38,8 @@ import com.dbms.model.User;
 import com.dbms.model.UserCart;
 import com.dbms.model.WholeSaleSeller;
 import com.dbms.model.myproduct;
+import com.dbms.util.FileUtil;
+
 import java.util.*;
 
 
@@ -119,7 +121,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/add_product",method = RequestMethod.POST)
-	public String add_productProcess(Model model,@Valid @ModelAttribute("myproduct") myproduct product,BindingResult result)
+	public String add_productProcess(HttpServletRequest request,Model model,@Valid @ModelAttribute("myproduct") myproduct product,BindingResult result)
 	{
 		//ModelAndView mv=new ModelAndView("home");
 		if(result.hasErrors())
@@ -132,6 +134,10 @@ public class AdminController {
 			return "redirect:/admin/add_product";
 		}
 		product_dao.addnewproduct(product);
+		if(!product.getFile().getOriginalFilename().equals(""))
+		{
+			FileUtil.uploadFile(request,product.getFile(),Integer.toString(product.getProduct_id()));
+		}
 		model.addAttribute("product_success","Product Successfully Added");
 		return "redirect:/admin/add_product";
 	}

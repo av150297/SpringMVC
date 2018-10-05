@@ -3,6 +3,7 @@
     <context:component-scan base-package="com.dbms" />
     <context:annotation-config />
    
+   
     <bean id="userdao" class="com.dbms.dao.UserdaoImpl" />
     <bean id="myproductdao" class="com.dbms.dao.myproductdaoImpl" />
     <bean id="employeedao" class="com.dbms.dao.EmployeedaoImpl" />
@@ -15,5 +16,9 @@
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource" />
     </bean>
+   
+	
+   
+   
     
 </beans>
