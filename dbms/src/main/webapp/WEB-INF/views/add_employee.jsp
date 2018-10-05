@@ -42,7 +42,7 @@
 	</div>
 	
 	<label for="contact"><b>Contact</b></label>
-    <form:input path="contact" type="text" required="required" pattern="[0-9]{10}" placeholder="contact"/>
+    <form:input path="contact" type="text" required="required" pattern="[0-9]{10}" placeholder="Contact"/>
 	<form:errors path="contact" />
 	
 	<label for="address"><b>Address</b></label>

@@ -12,11 +12,12 @@
       <li><a href="/dbms/admin/add_product">Products</a></li>
       <li><a href="/dbms/admin/employees">Employees</a></li>
       <li><a href="/dbms/admin/offers">Offers</a></li>
-      <li><a href="#">Manage Users</a></li>
-      <li><a href="#">Reserved Orders</a></li>
+      <li><a href="/dbms/admin/manageusers">Manage Users</a></li>
+      <li><a href="/dbms/admin/reserved_users">Reserved Orders</a></li>
+      <li><a href="/dbms/admin/all_orders">Orders</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      <li><a href="<c:url value="/j_spring_security_logout" />"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
   </div>
 </nav>

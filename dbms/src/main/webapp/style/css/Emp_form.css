@@ -5,12 +5,17 @@ body {
 
 * {
     box-sizing: border-box;
+    border-radius: 25px;
 }
 
 /* Add padding to containers */
 .container {
     padding: 16px;
     background-color: white;
+}
+
+input{
+	border-radius: 25px;
 }
 
 /* Full-width input fields */
@@ -37,6 +42,7 @@ hr {
 /* Set a style for the submit button */
 .registerbtn {
     background-color: #4CAF50;
+    border-radius: 25px;
     color: white;
     padding: 16px 20px;
     margin: 8px 0;

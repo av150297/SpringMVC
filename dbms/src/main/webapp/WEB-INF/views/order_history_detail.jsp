@@ -1,11 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Order History</title>
+<spring:url var="style" value="/style" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="${style}/css/cart.css" rel="stylesheet">
+<jsp:include page="admin_base.jsp"></jsp:include>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<title>Reserved Products</title>
 </head>
 <body>
 ${order.order_id }<br>

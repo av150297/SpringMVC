@@ -90,6 +90,27 @@ public class AdminController {
 		List <WholeSaleSeller> wholesellers=wholesellerdao.showallsellers();
 		myproduct product= new myproduct();
 		WholeSaleSeller seller=new WholeSaleSeller();
+		String message=request.getParameter("seller_error");
+		if(message!=null) {
+			mv.addObject("seller_error",message);
+			mv.addObject("flag","1");
+		}
+		message=request.getParameter("product_success");
+		if(message!=null) {
+			mv.addObject("flag","1");
+			mv.addObject("success",message);
+		}
+		message=request.getParameter("product_error");
+		if(message!=null) {
+			mv.addObject("flag","1");
+			mv.addObject("product_error",message);
+		}
+		message=request.getParameter("seller_success");
+		if(message!=null) {
+			mv.addObject("flag","1");
+			mv.addObject("seller_success",message);
+		}
+		
 		mv.addObject("seller",seller);
 		mv.addObject("product",product);
 		mv.addObject("wholesellers",wholesellers);
@@ -107,20 +128,26 @@ public class AdminController {
 		}
 		if(product_dao.checkproductnameexists(product))
 		{
-			model.addAttribute("error", "Product already exists");
+			model.addAttribute("product_error", "Product Id already exists");
 			return "redirect:/admin/add_product";
 		}
 		product_dao.addnewproduct(product);
-		return "redirect:/admin";
+		model.addAttribute("product_success","Product Successfully Added");
+		return "redirect:/admin/add_product";
 	}
 	
 	@RequestMapping(value="/add_seller",method=RequestMethod.GET)
-	public ModelAndView addSeller(HttpServletRequest request,HttpServletResponse response)
+	public String addSeller(Model model,HttpServletRequest request,HttpServletResponse response)
 	{
 		ModelAndView mv=new ModelAndView("add_seller");
 		WholeSaleSeller seller= new WholeSaleSeller();
 		mv.addObject("seller",seller);
-		return mv;
+		String message=request.getParameter("seller_error");
+		if(message!=null)
+		{
+			model.addAttribute("seller_error",message);
+		}
+		return "redirect:/admin/add_product";
 	}
 	
 	@RequestMapping(value="/add_seller",method=RequestMethod.POST)
@@ -132,11 +159,12 @@ public class AdminController {
 		}
 		if(sellerdao.checksellerexists(seller))
 		{
-			model.addAttribute("error", "Seller already exists");
+			model.addAttribute("seller_error", "Seller Id already exists");
 			return "redirect:/admin/add_seller";
 		}
 		sellerdao.addnewseller(seller);
-		return "redirect:/admin";
+		model.addAttribute("seller_success","Seller Added Successfully");
+		return "redirect:/admin/add_product";
 	}
 	
 	@RequestMapping(value="/add_employee",method=RequestMethod.GET)
@@ -185,8 +213,17 @@ public class AdminController {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("employee_orders");
 		List <Order> orders=orderdao.getOrdersByEmployeeId(emp_id);
-		mv.addObject("orders",orders);
+		Map<Integer, Integer> orderCounts = new HashMap<>();
+		Map<Integer, Offer> offers = new HashMap<>();
+		for(Order order:orders)
+		{
+			orderCounts.put(order.getOrder_id(),orderdao.getProductCount(order.getOrder_id()));
+			offers.put(order.getOrder_id(), offerdao.getOffer(order.getOffer_id()));
+		}
 		mv.addObject("emp_id",emp_id);
+		mv.addObject("orders", orders);
+		mv.addObject("orderCounts",orderCounts);
+		mv.addObject("offers",offers);
 		return mv;
 	}
 	@RequestMapping("/employees/toggle/{emp_id}")
@@ -207,7 +244,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/add_offer",method=RequestMethod.POST)
-	public String addOfferProcess(Model model,@Valid @ModelAttribute("offer") Offer offer,BindingResult result)
+	public String addOfferProcess(Model model,@Valid @ModelAttribute("offered") Offer offer,BindingResult result)
 	{
 		if(result.hasErrors())
 		{
@@ -228,7 +265,9 @@ public class AdminController {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("all_offers");
 		List<Offer> offers=offerdao.getAllOffers();
+		Offer offer=new Offer();
 		mv.addObject("offers",offers);
+		mv.addObject("offered",offer);
 		return mv;
 	}
 	
@@ -248,7 +287,16 @@ public class AdminController {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("all_orders");
 		List<Order> orders=orderdao.getAllOrders();
-		mv.addObject("orders",orders);
+		Map<Integer, Integer> orderCounts = new HashMap<>();
+		Map<Integer, Offer> offers = new HashMap<>();
+		for(Order order:orders)
+		{
+			orderCounts.put(order.getOrder_id(),orderdao.getProductCount(order.getOrder_id()));
+			offers.put(order.getOrder_id(), offerdao.getOffer(order.getOffer_id()));
+		}
+		mv.addObject("orders", orders);
+		mv.addObject("orderCounts",orderCounts);
+		mv.addObject("offers",offers);
 		return mv;
 	}
 	
@@ -280,6 +328,48 @@ public class AdminController {
 	    return model;
 	}
 	
+	@RequestMapping("user_orders/{username}")
+	public ModelAndView user_orders(@PathVariable(value="username") String username)
+	{
+		//String username="ayush";
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user_orders");
+		List <Order> orders=orderdao.getOrdersbyusername(username);
+		Map<Integer, Integer> orderCounts = new HashMap<>();
+		Map<Integer, Offer> offers = new HashMap<>();
+		for(Order order:orders)
+		{
+			orderCounts.put(order.getOrder_id(),orderdao.getProductCount(order.getOrder_id()));
+			offers.put(order.getOrder_id(), offerdao.getOffer(order.getOffer_id()));
+		}
+		mv.addObject("username",username);
+		mv.addObject("orders", orders);
+		mv.addObject("orderCounts",orderCounts);
+		mv.addObject("offers",offers);
+		return mv;
+	}
+	
+	@RequestMapping("user_orders/{username}/{order_id}")
+	public ModelAndView user_orders_details(@PathVariable(value="username") String username,@PathVariable(value="order_id") int order_id)
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("user_order_detail");
+		Order order=orderdao.getOrderByOrderId(order_id);
+		List<myproduct> products=orderdao.getCartbyorderid(order_id);
+		Map <Integer,List<Feedback> > mp=new HashMap<>();
+		for(myproduct product:products)
+		{
+			mp.put(product.getProduct_id(),feedbackdao.getFeedbackbyProductId(product.getProduct_id()));
+		}
+		Offer offer=offerdao.getOffer(order.getOffer_id());
+		double discount=offer.getDiscount()*order.getSubtotal()/100;
+		mv.addObject("order", order);
+		mv.addObject("discount",discount);
+		mv.addObject("products",products);
+		mv.addObject("mp",mp);
+		return mv;
+	}
+	
 	@RequestMapping("/manageusers/{username}")
 	public String manageusers(@PathVariable(value="username") String username) {
 
@@ -287,13 +377,16 @@ public class AdminController {
 	    return "redirect:/admin/manageusers";
 	}
 	
+	
+	
+	
 	@RequestMapping("/reserved_users")
 	public ModelAndView reserved_users()
 	{
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("reserved_users");
 		List<User> allReservedUsers = userdao.getAllReservedUsers();
-	    mv.addObject("users", allReservedUsers);
+	    mv.addObject("allusers", allReservedUsers);
 	    return mv;
 	}
 	
@@ -318,6 +411,13 @@ public class AdminController {
 		mv.addObject("amount", amount);
 		mv.addObject("discount",discount);
 		return mv;
+	}
+	
+	@RequestMapping(value="/feedback/{username}/{order_id}/{id}")
+	public String deleteFeedback(Principal principal,@PathVariable(value="username") String username,@PathVariable(value="id") int feedbackid,@PathVariable(value="order_id") int order_id)
+	{
+		feedbackdao.deleteFeedback(feedbackid);
+		return "redirect:/admin/user_orders/"+username+"/"+Integer.toString(order_id);
 	}
 	
 	@RequestMapping("/reserved_users/{username}/remove/{product_id}")

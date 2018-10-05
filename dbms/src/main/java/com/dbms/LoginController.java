@@ -60,37 +60,27 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.GET)
-	public ModelAndView register() {
+	public String register() {
 		
-		ModelAndView model = new ModelAndView("register");
-		User user = new User();
-		model.addObject("user", user);
-		return model;
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public ModelAndView registerProcess(@Valid @ModelAttribute("user") User user,BindingResult result) {
+	public String registerProcess(@Valid @ModelAttribute("user") User user,BindingResult result) {
 		
 		if(result.hasErrors()) {
-			return new ModelAndView("register");
+			return "redirect:/";
 		}
 		else {
 			
 			if(!user.getPassword().equals(user.getMpassword())) {
-				ModelAndView model = new ModelAndView("register");
-				model.addObject("error","passwords dont match");
-				return model;
+				return "redirect:/";
 			}
 			if(userdao.getUserbyusername(user.getUsername())!=null) {
-				ModelAndView model = new ModelAndView("register");
-				model.addObject("error", "username exists");
-				return new ModelAndView("register");
+				return "redirect:/";
 			}
 			userdao.saveOrUpdate(user);
-			ModelAndView mv=new ModelAndView("home");
-			mv.addObject("name","Noobie");
-			mv.addObject("description","You can login and register from here...!");
-			return mv;
+			return "redirect:/";
 		}
 	}
 }

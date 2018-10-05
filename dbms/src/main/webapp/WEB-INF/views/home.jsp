@@ -47,28 +47,28 @@ Register</button>
     <div class="imgcontainer">
       <span onclick="document.getElementById('modal-wrapper2').style.display='none'" class="close" title="Close PopUp">&times;</span>
       <img src="${style}/images/1.png" alt="Avatar" class="avatar">
-      <h1 style="text-align:center">Sign In</h1>
+      <h1 style="text-align:center">Sign Up</h1>
     </div>
 
     <div class="container">
-    	<form:input path="username" type="text" placeholder="Enter Username"/>
+    	<form:input path="username" type="text" placeholder="Enter Username" required="required"/>
     	<form:errors path="username" />
-    	<form:input path="password" type="password" placeholder="Enter Password"/>
+    	<form:input path="password" id="password" type="password" placeholder="Enter Password" required="required"/>
     	<form:errors path="password" />
-    	<form:input path="mpassword" type="password" placeholder="Confirm Password"/>
+    	<form:input path="mpassword" id="confirm_password" type="password" placeholder="Confirm Password" required="required"/>
     	<form:errors path="mpassword" />
-    	<form:input path="name" type="text" placeholder="Enter Name"/>
+    	<form:input path="name" type="text" placeholder="Enter Name" required="required"/>
     	<form:errors path="name" />
-    	<form:input path="house" type="text" placeholder="Enter house address"/>
+    	<form:input path="house" type="text" placeholder="Enter house address" required="required"/>
     	<form:errors path="house" />
-    	<form:input path="pin" type="text" placeholder="Enter Pincode"/>
+    	<form:input path="pin" type="text" placeholder="Enter Pincode" required="required" pattern="[0-9]{6}" />
     	<form:errors path="pin" />
-    	<form:input path="city" type="text" placeholder="Enter City"/>
+    	<form:input path="city" type="text" placeholder="Enter City" required="required"/>
     	<form:errors path="city" />
-    	<form:input path="state" type="text" placeholder="Enter State"/>
+    	<form:input path="state" type="text" placeholder="Enter State" required="required" />
     	<form:errors path="state" />
-    	<form:input path="mail" type="text" placeholder="Enter Email"/>
-    	<form:errors path="mail" />
+    	<form:input path="email" type="text" placeholder="Enter Email" required="required" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" />
+    	<form:errors path="email" />
       <button type="submit">Register</button>      
     </div>
     
@@ -90,6 +90,24 @@ window.onclick = function(event) {
     }
 }
 </script>
+<script>
+var password = document.getElementById("password")
+, confirm_password = document.getElementById("confirm_password");
+
+function validatePassword(){
+if(password.value != confirm_password.value) {
+  confirm_password.setCustomValidity("Passwords Don't Match");
+} else {
+  confirm_password.setCustomValidity('');
+}
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+
+</script>
+
+
 
 </body>
 <!--  

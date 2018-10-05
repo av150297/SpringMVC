@@ -38,5 +38,4 @@ public class FeedbackdaoImpl implements Feedbackdao{
 		String sql="delete from feedback where feedback_id=?";
 		jdbcTemplate.update(sql,new Object[] {feedbackid});
 	}
-	
 }

@@ -29,10 +29,42 @@
 	
 
 
-	<div class="container">
+	<div class="container" style="border-radius: 25px;">
+	<c:if test="${seller_error!=null}">
 
+  	<div class="alert alert-danger">
+  		<strong>Alert! </strong>${seller_error}<br>
+	</div>
+	</c:if>
+	
+	<c:if test="${product_error!=null}">
+
+  	<div class="alert alert-danger">
+  		<strong>Alert! </strong>${product_error}<br>
+	</div>
+	</c:if>
+	
+	<c:if test="${seller_success!=null}">
+
+  	<div class="alert alert-success">
+  		<strong>Congrats! </strong>${seller_success}<br>
+	</div>
+	</c:if>
+	
+	<c:if test="${success!=null}">
+  	<div class="alert alert-success">
+  		<strong>Congrats! </strong>${success}<br>
+	</div>
+	</c:if>
+	
 	<!-- Trigger/Open The Modal -->
-<button id="myBtn" class="btn btn-primary" style="margin-top:30px;float: right;">Add A Seller</button>
+	<c:if test="${flag!=null}">
+	<button id="myBtn" class="btn btn-primary" style="margin-top:auto;float: right;">Add A Seller</button>
+	</c:if>
+
+	<c:if test="${flag==null}">
+	<button id="myBtn" class="btn btn-primary" style="margin-top:30px;float: right;">Add A Seller</button>
+	</c:if>
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -44,11 +76,12 @@
       <span class="close">&times;</span>
       <h2>Add A WholeSeller Details</h2>
     </div>
+    <br>
     <div style="position: relative; margin-left: 20px; margin-right: 20px">
     <form:form method="post" modelAttribute="seller" action="/dbms/admin/add_seller">
     
     <label for="Sellerid"><b>Seller Id</b></label>
-    <form:input path="seller_id" type="text" required="required" placeholder="Seller ID"/>
+    <form:input  path="seller_id" type="text" required="required" placeholder="Seller ID" style="border-radius: 25px;"/>
     <form:errors path="seller_id" />
     
     <label for="Name"><b>Seller Name</b></label>
@@ -60,15 +93,15 @@
     <form:errors path="address" />
     
     <label for="email"><b>E-mail</b></label>
-    <form:input path="email" pattern="*@*" type="text" required="required" placeholder="Email" class="form-control"/>
+    <form:input path="email" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" type="text" required="required" placeholder="Email" />
     <form:errors path="email" />
     
+    <div class="modal-footer">
+      <button type="submit" class="registerbtn" style="border-radius: 25px;">Add</button>
+    </div>
     </form:form>
     </div>
     
-    <div class="modal-footer">
-      <h3><button class="btn btn-primary">Submit</button></h3>
-    </div>
   </div>
 	</div>
 </div>
@@ -78,11 +111,10 @@
 	
 	
 	<form:form method="post" modelAttribute="product" action="/dbms/admin/add_product">
-  	
-    <h1>Add Product</h1>
+    <h1 style="position: center; margin-left: 10px;">Add Product</h1>
     <hr>
     <label for="Productid"><b>Product Id</b></label>
-    <form:input path="product_id" type="text" pattern="[0-9]*" min="0" required="required" placeholder="Product ID"/>
+    <form:input path="product_id" type="text" pattern="[0-9]*" required="required" placeholder="Product ID"/>
 	<form:errors path="product_id" /><br><br>
 	
 	<div class="custom-select" style="width:200px;">
@@ -101,12 +133,12 @@
 	
 	
 	<label for="Product_Type"><b>Product Type</b></label>
-    <form:input path="product_type" type="text" required="required" placeholder="Product type"/>
+    <form:input path="product_type" type="text" required="required" placeholder="Product Type"/>
 	<form:errors path="product_type" />
 	
 	<div class="custom-select" style="width:200px;">
 	<label for="category"><b>Category</b></label>
-		<form:select path="category" placeholder="Category" required="required">
+		<form:select path="category" placeholder="Category" required="required" >
 		<c:forEach items="${categories}" var="x">
 		<option value="${x}">${x}</option>
 		</c:forEach>
@@ -116,23 +148,23 @@
 	
 	
 	<label for="Cost Price"><b>Cost Price</b></label>
-    <form:input path="cost_price" type="number" required="required" min="0" placeholder="0"/>
+    <form:input path="cost_price" type="number" required="required" min="0" placeholder="0" style="text-align: right;"/>
 	<form:errors path="cost_price" />
 	
 	<label for="Making Charges"><b>Making Charges</b></label>
-    <form:input path="making_charges" type="number" required="required" min="0" placeholder="0"/>
+    <form:input path="making_charges" type="number" required="required" min="0" placeholder="0" style="text-align: right;"/>
 	<form:errors path="making_charges" />
 	
 	<label for="Gold"><b>Gold Wt</b></label>
-    <form:input path="gold" type="number" step="0.01" required="required" min="0" max="1000" placeholder="In Gram"/>
+    <form:input path="gold" type="number" step="0.01" required="required" min="0" max="1000" placeholder="In Gram" style="text-align: right;"/>
 	<form:errors path="gold" />
 	
 	<label for="Silver"><b>Silver Wt</b></label>
-    <form:input path="silver" type="number" step="0.01" required="required" min="0" max="1000" placeholder="In Gram"/>
+    <form:input path="silver" type="number" step="0.01" required="required" min="0" max="1000" placeholder="In Gram" style="text-align: right;"/>
 	<form:errors path="silver" />
 	
 	<label for="Platinum"><b>Platinum Wt</b></label>
-    <form:input path="platinum" type="number" step="0.01" required="required" min="0" max="1000" placeholder="In Gram"/>
+    <form:input path="platinum" type="number" step="0.01" required="required" min="0" max="1000" placeholder="In Gram" style="text-align: right;"/>
 	<form:errors path="platinum" />
 	<br><br>
 	<label for="Stones"><b>Stones</b></label>
@@ -143,7 +175,7 @@
     <form:input path="description" type="text" required="required" placeholder="Enter Description"/>
 	<form:errors path="description" />
 	
-    <button type="submit" class="registerbtn">Add</button>
+    <button type="submit" class="registerbtn" style="border-radius: 25px;">Add</button>
   </div>
 
   </form:form>

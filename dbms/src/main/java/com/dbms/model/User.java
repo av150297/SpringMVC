@@ -23,7 +23,7 @@ public class User{
 
 	@NotEmpty(message="required")
 	@Email(message="Invalid mail")
-	private String mail;
+	private String email;
 	private int status=1;
 	public User() {
 		
@@ -38,7 +38,7 @@ public class User{
 		this.house=house;
 		this.pin=pin;
 		this.state=state;
-		this.mail=mail;
+		this.email=mail;
 		this.status=status;
 	}
 
@@ -114,12 +114,12 @@ public class User{
 		this.state = state;
 	}
 
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String mail) {
+		this.email = mail;
 	}
 	
 	

@@ -57,8 +57,8 @@ public class UserdaoImpl implements Userdao{
 		
 	}
 	public void saveOrUpdateCustomer(User user) {
-		String sql="INSERT INTO customer VALUES(?,?,?,?,?,?,?)";
-		jdbcTemplate.update(sql,new Object[] {user.getUsername(),user.getName(),user.getHouse(),user.getPin(),user.getCity(),user.getState(),user.getMail()});
+		String sql="INSERT INTO customer VALUES(?,?,?,?,?,?,?,?)";
+		jdbcTemplate.update(sql,new Object[] {user.getUsername(),user.getName(),user.getHouse(),user.getPin(),user.getCity(),user.getState(),user.getEmail(),user.getStatus()});
 	}
 	
 	public User getCustomerbyusername(String username) {
@@ -75,8 +75,8 @@ public class UserdaoImpl implements Userdao{
 			user.setPin(rs.getLong("pincode"));
 			user.setCity(rs.getString("city"));
 			user.setState(rs.getString("state"));
-			user.setMail(rs.getString("email"));
-			user.setStatus(1);
+			user.setEmail(rs.getString("email"));
+			user.setStatus(rs.getInt("status"));
 			return user;
 		}
 		return null;
@@ -85,18 +85,18 @@ public class UserdaoImpl implements Userdao{
 	}
 	@Override
 	  public List<User> showallusers() {
-	    String sql = "select * from USERS where username !='root'";
+	    String sql = "select * from customer";
 	    List<User> allusers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<User>(User.class));
 	    return allusers;
 	 }
 	@Override
 	public void toggle(String username) {
-		String sql="update USERS set status=1-status where username=?";
+		String sql="update customer set status=1-status where username=?";
 		jdbcTemplate.update(sql,new Object[] {username});
 	}
 	@Override
 	public List<User> getAllReservedUsers() {
-		String sql = "select * from USERS where username !='root' and username in (Select Distinct username from user_cart where order_id is null and reserved_status=1)";
+		String sql = "select * from customer where username !='root' and username in (Select Distinct username from user_cart where order_id is null and reserved_status=1)";
 	    List<User> allusers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<User>(User.class));
 	    return allusers;
 	}

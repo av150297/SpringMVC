@@ -20,7 +20,7 @@
 	<!-- Form starts here -->
 
 	<form:form method="post" modelAttribute="offer" action="/dbms/admin/add_offer">
-  <div class="container">
+  	<div class="container">
     <h1>Add Offer</h1>
     <hr>
     <label for="offerid"><b>Offer Id</b></label>
@@ -33,9 +33,9 @@
 	
 	
 	<label for="discount"><b>Discount %:</b></label>
-    <form:input path="discount" type="number" required="required" min="0" max="100" placeholder="Discount"/>
+    <form:input path="discount" type="number" required="required" min="0" max="100" placeholder="Discount" style="text-align:right;"/>
 	<form:errors path="discount" />
-	<br>
+	<br><br>
 	<label for="status"><b>Status</b></label>
 	<div class="custom-select" style="width:200px;">
 	<form:select path="status">

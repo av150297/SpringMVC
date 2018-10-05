@@ -15,9 +15,12 @@
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <title>Reserved Products</title>
 </head>
-<html>
+
+<body>
+<!-- Tables Starts Here -->
+
 <div class="container">
-<h2> User <strong>${username}</strong> Reserved Items</h2>
+<h2> Detail of Order Number: <strong>${order.order_id}</strong></h2>
 	<table id="cart" class="table table-hover table-condensed">
     				<thead>
 						<tr>
@@ -25,7 +28,7 @@
 							<th style="width:10%">Type</th>
 							<th style="width:8%">Category</th>
 							<th style="width:22%" class="text-center">Price</th>
-							<th style="width:15%"></th>
+							<th style="width:15%">Feedbacks</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -46,9 +49,14 @@
 								${item.category}
 							</td>
 							<td data-th="Price" class="text-center">${item.making_charges+item.cost_price}</td>
-							<td class="actions" data-th="">
+							<td class="actions" data-th="Feedbacks">
+								<c:forEach items="${mp[item.product_id]}" var="fb">
+		        				<p>${fb.description}</p>
+		        				<a href="/dbms/admin/feedback/${order.username}/${order.order_id}/${fb.feedbackId}"><button class="btn btn-danger btn-sm"  ><i class="fa fa-trash-o" ></i></button></a>
+		        				<br><br>
+		        				</c:forEach>
 								
-								<a href="/dbms/admin/reserved_users/${username}/remove/${item.product_id}"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>								
+																
 							</td>
 						</tr>
 					</c:forEach>	
@@ -57,7 +65,7 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td data-th="Price"><strong>Subtotal: <strong style="color:green;">${amount}</strong></strong><br><strong>Offer: ${offer.offer_id}</strong><br><strong>Discount:</strong><strong style="color:red;"> -${discount}</strong></td>
+						<td data-th="Price"><strong>Subtotal: <strong style="color:green;">${order.subtotal}</strong></strong><br><strong>Offer: ${order.offer_id}</strong><br><strong>Discount:</strong><strong style="color:red;"> -${discount}</strong></td>
 					</tr>	
 						
 					</tbody>
@@ -66,14 +74,20 @@
 							<td class="text-center"><strong>Total 1.99</strong></td>
 						</tr>
 						<tr>
-							<td><a href="/dbms/admin/reserved_users/${username}/remove" class="btn btn-danger"><i class="fa fa-angle-left"></i>Decline</a></td>
+							<td><a href="/dbms/admin/user_orders/${order.username}" class="btn btn-warning"><i class="fa fa-angle-left"></i>User Orders</a></td>
 							<td colspan="2" class="hidden-xs"></td>
-							<td class="hidden-xs text-center"><strong >Total: <strong style="color: green;">${amount-discount}</strong></strong></td>
-							<td><a href="/dbms/admin/reserved_users/${username}/placed" class="btn btn-success btn-block">Confirm<i class="fa fa-angle-right"></i></a></td>
+							
+							<td class="hidden-xs text-center"><strong >Total: <strong style="color: green;">${order.subtotal-discount}</strong></strong></td>
+							<td><a href="/dbms/admin/employees/${order.delivered_by}" class="btn btn-success">Employee Orders <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 					
 					
 				</table>
 </div>
+
+
+
+<!-- Table End Here -->
+</body>
 </html>
