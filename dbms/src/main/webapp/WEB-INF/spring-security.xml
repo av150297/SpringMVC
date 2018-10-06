@@ -7,7 +7,7 @@
 
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/welcome/**" access="permitAll" />
-		<intercept-url pattern="/admin*" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/dashboard/**" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/myproducts/**" access="hasRole('ROLE_USER')"/>
 		

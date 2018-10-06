@@ -3,6 +3,8 @@ package com.dbms;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +35,7 @@ public class UserCartController {
 	
 	
 	@RequestMapping(value="/dashboard/my_cart")
-	public ModelAndView showcart(Principal principal) {
+	public ModelAndView showcart(HttpServletRequest request,Principal principal) {
 		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("user_products");
@@ -52,7 +54,18 @@ public class UserCartController {
 			model.addObject("products",products);
 			model.addObject("offer",offer);
 		}
-		model.addObject("flag",flag);
+		if(request.getParameter("success")!=null)
+		{
+			model.addObject("success",request.getParameter("success").toString());
+		}
+		if(request.getParameter("failure")!=null)
+		{
+			model.addObject("failure",request.getParameter("failure").toString());
+		}
+		if(request.getParameter("reserve_error")!=null)
+		{
+			model.addObject("reserve_error",request.getParameter("reserve_error").toString());
+		}
 		model.addObject("amount", amount);
 		model.addObject("discount",discount);
 		return model;
@@ -93,13 +106,14 @@ public class UserCartController {
 		String username=principal.getName();
 		if(usercartdao.checkReserveOrder(username)==true)
 		{
-			model.addAttribute("Reserve_error","You can not add more than 1 cart in a reserve at a time");
+			model.addAttribute("reserve_error","You can not add more than 1 cart in a reserve at a time");
+			return "redirect:/dashboard/my_cart";
 		}
 		else
 		{
 			usercartdao.addToReserve(username);
-		}
-		return "redirect:/dashboard/my_cart";
+			return  "redirect:/dashboard/my_cart/reserved_products";
+		}	
 	}
 	
 	@RequestMapping(value="/dashboard/my_cart/reserved_products")

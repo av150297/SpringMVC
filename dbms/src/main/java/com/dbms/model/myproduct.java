@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Blob;
+
 import javax.persistence.Transient;
 import javax.validation.constraints.*;
 
@@ -39,17 +41,14 @@ public class myproduct {
 	@NotEmpty(message="required")
 	private String description;
 	private int status=0;
+	private Blob product_image;
 	
-	public MultipartFile getFile() {
-		return file;
+	public Blob getProduct_image() {
+		return product_image;
 	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
+	public void setProduct_image(Blob product_image) {
+		this.product_image = product_image;
 	}
-	@Transient
-	private MultipartFile file;
-	
-	
 	public int getStatus() {
 		return status;
 	}

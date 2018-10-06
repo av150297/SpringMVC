@@ -9,6 +9,7 @@
 </head>
 <body>
 <h2>Product Detail</h2>
+<img src="data:image/jpeg;base64,${image}" height=100px width=100px>
 	Product name: ${product.product_name} <br>
 	Product type: ${product.product_type} <br>
 	Product description: ${product.description}<br>

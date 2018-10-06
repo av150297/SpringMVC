@@ -1,8 +1,13 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page session="true"%>
+<spring:url var="style" value="/style" />
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<jsp:include page="user_base.jsp"></jsp:include>
 <html>
 <body>
-	<h2>${message}</h2> 
+	<h2>${style}style</h2> 
     <c:if test="${pageContext.request.userPrincipal.name != null}">
         <h2>
             Welcome : ${user} | 

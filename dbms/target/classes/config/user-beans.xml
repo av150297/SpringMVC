@@ -13,6 +13,7 @@
     <bean id="salarydao" class="com.dbms.dao.SalaryTypedaoImpl" />
     <bean id="usercartdao" class="com.dbms.dao.UserCartdaoImpl" />
     <bean id="orderdao" class="com.dbms.dao.OrderdaoImpl" />
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource" />
     </bean>

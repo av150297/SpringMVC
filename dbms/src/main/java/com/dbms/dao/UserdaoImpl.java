@@ -72,7 +72,7 @@ public class UserdaoImpl implements Userdao{
 			//user.setPassword(rs.getString("password"));
 			user.setName(rs.getString("name"));
 			user.setHouse(rs.getString("house"));
-			user.setPin(rs.getLong("pincode"));
+			user.setPin(rs.getInt("pincode"));
 			user.setCity(rs.getString("city"));
 			user.setState(rs.getString("state"));
 			user.setEmail(rs.getString("email"));

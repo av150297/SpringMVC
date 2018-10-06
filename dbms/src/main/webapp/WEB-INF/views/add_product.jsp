@@ -132,8 +132,7 @@
 	<form:errors path="product_name" />
 	
 	<label for="file"><b>Choose a File</b></label>
-    <form:input path="file" type="file" required="required" />
-	<form:errors path="file" />
+    <input name="file" type="file" required="required" />
 	
 	
 	<label for="Product_Type"><b>Product Type</b></label>
@@ -175,7 +174,7 @@
     <form:input path="stones" type="text" required="required" placeholder="Stones"/>
 	<form:errors path="stones" />
 	
-	<label for="Description"><b>Stones</b></label>
+	<label for="Description"><b>Description</b></label>
     <form:input path="description" type="text" required="required" placeholder="Enter Description"/>
 	<form:errors path="description" />
 	

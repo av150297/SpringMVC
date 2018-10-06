@@ -15,7 +15,7 @@ public class User{
 	
 	private String house;
 	//@NotEmpty(message="required")
-	private Long pin;
+	private int pin;
 	@NotEmpty(message="required")
 	private String city;
 	
@@ -29,7 +29,7 @@ public class User{
 		
 	}
 	
-	public User(String uname,String pass,String mpass,String name,String house,Long pin,String city,String state,String mail,int status) {
+	public User(String uname,String pass,String mpass,String name,String house,int pin,String city,String state,String mail,int status) {
 		this.username=uname;
 		this.password=pass;
 		this.mpassword=mpass;
@@ -82,11 +82,11 @@ public class User{
 		this.house = house;
 	}
 
-	public Long getPin() {
+	public int getPin() {
 		return pin;
 	}
 
-	public void setPin(Long pin) {
+	public void setPin(int pin) {
 		this.pin = pin;
 	}
 

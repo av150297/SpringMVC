@@ -17,6 +17,7 @@ import com.dbms.model.Employee;
 import com.dbms.model.Feedback;
 import com.dbms.model.Offer;
 import com.dbms.model.Order;
+import com.dbms.model.User;
 import com.dbms.model.UserCart;
 import com.dbms.model.myproduct;
 
@@ -31,7 +32,9 @@ public class OrderdaoImpl implements Orderdao{
 	@Autowired
 	myproductdao productdao;
 	@Autowired
-	Employeedao employeedao;	
+	Employeedao employeedao;
+	@Autowired
+	Userdao userdao;
 	
 	@Override
 	public int getProductCount(int order_id) {
@@ -47,6 +50,7 @@ public class OrderdaoImpl implements Orderdao{
 		int order_id=1;
 		int amount=cartdao.getamount(username);
 		Employee employee=employeedao.allocateEmployee();
+		User user=userdao.getCustomerbyusername(username);
 		String sql="select Count(*) from orderandbill";
 		int count=jdbcTemplate.queryForObject(sql, new Object [] {}, Integer.class);
 		if(count!=0) 
@@ -55,7 +59,7 @@ public class OrderdaoImpl implements Orderdao{
 			order_id = jdbcTemplate.queryForObject(sql, new Object [] {}, Integer.class)+1;
 		}
 		sql="insert into orderandbill(order_id,username,offer_id,address,subtotal,delivered_by) values(?,?,?,?,?,?)";
-		jdbcTemplate.update(sql,new Object[] {order_id,username,cart.getOfferId(),"XYZ",amount,employee.getEmpId()});
+		jdbcTemplate.update(sql,new Object[] {order_id,username,cart.getOfferId(),user.getHouse()+", "+user.getCity()+" "+Integer.toString(user.getPin()),amount,employee.getEmpId()});
 		sql="update user_cart set order_id= ? where username= ? and order_id is null and reserved_status=0";
 		jdbcTemplate.update(sql,new Object[] {order_id,username});
 		employeedao.updateEmployee(employee);
@@ -78,7 +82,7 @@ public class OrderdaoImpl implements Orderdao{
 			order_id = jdbcTemplate.queryForObject(sql, new Object [] {}, Integer.class)+1;
 		}
 		sql="insert into orderandbill(order_id,username,offer_id,address,subtotal,delivered_by) values(?,?,?,?,?,?)";
-		jdbcTemplate.update(sql,new Object[] {order_id,username,cart.getOfferId(),"XYZ",amount,"Offline"});
+		jdbcTemplate.update(sql,new Object[] {order_id,username,cart.getOfferId(),"Offline",amount,"Offline"});
 		sql="update user_cart set order_id= ? where username= ? and order_id is null and reserved_status=1";
 		jdbcTemplate.update(sql,new Object[] {order_id,username});
 		productdao.updateProductStatus(order_id);

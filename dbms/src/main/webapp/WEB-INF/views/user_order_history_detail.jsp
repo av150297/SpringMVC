@@ -10,17 +10,22 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="${style}/css/cart.css" rel="stylesheet">
-<jsp:include page="admin_base.jsp"></jsp:include>
+<jsp:include page="user_base.jsp"></jsp:include>
 <!------ Include the above in your HEAD tag ---------->
 
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-<title>Reserved Products</title>
+<title>Order Detail</title>
 </head>
 
 <body>
 <!-- Tables Starts Here -->
 
 <div class="container">
+<c:if test="${success!=null}">
+  		<div class="alert alert-success" style="border-radius:25px;">
+  			<strong>Congrats! </strong>${success}<br>
+		</div>
+		</c:if>
 <h2> Detail of Order Number: <strong>${order.order_id}</strong></h2>
 	<table id="cart" class="table table-hover table-condensed">
     				<thead>
@@ -38,7 +43,7 @@
 						<tr>
 							<td data-th="Product">
 								<div class="row">
-									<div class="col-sm-2 hidden-xs"><img src="${style}/images/${item.product_id}.jpg" alt="..." class="img-responsive"/></div>
+									<div class="col-sm-2 hidden-xs"><img src="${style}/images/${item.product_id}.jpg" alt="..." "style class="img-responsive"/></div>
 									<div class="col-sm-10">
 										<h4 class="nomargin">${item.product_name}</h4>
 										<p>${item.description}</p>
@@ -53,10 +58,13 @@
 							<td class="actions" data-th="Feedbacks">
 								<c:forEach items="${mp[item.product_id]}" var="fb">
 		        				<p>${fb.description}</p>
-		        				<a href="/dbms/admin/feedback/${order.username}/${order.order_id}/${fb.feedbackId}"><button class="btn btn-danger btn-sm"  ><i class="fa fa-trash-o" ></i></button></a>
+		        				<a href="/dbms/dashboard/feedback/delete/${order.username}/${order.order_id}/${fb.feedbackId}"><button class="btn btn-danger btn-sm"  ><i class="fa fa-trash-o" ></i></button></a>
 		        				<br><br>
 		        				</c:forEach>
-								
+								<form method="get" action="/dbms/dashboard/feedback/${order.order_id}/${item.product_id}">
+		        			<input type="text-area" name="description" required="required"><br><br>
+		        			<button class="btn btn-success" type="submit">Add</button>
+		       	 			</form>
 																
 							</td>
 						</tr>
@@ -75,11 +83,11 @@
 							<td class="text-center"><strong>Total 1.99</strong></td>
 						</tr>
 						<tr>
-							<td><a href="/dbms/admin/user_orders/${order.username}" class="btn btn-warning"><i class="fa fa-angle-left"></i>User Orders</a></td>
+							<td><a href="/dbms/dashboard/order_history" class="btn btn-warning"><i class="fa fa-angle-left"></i>Order History</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							
 							<td class="hidden-xs text-center"><strong >Total: <strong style="color: green;">${order.subtotal-discount}</strong></strong></td>
-							<td><a href="/dbms/admin/employees/${order.delivered_by}" class="btn btn-success">Employee Orders <i class="fa fa-angle-right"></i></a></td>
+							<td><a href="/dbms/dashboard" class="btn btn-success" >Homepage <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 					

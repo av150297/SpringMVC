@@ -1,5 +1,9 @@
 package com.dbms.dao;
 
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -90,8 +94,8 @@ public class myproductdaoImpl implements myproductdao{
 
 	@Override
 	public myproduct getproductbyname(String product_name) {
-		String sql="select * from myproduct M where M.product_name='"+product_name+"'";
-		return jdbcTemplate.query(sql,new ResultSetExtractor<myproduct>() {
+		String sql="select * from myproduct P,product_image I where P.product_name='"+product_name+"' and P.product_name=I.product_name";
+		myproduct product=jdbcTemplate.query(sql,new ResultSetExtractor<myproduct>() {
 			
 			public myproduct extractData(ResultSet rs) throws SQLException,DataAccessException{
 				if(rs.next()) {
@@ -108,12 +112,15 @@ public class myproductdaoImpl implements myproductdao{
 					product.setMaking_charges((double)rs.getInt("making_charges"));
 					product.setStones(rs.getString("stones"));
 					product.setProduct_type(rs.getString("product_type"));
+					product.setProduct_image(rs.getBlob("image"));
 					return product;
 				}
 				return null;
 			}
 			
 		});
+		
+		return product;
 	}
 
 	@Override
@@ -156,5 +163,20 @@ public class myproductdaoImpl implements myproductdao{
 			}
 			
 		});
+	}
+	
+	@Override
+	public void setProductImage(String id,InputStream is,byte[] barr) throws ClassNotFoundException, SQLException
+	{
+		Class.forName("com.mysql.jdbc.Driver");
+		String url="jdbc:mysql://localhost:3306/spring";
+		String user="root";
+		String password="audirs8";
+		Connection con=DriverManager.getConnection(url, user, password);
+		String sql="insert into product_image values(?,?)";
+		PreparedStatement ps=con.prepareStatement(sql);
+		ps.setString(1, id);
+		ps.setBinaryStream(2,is,barr.length);
+		ps.executeUpdate();
 	}
 }

@@ -87,7 +87,7 @@ public class UserCartdaoImpl implements UserCartdao {
 		int count=0;
 		if(getCountInCart(username)!=0) 
 		{
-			String sql="select sum(M.making_charges+M.cost_price) from myproduct M where M.product_id in (select A.product_id from user_cart A where A.username=? and A.order_id is NULL) ";
+			String sql="select sum(M.making_charges+M.cost_price) from myproduct M where M.product_id in (select A.product_id from user_cart A where A.username=? and A.order_id is NULL and A.reserved_status=0) ";
 			count = jdbcTemplate.queryForObject(sql, new Object[] {username}, Integer.class);
 		}
 		return count;

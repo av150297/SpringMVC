@@ -1,6 +1,9 @@
 package com.dbms;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dbms.dao.Employeedao;
@@ -121,8 +126,8 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/add_product",method = RequestMethod.POST)
-	public String add_productProcess(HttpServletRequest request,Model model,@Valid @ModelAttribute("myproduct") myproduct product,BindingResult result)
-	{
+	public String add_productProcess(HttpServletRequest request,Model model,@Valid @ModelAttribute("myproduct") myproduct product,BindingResult result,@RequestParam CommonsMultipartFile file) throws IOException, ClassNotFoundException, SQLException
+ 	{
 		//ModelAndView mv=new ModelAndView("home");
 		if(result.hasErrors())
 		{
@@ -134,10 +139,9 @@ public class AdminController {
 			return "redirect:/admin/add_product";
 		}
 		product_dao.addnewproduct(product);
-		if(!product.getFile().getOriginalFilename().equals(""))
-		{
-			FileUtil.uploadFile(request,product.getFile(),Integer.toString(product.getProduct_id()));
-		}
+		byte[] barr=file.getBytes();
+		InputStream is=file.getInputStream();
+		product_dao.setProductImage(product.getProduct_name(), is, barr);
 		model.addAttribute("product_success","Product Successfully Added");
 		return "redirect:/admin/add_product";
 	}
@@ -337,7 +341,6 @@ public class AdminController {
 	@RequestMapping("user_orders/{username}")
 	public ModelAndView user_orders(@PathVariable(value="username") String username)
 	{
-		//String username="ayush";
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("user_orders");
 		List <Order> orders=orderdao.getOrdersbyusername(username);

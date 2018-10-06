@@ -1,5 +1,7 @@
 package com.dbms.dao;
 
+import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.dbms.model.myproduct;
@@ -16,5 +18,5 @@ public interface myproductdao {
 	public List<myproduct> getAllCategories();
 	public void updateProductStatus(int order_id);
 	public myproduct getAvailableProductByName(String product_name, String category);
-
+	public void setProductImage(String id,InputStream is,byte[] barr) throws ClassNotFoundException, SQLException;
 }

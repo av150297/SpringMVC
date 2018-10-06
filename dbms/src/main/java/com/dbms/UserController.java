@@ -1,7 +1,9 @@
 package com.dbms;
 
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,12 +56,16 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/dashboard/profile")
-	public ModelAndView viewprofile(Principal principal) {
+	public ModelAndView viewprofile(HttpServletRequest request,Principal principal) {
 		
 		ModelAndView model = new ModelAndView("profiledetails");
 		String username = principal.getName();
 		User user = userdao.getCustomerbyusername(username);
-		model.addObject("userinfo", user);
+		if(request.getParameter("message")!=null)
+		{
+			model.addObject("success","Profile Updated Successfully");
+		}
+		model.addObject("userinfo", user);		
 		return model;
 	}
 	
@@ -103,13 +109,17 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/dashboard/product_category/{category}/{productname}")
-	public ModelAndView product_detail(@PathVariable(value="productname") String productname,@PathVariable(value="category") String category)
+	public ModelAndView product_detail(@PathVariable(value="productname") String productname,@PathVariable(value="category") String category) throws SQLException
 	{
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("product_detail");
 		myproduct product=new myproduct();
 		product=productdao.getproductbyname(productname);
 		mv.addObject("product",product);
+		byte[] barr=product.getProduct_image().getBytes(1,(int) product.getProduct_image().length());
+		String image=Base64.getEncoder().encodeToString(barr);
+		System.out.println(image.length());
+		mv.addObject("image",image);
 		return mv;
 	}
 	
@@ -122,11 +132,11 @@ public class UserController {
 		{
 			String username=principal.getName();
 			offerdao.applyOffer(offer_id,username);
-			model.addAttribute("message","Coupon code successfully applied");
+			model.addAttribute("success","Coupon code successfully applied");
 		}
 		else
 		{
-			model.addAttribute("message","Coupon code is invalid or expired...!");
+			model.addAttribute("failure","Coupon code is invalid or expired...!");
 		}
 		return "redirect:/dashboard/my_cart";
 	}
@@ -155,10 +165,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/dashboard/order_history/{order_id}")
-	public ModelAndView userOrderDetail(Principal principal,@PathVariable(value="order_id") int order_id)
+	public ModelAndView userOrderDetail(HttpServletRequest request,Principal principal,@PathVariable(value="order_id") int order_id)
 	{
 		ModelAndView mv=new ModelAndView();
-		mv.setViewName("order_history_detail");
+		mv.setViewName("user_order_history_detail");
 		Order order=orderdao.getOrderByOrderId(order_id);
 		List<myproduct> products=orderdao.getCartbyorderid(order_id);
 		Map <Integer,List<Feedback> > mp=new HashMap<>();
@@ -166,7 +176,14 @@ public class UserController {
 		{
 			mp.put(product.getProduct_id(),feedbackdao.getFeedbackbyProductId(product.getProduct_id()));
 		}
+		Offer offer=offerdao.getOffer(order.getOffer_id());
+		double discount=offer.getDiscount()*order.getSubtotal()/100;
+		if(request.getParameter("added")!=null)
+		{
+			mv.addObject("success",request.getParameter("added").toString());
+		}
 		mv.addObject("order", order);
+		mv.addObject("discount",discount);
 		mv.addObject("products",products);
 		mv.addObject("mp",mp);
 		return mv;
@@ -182,23 +199,15 @@ public class UserController {
 		feedback.setDescription(description);
 		feedback.setProductId(product_id);
 		feedbackdao.addFeedack(feedback);
-		model.addAttribute("message","Feedback Added Successfully");
+		model.addAttribute("added","Feedback Added Successfully");
 		return "redirect:/dashboard/order_history/"+Integer.toString(order_id);
 	}
 	
-	@RequestMapping(value="/welcome/delete/{order_id}/{id}")
-	public String deleteFeedback(Principal principal,@PathVariable(value="id") int feedbackid,@PathVariable(value="order_id") int order_id)
+	@RequestMapping(value="/dashboard/feedback/delete/{username}/{order_id}/{id}")
+	public String deleteFeedback(Principal principal,@PathVariable(value="id") int feedbackid,@PathVariable(value="order_id") int order_id,@PathVariable(value="username") String username)
 	{
-		String username=principal.getName();
-		if(username.equals("root"))
-		{
+		if(principal.getName().equals(username))
 			feedbackdao.deleteFeedback(feedbackid);
-			return "redirect:/admin/all_orders/"+Integer.toString(order_id);
-		}
-		else
-		{
-			feedbackdao.deleteFeedback(feedbackid);
-			return "redirect:/dashboard/order_history/"+Integer.toString(order_id);
-		}
+		return "redirect:/dashboard/order_history/"+Integer.toString(order_id);
 	}
 }
