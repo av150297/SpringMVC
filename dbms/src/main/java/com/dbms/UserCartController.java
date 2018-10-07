@@ -1,7 +1,11 @@
 package com.dbms;
 
 import java.security.Principal;
+import java.sql.SQLException;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,8 +39,8 @@ public class UserCartController {
 	
 	
 	@RequestMapping(value="/dashboard/my_cart")
-	public ModelAndView showcart(HttpServletRequest request,Principal principal) {
-		
+	public ModelAndView showcart(HttpServletRequest request,Principal principal) throws SQLException {
+		Map<String, String> imgmap = new HashMap<>();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("user_products");
 		String username = principal.getName();
@@ -48,11 +52,18 @@ public class UserCartController {
 			flag="true";
 			usercart=usercartdao.getCartbyusername(username);
 			List<myproduct> products=usercart.getProducts();
+			for(myproduct product:products)
+			{
+				byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+				String image=Base64.getEncoder().encodeToString(barr);
+				imgmap.put(product.getProduct_name(),image);
+			}
 			amount = usercartdao.getamount(username);
 			Offer offer=offerdao.getOffer(usercart.getOfferId());
 			discount=(amount*offer.getDiscount())/100;
 			model.addObject("products",products);
 			model.addObject("offer",offer);
+			model.addObject("imgmap",imgmap);
 		}
 		if(request.getParameter("success")!=null)
 		{
@@ -78,11 +89,12 @@ public class UserCartController {
 		myproduct product = myproduct_dao.getAvailableProductByName(product_name,category);
 		if(product==null)
 		{
-			model.addAttribute("message","Sorry, Product is out of stock. Contact the store owner");
+			model.addAttribute("failure","Sorry, Product is out of stock. Contact the store owner");
 			return "redirect:/dashboard/product_category/"+category+"/"+product_name;
 		}
 		usercartdao.addToCart(username, product.getProduct_id());
-		return "redirect:/dashboard/my_cart";
+		model.addAttribute("success","Product Successfully Added");
+		return "redirect:/dashboard/product_category/"+category+"/"+product_name;
 	}
 	
 	@RequestMapping(value="/dashboard/my_cart/remove/{productid}")
@@ -117,8 +129,9 @@ public class UserCartController {
 	}
 	
 	@RequestMapping(value="/dashboard/my_cart/reserved_products")
-	public ModelAndView displayreservedProducts(Principal principal)
+	public ModelAndView displayreservedProducts(Principal principal) throws SQLException
 	{
+		Map<String, String> imgmap = new HashMap<>();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("reserved_orders");
 		String username = principal.getName();
@@ -128,6 +141,12 @@ public class UserCartController {
 		UserCart usercart=new UserCart();
 		usercart=usercartdao.getReservedCartbyusername(username);
 		List<myproduct> products=usercart.getProducts();
+		for(myproduct product:products)
+		{
+			byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+			String image=Base64.getEncoder().encodeToString(barr);
+			imgmap.put(product.getProduct_name(),image);
+		}
 		amount = usercartdao.getReservedAmount(username);
 		Offer offer=offerdao.getOffer(usercart.getOfferId());
 		discount=(amount*offer.getDiscount())/100;
@@ -136,6 +155,7 @@ public class UserCartController {
 		model.addObject("flag",flag);
 		model.addObject("amount", amount);
 		model.addObject("discount",discount);
+		model.addObject("imgmap",imgmap);
 		return model;
 	}
 

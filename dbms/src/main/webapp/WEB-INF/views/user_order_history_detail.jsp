@@ -43,7 +43,7 @@
 						<tr>
 							<td data-th="Product">
 								<div class="row">
-									<div class="col-sm-2 hidden-xs"><img src="${style}/images/${item.product_id}.jpg" alt="..." "style class="img-responsive"/></div>
+									<div class="col-sm-2 hidden-xs"><img src="data:image/jpeg;base64,${imgmap[item.product_name]}" alt="..." "style class="img-responsive"/></div>
 									<div class="col-sm-10">
 										<h4 class="nomargin">${item.product_name}</h4>
 										<p>${item.description}</p>

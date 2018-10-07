@@ -26,7 +26,7 @@ public class UserCartdaoImpl implements UserCartdao {
 	
 	@Override
 	public UserCart getCartbyusername(String username) {
-		String sql="select * from myproduct where product_id in (select product_id from user_cart where username='"+username+"' and order_id is NULL and reserved_status=0)";
+		String sql="select * from myproduct M,product_image I where product_id in (select product_id from user_cart where username='"+username+"' and order_id is NULL and reserved_status=0) and M.product_name=I.product_name";
 		List<myproduct> products= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
 		UserCart usercart=new UserCart();
 		usercart.setUsername(username);
@@ -101,7 +101,7 @@ public class UserCartdaoImpl implements UserCartdao {
 
 	@Override
 	public UserCart getReservedCartbyusername(String username) {
-		String sql="select * from myproduct where product_id in (select product_id from user_cart where username='"+username+"' and order_id is NULL and reserved_status=1)";
+		String sql="select * from myproduct M,product_image I where product_id in (select product_id from user_cart where username='"+username+"' and order_id is NULL and reserved_status=1) and M.product_name=I.product_name";
 		List<myproduct> products= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
 		UserCart usercart=new UserCart();
 		usercart.setUsername(username);

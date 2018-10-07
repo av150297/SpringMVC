@@ -41,13 +41,13 @@ public class myproduct {
 	@NotEmpty(message="required")
 	private String description;
 	private int status=0;
-	private Blob product_image;
+	private Blob Image;
 	
-	public Blob getProduct_image() {
-		return product_image;
+	public Blob getImage() {
+		return Image;
 	}
-	public void setProduct_image(Blob product_image) {
-		this.product_image = product_image;
+	public void setImage(Blob product_image) {
+		this.Image = product_image;
 	}
 	public int getStatus() {
 		return status;

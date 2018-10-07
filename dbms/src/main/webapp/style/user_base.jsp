@@ -12,12 +12,12 @@
     <div class="navbar-header">
       <a class="navbar-brand" href="/dbms/dashboard">Sparkle</a>
     </div>
-    <ul class="nav navbar-nav" style="display: inline;">
+    <ul class="nav navbar-nav">
       <li><a href="/dbms/dashboard/product_category">Products</a></li>
       <li><a href="/dbms/dashboard/my_cart/reserved_products">Reserved Orders</a></li>
       <li><a href="/dbms/dashboard/order_history">Orders</a></li>
     </ul>
-    <ul class="nav navbar-nav navbar-right" style="display: inline;">
+    <ul class="nav navbar-nav navbar-right">
       <li><a href="/dbms/dashbord/about_us"><span class="glyphicon glyphicon-info-sign"></span> About Us</a></li>
       <li><a href="/dbms/dashboard/my_cart"><span class="glyphicon">&#xe116;</span> Cart</a></li>
       <li><a href="/dbms/dashboard/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>

@@ -86,13 +86,21 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/dashboard/product_category/{category}")
-	public ModelAndView product_category(@PathVariable(value="category") String category)
+	public ModelAndView product_category(@PathVariable(value="category") String category) throws SQLException
 	{
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("product_category");
 		List <myproduct> products=productdao.showallproductsbycategory(category);
+		Map<String, String> imgmap = new HashMap<>();
+		for(myproduct product:products)
+		{
+			byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+			String image=Base64.getEncoder().encodeToString(barr);
+			imgmap.put(product.getProduct_name(),image);
+		}
 		mv.addObject("products",products);
 		mv.addObject("category",category);
+		mv.addObject("imgmap",imgmap);
 		return mv;
 	}
 	@RequestMapping(value="/dashboard/product_category")
@@ -109,17 +117,24 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/dashboard/product_category/{category}/{productname}")
-	public ModelAndView product_detail(@PathVariable(value="productname") String productname,@PathVariable(value="category") String category) throws SQLException
+	public ModelAndView product_detail(HttpServletRequest request,@PathVariable(value="productname") String productname,@PathVariable(value="category") String category) throws SQLException
 	{
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("product_detail");
 		myproduct product=new myproduct();
 		product=productdao.getproductbyname(productname);
 		mv.addObject("product",product);
-		byte[] barr=product.getProduct_image().getBytes(1,(int) product.getProduct_image().length());
+		byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
 		String image=Base64.getEncoder().encodeToString(barr);
-		System.out.println(image.length());
 		mv.addObject("image",image);
+		if(request.getParameter("success")!=null)
+		{
+			mv.addObject("success",request.getParameter("success").toString());
+		}
+		if(request.getParameter("failure")!=null)
+		{
+			mv.addObject("failure",request.getParameter("failure").toString());
+		}
 		return mv;
 	}
 	
@@ -165,15 +180,19 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/dashboard/order_history/{order_id}")
-	public ModelAndView userOrderDetail(HttpServletRequest request,Principal principal,@PathVariable(value="order_id") int order_id)
+	public ModelAndView userOrderDetail(HttpServletRequest request,Principal principal,@PathVariable(value="order_id") int order_id) throws SQLException
 	{
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("user_order_history_detail");
 		Order order=orderdao.getOrderByOrderId(order_id);
 		List<myproduct> products=orderdao.getCartbyorderid(order_id);
 		Map <Integer,List<Feedback> > mp=new HashMap<>();
+		Map<String, String> imgmap = new HashMap<>();
 		for(myproduct product:products)
 		{
+			byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+			String image=Base64.getEncoder().encodeToString(barr);
+			imgmap.put(product.getProduct_name(),image);
 			mp.put(product.getProduct_id(),feedbackdao.getFeedbackbyProductId(product.getProduct_id()));
 		}
 		Offer offer=offerdao.getOffer(order.getOffer_id());
@@ -186,6 +205,7 @@ public class UserController {
 		mv.addObject("discount",discount);
 		mv.addObject("products",products);
 		mv.addObject("mp",mp);
+		mv.addObject("imgmap",imgmap);
 		return mv;
 	}
 	

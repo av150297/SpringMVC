@@ -97,7 +97,7 @@ public class OrderdaoImpl implements Orderdao{
 	}
 	@Override
 	public List<myproduct> getCartbyorderid(int orderid) {
-		String sql="select * from myproduct where product_id in (select product_id from user_cart where order_id='"+Integer.toString(orderid)+"')";
+		String sql="select * from myproduct M,product_image I where product_id in (select product_id from user_cart where order_id='"+Integer.toString(orderid)+"') and M.product_name=I.product_name";
 		List<myproduct> products= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
 		return products;
 	}

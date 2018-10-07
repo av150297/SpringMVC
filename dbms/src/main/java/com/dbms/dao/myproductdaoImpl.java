@@ -35,7 +35,7 @@ public class myproductdaoImpl implements myproductdao{
 
 	@Override
 	public List<myproduct> showallproductsbycategory(String category) {
-		String sql = "select distinct product_name,product_type,gold,silver,platinum,stones,cost_price,making_charges,description,category from myproduct where category='"+category+"'";
+		String sql = "select distinct myproduct.product_name,product_type,gold,silver,platinum,stones,cost_price,making_charges,description,category,image from myproduct,product_image where category='"+category+"' and myproduct.product_name=product_image.product_name";
 		List<myproduct> categoryproducts= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
 		return categoryproducts;
 	}
@@ -112,7 +112,7 @@ public class myproductdaoImpl implements myproductdao{
 					product.setMaking_charges((double)rs.getInt("making_charges"));
 					product.setStones(rs.getString("stones"));
 					product.setProduct_type(rs.getString("product_type"));
-					product.setProduct_image(rs.getBlob("image"));
+					product.setImage(rs.getBlob("image"));
 					return product;
 				}
 				return null;

@@ -34,7 +34,7 @@
 						<tr>
 							<td data-th="Product">
 								<div class="row">
-									<div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="" class="img-responsive"/></div>
+									<div class="col-sm-2 hidden-xs"><img src="data:image/jpeg;base64,${imgmap[item.product_name]}" alt="" class="img-responsive"/></div>
 									<div class="col-sm-10">
 										<h4 class="nomargin">${item.product_name}</h4>
 										<p>${item.description}</p>

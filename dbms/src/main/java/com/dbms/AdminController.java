@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -311,21 +307,26 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/all_orders/{order_id}")
-	public ModelAndView AdminOrderDetail(Principal principal,@PathVariable(value="order_id") int order_id)
+	public ModelAndView AdminOrderDetail(Principal principal,@PathVariable(value="order_id") int order_id) throws SQLException
 	{
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("order_history_detail");
+		Map<String, String> imgmap = new HashMap<>();
 		Order order=orderdao.getOrderByOrderId(order_id);
 		List<myproduct> products=orderdao.getCartbyorderid(order_id);
 		Map <Integer,List<Feedback> > mp=new HashMap<>();
 		for(myproduct product:products)
 		{
+			byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+			String image=Base64.getEncoder().encodeToString(barr);
+			imgmap.put(product.getProduct_name(),image);
 			mp.put(product.getProduct_id(),feedbackdao.getFeedbackbyProductId(product.getProduct_id()));
 		}
 		mv.addObject("order", order);
 		mv.addObject("products",products);
 		mv.addObject("mp",mp);
 		mv.addObject("flag","true");
+		mv.addObject("imgmap",imgmap);
 		return mv;
 	}
 	
@@ -359,8 +360,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping("user_orders/{username}/{order_id}")
-	public ModelAndView user_orders_details(@PathVariable(value="username") String username,@PathVariable(value="order_id") int order_id)
+	public ModelAndView user_orders_details(@PathVariable(value="username") String username,@PathVariable(value="order_id") int order_id) throws SQLException
 	{
+		Map<String, String> imgmap = new HashMap<>();
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("user_order_detail");
 		Order order=orderdao.getOrderByOrderId(order_id);
@@ -368,6 +370,9 @@ public class AdminController {
 		Map <Integer,List<Feedback> > mp=new HashMap<>();
 		for(myproduct product:products)
 		{
+			byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+			String image=Base64.getEncoder().encodeToString(barr);
+			imgmap.put(product.getProduct_name(),image);
 			mp.put(product.getProduct_id(),feedbackdao.getFeedbackbyProductId(product.getProduct_id()));
 		}
 		Offer offer=offerdao.getOffer(order.getOffer_id());
@@ -376,6 +381,7 @@ public class AdminController {
 		mv.addObject("discount",discount);
 		mv.addObject("products",products);
 		mv.addObject("mp",mp);
+		mv.addObject("imgmap",imgmap);
 		return mv;
 	}
 	
@@ -400,8 +406,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/reserved_users/{username}")
-	public ModelAndView reservedProducts(@PathVariable(value = "username") String username)
+	public ModelAndView reservedProducts(@PathVariable(value = "username") String username) throws SQLException
 	{
+		Map<String, String> imgmap = new HashMap<>();
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin_reserved_orders");
 		String flag="false";
@@ -410,6 +417,12 @@ public class AdminController {
 		UserCart usercart=new UserCart();
 		usercart=usercartdao.getReservedCartbyusername(username);
 		List<myproduct> products=usercart.getProducts();
+		for(myproduct product:products)
+		{
+			byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+			String image=Base64.getEncoder().encodeToString(barr);
+			imgmap.put(product.getProduct_name(),image);
+		}
 		amount = usercartdao.getReservedAmount(username);
 		Offer offer=offerdao.getOffer(usercart.getOfferId());
 		discount=(amount*offer.getDiscount())/100;
@@ -419,6 +432,7 @@ public class AdminController {
 		mv.addObject("flag",flag);
 		mv.addObject("amount", amount);
 		mv.addObject("discount",discount);
+		mv.addObject("imgmap",imgmap);
 		return mv;
 	}
 	

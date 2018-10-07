@@ -22,7 +22,8 @@
       <!-- edit form column -->
       <div class="container">
         <c:if test="${success!=null}">
-  		<div class="alert alert-success" style="border-radius:25px;">
+  		<div class="alert alert-success alert-dismissible" style="border-radius:25px;">
+  			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   			<strong>Congrats! </strong>${success}<br>
 		</div>
 		</c:if>
