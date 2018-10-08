@@ -114,8 +114,8 @@
     <h1 style="position: center; margin-left: 10px;">Add Product</h1>
     <hr>
     <label for="Productid"><b>Product Id</b></label>
-    <form:input path="product_id" type="text" pattern="[0-9]*" required="required" placeholder="Product ID"/>
-	<form:errors path="product_id" /><br><br>
+    <input type="text"  required="required" placeholder="Enter comma separated product ids without space" name="product_ids"/>
+	<br><br>
 	
 	<div class="custom-select" style="width:200px;">
 	<label for="seller_id"><b>Seller ID</b></label>
@@ -179,9 +179,32 @@
 	<form:errors path="description" />
 	
     <button type="submit" class="registerbtn" style="border-radius: 25px;">Add</button>
-  </div>
+  
 
   </form:form>
+  <hr>
+  <h1 style="position: center; margin-left: 10px;">Increase the Quantity</h1>
+	<form method="post" action="/dbms/admin/add_product/increase_quantity">
+	<label for="Product Ids"><b>Product Ids</b></label>
+	<input type="text" required="required" name="product_ids" placeholder="Enter comma separated product ids without space">
+	<div class="custom-select" style="width:200px;">
+	<label for="product_name"><b>Product Name</b></label>
+		<select name="product_name" placeholder="Product Name" required="required">
+		<c:forEach items="${product_names}" var="name">
+		<option value="${name}">${name}</option>
+		</c:forEach>
+		</select>
+		
+	</div><br>
+	
+	
+	
+	<button type="submit" class="registerbtn" style="border-radius: 25px;">Add</button>
+	</form>
+	
+	</div>  
+	
+  
 
 	<!-- Form End Here -->
 	<script>

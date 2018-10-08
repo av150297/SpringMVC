@@ -43,7 +43,7 @@
                    <th>Cost Price+Making Charges</th>
                    <th>Status</th>
                    <th>Seller</th>
-                   <th>Info</th>
+                   <th>Edit</th>
                    </thead>
 <tbody>
     <c:forEach items="${products}" var="item">
@@ -62,7 +62,7 @@
     <td><a href=""><p data-placement="top" data-toggle="tooltip" title="Status"><button class="btn btn-danger btn-xs" data-title="Disable" data-toggle="modal" data-target="" >Sold</button></p></a></td>
     </c:if>
     <td><a href="/dbms/admin/seller_info/${item.seller_id}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
-    <td><a href="/dbms/admin/products/info/${item.product_id}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-warning btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-info-sign"></span></button></p></a></td>
+    <td><a href="/dbms/admin/products/info/${item.product_id}/edit"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-warning btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-edit"></span></button></p></a></td>
     </tr>
     </c:forEach>
 </tbody>

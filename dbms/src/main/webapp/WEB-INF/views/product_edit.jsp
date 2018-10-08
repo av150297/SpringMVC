@@ -24,7 +24,7 @@
    
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">Product Id: ${product.product_id}</h3>
+              <h3 class="panel-title">Product Name: ${product.product_name}</h3>
             </div>
             <div class="panel-body">
               <div class="row">
@@ -32,7 +32,9 @@
                 
         
                 <div class=" col-md-9 col-lg-9 "> 
-                  <table class="table table-user-information">
+                  
+                  <form method="post" action="/dbms/admin/products/info/${product.product_id}/edit">
+                    <table class="table table-user-information">
                     <tbody>
                       <tr>
                         <td>Product Name:</td>
@@ -48,43 +50,47 @@
                       </tr>
                    	  <tr>
                         <td>Gold (in gm): </td>
-                        <td>${product.gold}</td>
+                        <td><input type="number" required="required" min="0" max="1000" value="${product.gold}" name="gold" /></td>
                       </tr>
                       <tr>
                         <td>Silver (in gm): </td>
-                        <td>${product.silver}</td>
+                        <td><input type="number" required="required" min="0" max="1000" value="${product.silver}" name="silver" /></td>
                       </tr>
                       <tr>
                         <td>Platinum (in gm): </td>
-                        <td>${product.platinum}</td>
+                        <td><input type="number" required="required" min="0" max="1000" value="${product.platinum}" name="platinum"/></td>
                       </tr>
                       <tr>
                         <td>Stones: </td>
-                        <td>${product.stones}</td>
+                        <td><input type="text" required="required" value="${product.stones}" name="stones"/></td>
                       </tr>
+                      <tr>
+                      <tr>
+                        <td>Cost Price: </td>
+                        <td><input type="number" required="required" value="${product.cost_price}" name="cost_price"/></td>
+                      </tr>
+                      
+                      <tr>
+                        <td>Making Charges: </td>
+                        <td><input type="number" required="required" value="${product.making_charges}" name="making_charges"/></td>
+                      </tr>
+                      
                       <tr>
                         <td>Description: </td>
-                        <td>${product.description}</td>
-                      </tr>
-                      <tr>
-                        <td>Price: </td>
-                        <td>${product.cost_price+product.making_charges}</td>
+                        <td><input type="text" required="required" value="${product.description}" name="description"/></td>
                       </tr>
                      
                     </tbody>
                   </table>
                   
-                  <a href="/dbms/admin/products" class="btn btn-warning">Back to Products</a>
-                  <a href="/dbms/admin/" class="btn btn-success">Home</a>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                  <button type="reset" class="btn btn-warning">Reset</button>
+                  </form>
                 </div>
               </div>
             </div>
                  <div class="panel-footer">
-                        <a href="/dbms/admin/seller_info/${product.seller_id}" data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
-                        <span class="pull-right">
-                            <a href="/dbms/admin/products/info/${product.product_id}/edit" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                            
-                        </span>
+                        <a href="/dbms/admin/products/info/${product.product_id}" data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger">Back</a>
                     </div>
             
           </div>

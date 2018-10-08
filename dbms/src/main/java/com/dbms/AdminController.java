@@ -73,6 +73,34 @@ public class AdminController {
 	
 	List<String> AllCategories = Arrays.asList("Rings", "Earrings", "Necklace","Pendants","Nosepins","Bracelets","Mangalsutras","Bangles","Coins","Kadas","Chains");
 	
+	
+	
+	public List<Integer> calculateIDs(String str)
+	{
+		List<Integer> ids=new ArrayList();
+		int num=0;
+		for(int i=0;i<str.length();i++)
+		{
+			if(str.charAt(i)==',')
+			{
+				if(num!=0)
+				{
+					ids.add(num);
+					num=0;
+				}
+			}
+			else
+			{
+				num=num*10+Character.getNumericValue(str.charAt(i));
+			}
+		}
+		if(num!=0)
+		{
+			ids.add(num);
+		}
+		return ids;
+	}
+	
 	@RequestMapping("")
 	public ModelAndView admin(Principal principal) {
 		ModelAndView model = new ModelAndView();
@@ -118,6 +146,35 @@ public class AdminController {
 		return mv;
 	}
 	
+	@RequestMapping(value="/products/info/{product_id}/edit",method=RequestMethod.GET)
+	public ModelAndView productEdit(@PathVariable(value="product_id") int product_id) throws SQLException
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("product_edit");
+		myproduct product=product_dao.getproductbyid(product_id);
+		byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+		String image=Base64.getEncoder().encodeToString(barr);
+		mv.addObject("image",image);
+		mv.addObject("product", product);
+		return mv;
+	}
+	
+	@RequestMapping(value="/products/info/{product_id}/edit",method=RequestMethod.POST)
+	public String productEdit(HttpServletRequest request,Model model,@PathVariable(value="product_id") int product_id)
+	{
+		myproduct product=product_dao.getproductbyid(product_id);
+		product.setGold(Double.parseDouble(request.getParameter("gold")));
+		product.setSilver(Double.parseDouble(request.getParameter("silver")));
+		product.setPlatinum(Double.parseDouble(request.getParameter("platinum")));
+		product.setCost_price(Double.parseDouble(request.getParameter("cost_price")));
+		product.setMaking_charges(Double.parseDouble(request.getParameter("making_charges")));
+		product.setStones(request.getParameter("stones"));
+		product.setDescription(request.getParameter("description"));
+		product_dao.UpdateProduct(product);
+		model.addAttribute("product_success","Product Successfully Updated");
+		return "redirect:/admin/products/info/"+Integer.toString(product.getProduct_id());
+	}
+	
 	
 	@RequestMapping(value = "/add_product",method = RequestMethod.GET)
 	public ModelAndView add_product(HttpServletRequest request,HttpServletResponse response)
@@ -147,32 +204,112 @@ public class AdminController {
 			mv.addObject("flag","1");
 			mv.addObject("seller_success",message);
 		}
-		
+		List <myproduct> product_names=product_dao.getProductNames();
+		List <String> names=new ArrayList<>();
+		for(myproduct p:product_names)
+		{
+			names.add(p.getProduct_name());
+		}
 		mv.addObject("seller",seller);
 		mv.addObject("product",product);
 		mv.addObject("wholesellers",wholesellers);
 		mv.addObject("categories",AllCategories);
+		mv.addObject("product_names",names);
 		return mv;
 	}
 	
 	@RequestMapping(value="/add_product",method = RequestMethod.POST)
 	public String add_productProcess(HttpServletRequest request,Model model,@Valid @ModelAttribute("myproduct") myproduct product,BindingResult result,@RequestParam CommonsMultipartFile file) throws IOException, ClassNotFoundException, SQLException
  	{
-		//ModelAndView mv=new ModelAndView("home");
 		if(result.hasErrors())
 		{
 			return "redirect:/admin/add_product";
 		}
 		if(product_dao.checkproductnameexists(product))
 		{
-			model.addAttribute("product_error", "Product Id already exists");
+			model.addAttribute("product_error","Product Name Already Exist. Instead increase the quantity");
 			return "redirect:/admin/add_product";
 		}
-		product_dao.addnewproduct(product);
-		byte[] barr=file.getBytes();
-		InputStream is=file.getInputStream();
-		product_dao.setProductImage(product.getProduct_name(), is, barr);
-		model.addAttribute("product_success","Product Successfully Added");
+		String str=request.getParameter("product_ids");
+		str=str.trim();
+		for(int i=0;i<str.length();i++)
+		{
+			if(str.charAt(i)==','||str.charAt(i)>='0'||str.charAt(i)<='9')
+				continue;
+			model.addAttribute("product_error","Product Id in a invalid format");
+			return "redirect:/admin/add_product";
+		}
+		List <Integer> ids=calculateIDs(str);
+		String error="";
+		String success="";
+		for(int i:ids)
+		{
+			product.setProduct_id(i);
+			if(product_dao.checkproductexists(product))
+			{
+				error=error+" "+Integer.toString(i);
+			}
+			else
+			{
+				success=success+" "+Integer.toString(i);
+				product.setProduct_id(i);
+				product_dao.addnewproduct(product);
+			}
+		}
+		if(success.length()>0)
+		{
+			byte[] barr=file.getBytes();
+			InputStream is=file.getInputStream();
+			product_dao.setProductImage(product.getProduct_name(), is, barr);
+		}
+		if(error.length()>0)
+		{
+			model.addAttribute("product_error", "Product Id "+error+" Already Exist");
+			model.addAttribute("product_success", "Product Id "+success+" successfully Added");
+			return "redirect:/admin/add_product";
+		}
+		model.addAttribute("product_success","Products " +success+" Successfully Added");
+		return "redirect:/admin/add_product";
+	}
+	
+	@RequestMapping("add_product/increase_quantity")
+	public String increase_quantity(HttpServletRequest request,Model model)
+	{
+		String product_name=request.getParameter("product_name");
+		myproduct product=product_dao.getproductbyname(product_name);
+		String str=request.getParameter("product_ids");
+		str=str.trim();
+		for(int i=0;i<str.length();i++)
+		{
+			if(str.charAt(i)==','||str.charAt(i)>='0'||str.charAt(i)<='9')
+				continue;
+			model.addAttribute("product_error","Product Ids in a invalid format");
+			return "redirect:/admin/add_product";
+		}
+		List <Integer> ids=calculateIDs(str);
+		String error="";
+		String success="";
+		for(int i:ids)
+		{
+			product.setProduct_id(i);
+			if(product_dao.checkproductexists(product))
+			{
+				error=error+" "+Integer.toString(i);
+			}
+			else
+			{
+				success=success+" "+Integer.toString(i);
+				product.setProduct_id(i);
+				product_dao.addnewproduct(product);
+			}
+		}
+		if(error.length()>0)
+		{
+			model.addAttribute("product_error", "Product Id "+error+" Already Exist");
+			model.addAttribute("product_success", "Product Id "+success+" successfully Added");
+			return "redirect:/admin/add_product";
+		}
+		model.addAttribute("product_success","Products "+success+" Successfully Added");
 		return "redirect:/admin/add_product";
 	}
 	

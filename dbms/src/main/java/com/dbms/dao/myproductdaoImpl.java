@@ -196,5 +196,18 @@ public class myproductdaoImpl implements myproductdao{
 		ps.executeUpdate();
 	}
 
+	@Override
+	public void UpdateProduct(myproduct product) {
+		String sql = "update myproduct set gold=?,silver=?,platinum=?,stones=?,cost_price=?,making_charges=?,description=? where product_name=? and status=0";
+		jdbcTemplate.update(sql,new Object[] {product.getGold(),product.getSilver(),product.getPlatinum(),product.getStones(),product.getCost_price(),product.getMaking_charges(),product.getDescription(),product.getProduct_name()});
+	}
+
+	@Override
+	public List<myproduct> getProductNames() {
+		String sql="select distinct product_name from myproduct";
+		List<myproduct> allproducts= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
+		return allproducts;
+	}
+
 	
 }
