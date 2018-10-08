@@ -17,10 +17,87 @@
 	<link href="${style}/css/Emp_form.css" rel="stylesheet">
 	</head>
 <body>
+	<div class="container">
+	<c:if test="${salary_error!=null}">
+
+  	<div class="alert alert-danger" style="border-radius:25px;">
+  		<strong>Alert! </strong>${salary_error}<br>
+	</div>
+	</c:if>
+	
+	<c:if test="${employee_error!=null}">
+
+  	<div class="alert alert-danger" style="border-radius:25px;">
+  		<strong>Alert! </strong>${employee_error}<br>
+	</div>
+	</c:if>
+	
+	<c:if test="${salary_success!=null}" >
+
+  	<div class="alert alert-success" style="border-radius:25px;">
+  		<strong>Congrats! </strong>${salary_success}<br>
+	</div>
+	</c:if>
+	
+	<c:if test="${success!=null}">
+  	<div class="alert alert-success" style="border-radius:25px;">
+  		<strong>Congrats! </strong>${success}<br>
+	</div>
+	</c:if>
+	<!-- Trigger/Open The Modal -->
+	<c:if test="${flag!=null}">
+	<button id="myBtn" class="btn btn-primary" style="margin-top:auto;float: right;">Add Salary Type</button>
+	</c:if>
+
+	<c:if test="${flag==null}">
+	<button id="myBtn" class="btn btn-primary" style="margin-top:30px;float: right;">Add A Salary Type</button>
+	</c:if>
+
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Add Salary Details</h2>
+    </div>
+    <br>
+    <div style="position: relative; margin-left: 20px; margin-right: 20px">
+
+    <form:form method="post" modelAttribute="salarytype" action="/dbms/admin/add_salary">
+    
+    <label for="typeid"><b>Type Id</b></label>
+    <form:input path="type"  type="text" required="required" placeholder="Type ID" style="border-radius: 25px;"/>
+    <form:errors path="type" />
+    
+    <label for="salary"><b>Salary</b></label>
+    <form:input path="salary"  type="text" required="required" placeholder="Salary Amount" style="border-radius: 25px;" pattern="[0-9]*"/>
+    <form:errors path="salary" />
+    
+    
+    <div class="modal-footer">
+      <button type="submit" class="registerbtn" style="border-radius: 25px;">Add</button>
+    </div>
+    </form:form>
+    </div>
+    
+  </div>
+	</div>
+</div>
+
+
+<!--  Model Ends here-->
+
+
+
+
 	<!-- Form starts here -->
 
 	<form:form method="post" modelAttribute="employee" action="/dbms/admin/add_employee">
-  <div class="container">
     <h1>Employee Record</h1>
     <hr>
     <label for="empid"><b>Employee Id</b></label>
@@ -60,11 +137,11 @@
   </form:form>
 
 	<!-- Form End Here -->
-
+</div>
 
 
 </body>
-<script>
+	<script>
 var x, i, j, selElmnt, a, b, c;
 /*look for any elements with the class "custom-select":*/
 x = document.getElementsByClassName("custom-select");
@@ -137,4 +214,32 @@ function closeAllSelect(elmnt) {
 /*if the user clicks anywhere outside the select box,
 then close all select boxes:*/
 document.addEventListener("click", closeAllSelect);
+</script>
+
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 </script>	

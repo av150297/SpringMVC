@@ -8,4 +8,8 @@ public interface SalaryTypedao {
 	public int getSalary(int type);
 
 	public List<SalaryType> getAllTypes();
+
+	public boolean checkTypeExist(int type);
+
+	public void addSalary(SalaryType salary);
 }

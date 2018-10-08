@@ -26,9 +26,24 @@ public class myproductdaoImpl implements myproductdao{
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
+	
+	@Override
+	public List<myproduct> allproducts() {
+		String sql="select * from myproduct";
+		List<myproduct> allproducts= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
+		return allproducts;
+	}
+	
 	@Override
 	public List<myproduct> showallproducts() {
 		String sql="select Distinct M.product_name,image,description,making_charges,cost_price,category from myproduct M,product_image I where M.product_name=I.product_name";
+		List<myproduct> allproducts= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
+		return allproducts;
+	}
+	
+	@Override
+	public List<myproduct> getProductsbySeller(String seller_id) {
+		String sql="select * from myproduct where seller_id='"+seller_id+"'";
 		List<myproduct> allproducts= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
 		return allproducts;
 	}
@@ -42,7 +57,7 @@ public class myproductdaoImpl implements myproductdao{
 
 	@Override
 	public myproduct getproductbyid(int productid) {
-		String sql = "select * from myproduct where product_id="+Integer.toString(productid);
+		String sql = "select * from myproduct M,product_image I where product_id="+Integer.toString(productid)+" and M.product_name=I.product_name";
 		return jdbcTemplate.query(sql,new ResultSetExtractor<myproduct>() {
 			
 			public myproduct extractData(ResultSet rs) throws SQLException,DataAccessException{
@@ -61,6 +76,7 @@ public class myproductdaoImpl implements myproductdao{
 					product.setStones(rs.getString("stones"));
 					product.setProduct_type(rs.getString("product_type"));
 					product.setStatus(rs.getInt("status"));
+					product.setImage(rs.getBlob("image"));
 					return product;
 				}
 				return null;
@@ -179,4 +195,6 @@ public class myproductdaoImpl implements myproductdao{
 		ps.setBinaryStream(2,is,barr.length);
 		ps.executeUpdate();
 	}
+
+	
 }

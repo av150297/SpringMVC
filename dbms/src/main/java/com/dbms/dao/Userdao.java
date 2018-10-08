@@ -18,4 +18,5 @@ public interface Userdao{
 	public List<User> getAllReservedUsers();
 	public int UpdateCustomer(String username, String name, String house, String state, String city, String email,
 			int pin);
+	public List<User> getCartUsers();
 }

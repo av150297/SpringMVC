@@ -1,6 +1,6 @@
 package com.dbms.model;
 
-import org.hibernate.validator.constraints.Email;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class User{
@@ -22,7 +22,7 @@ public class User{
 	private String state;
 
 	@NotEmpty(message="required")
-	@Email(message="Invalid mail")
+	
 	private String email;
 	private int status=1;
 	public User() {

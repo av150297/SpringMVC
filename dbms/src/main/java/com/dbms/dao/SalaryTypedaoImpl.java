@@ -45,4 +45,19 @@ public class SalaryTypedaoImpl implements SalaryTypedao{
 		return alltypes;
 	}
 
+	@Override
+	public boolean checkTypeExist(int type) {
+		String sql = "select count(*) from salary_type where type=?";
+		int count = jdbcTemplate.queryForObject(sql, new Object [] {type}, Integer.class);
+		if(count>0) return true;
+		return false;
+	}
+
+	@Override
+	public void addSalary(SalaryType salary) {
+		String sql = "insert into salary_type values(?,?)";
+		jdbcTemplate.update(sql,new Object[] {salary.getType(),salary.getSalary()});
+		
+	}
+
 }

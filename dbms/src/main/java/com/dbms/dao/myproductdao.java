@@ -19,4 +19,6 @@ public interface myproductdao {
 	public void updateProductStatus(int order_id);
 	public myproduct getAvailableProductByName(String product_name, String category);
 	public void setProductImage(String id,InputStream is,byte[] barr) throws ClassNotFoundException, SQLException;
+	public List<myproduct> allproducts();
+	public List<myproduct> getProductsbySeller(String seller_id);
 }

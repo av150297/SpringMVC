@@ -154,4 +154,19 @@ public class UserCartdaoImpl implements UserCartdao {
 		else
 			return false;
 	}
+
+	@Override
+	public void removeCartByUsername(String username) {
+		String sql="delete from user_cart where username=? and order_id is NULL and reserved_status=0";
+		jdbcTemplate.update(sql, new Object[] {username});
+		return ;
+	}
+
+	@Override
+	public void removeReservedCartByUsername(String username) {
+		String sql="delete from user_cart where username=? and order_id is NULL and reserved_status=1";
+		jdbcTemplate.update(sql, new Object[] {username});
+		return ;
+		
+	}
 }

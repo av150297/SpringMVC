@@ -107,4 +107,10 @@ public class UserdaoImpl implements Userdao{
 		jdbcTemplate.update(sql,new Object[] {name,house,state,city,email,pin, username});
 		return 0;
 	}
+	@Override
+	public List<User> getCartUsers() {
+		String sql = "select * from customer where username in (select distinct username from user_cart where order_id is null and reserved_status=0)";
+	    List<User> allusers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<User>(User.class));
+	    return allusers;
+	}
 }

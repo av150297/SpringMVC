@@ -15,8 +15,18 @@
 <body>	
 	<jsp:include page="admin_base.jsp"></jsp:include>
 	
+	
+
+	
+	
 	<!-- Table Starts here -->	
 <div class="container" >
+<c:if test="${success!=null}">
+  		<div class="alert alert-success alert-dismissible" style="border-radius:25px;">
+  			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  			<strong>Congrats! </strong>${success}<br>
+		</div>
+</c:if>
 <a href="/dbms/admin/add_employee"><button class="btn btn-primary" style="margin-top:40px;float: right;">Add An Employee</button></a>
 <div class="row">
 		        
@@ -26,7 +36,7 @@
     	    <thead>                  
                    <th>Emp Id</th>
                    <th>Name</th>
-                   <th>Type</th>
+                   <th>Salary</th>
                    <th>Contact</th>
                    <th>Email</th>
                    <th>Address</th>
@@ -39,7 +49,7 @@
     <tr>
     <td>${employee.empId}</td>
     <td>${employee.name}</td>
-    <td>${employee.type}</td>
+    <td>${salary[employee.type]}</td>
     <td>${employee.contact}</td>
     <td>${employee.email}</td>
     <td>${employee.address}</td>

@@ -19,4 +19,6 @@ public interface UserCartdao {
 	public List<myproduct> getReservedOrdersByUsername(String username);
 	int getReserveCountInCart(String username);
 	public boolean checkReserveOrder(String username);
+	public void removeCartByUsername(String username);
+	public void removeReservedCartByUsername(String username);
 }

@@ -15,7 +15,6 @@ public class Employee {
 	@NotNull
 	private String contact;
 	@NotEmpty(message="required")
-	@Email(message="Invalid Email")
 	private String email;
 	@NotEmpty(message="required")
 	private String address;

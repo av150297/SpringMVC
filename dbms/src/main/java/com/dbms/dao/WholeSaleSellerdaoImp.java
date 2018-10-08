@@ -30,7 +30,7 @@ public class WholeSaleSellerdaoImp implements WholeSaleSellerdao {
 
 	@Override
 	public WholeSaleSeller getsellerbyid(String sellerId) {
-		String sql = "select * from wholesaleseller where seller_id='"+sellerId+"'";
+		String sql = "select * from wholesale_seller where seller_id='"+sellerId+"'";
 		return jdbcTemplate.query(sql,new ResultSetExtractor<WholeSaleSeller>() {
 			
 			public WholeSaleSeller extractData(ResultSet rs) throws SQLException,DataAccessException{

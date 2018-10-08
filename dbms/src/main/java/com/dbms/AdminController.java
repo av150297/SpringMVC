@@ -39,7 +39,7 @@ import com.dbms.model.User;
 import com.dbms.model.UserCart;
 import com.dbms.model.WholeSaleSeller;
 import com.dbms.model.myproduct;
-import com.dbms.util.FileUtil;
+
 
 import java.util.*;
 
@@ -82,6 +82,40 @@ public class AdminController {
 		model.addObject("name", "Spring Security Custom Login Demo");
 		model.addObject("description", "Protected page !");
 		return model;
+	}
+	
+	@RequestMapping(value="/products")
+	public ModelAndView allProducts()
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("all_products");
+		List <myproduct> products=product_dao.allproducts();
+		mv.addObject("products",products);
+		return mv;
+	}
+	
+	@RequestMapping(value="/products/{seller_id}")
+	public ModelAndView allProductsBySeller(@PathVariable(value="seller_id") String seller_id)
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("all_products");
+		List <myproduct> products=product_dao.getProductsbySeller(seller_id);
+		mv.addObject("products",products);
+		mv.addObject("seller_id",seller_id);
+		return mv;
+	}
+	
+	@RequestMapping("/products/info/{product_id}")
+	public ModelAndView getProductInfo(@PathVariable(value="product_id")int product_id) throws SQLException
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("product_info");
+		myproduct product=product_dao.getproductbyid(product_id);
+		byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+		String image=Base64.getEncoder().encodeToString(barr);
+		mv.addObject("image",image);
+		mv.addObject("product",product);
+		return mv;
 	}
 	
 	
@@ -142,6 +176,40 @@ public class AdminController {
 		return "redirect:/admin/add_product";
 	}
 	
+	@RequestMapping(value="/seller_info/{seller_id}")
+	public ModelAndView sellerInfo(@PathVariable(value="seller_id") String seller_id)
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("seller_info");
+		WholeSaleSeller seller=wholesellerdao.getsellerbyid(seller_id);
+		mv.addObject("seller",seller);
+		return mv;
+	}
+	
+	
+	@RequestMapping(value="/add_salary",method=RequestMethod.GET)
+	public String addSalary(Model model,HttpServletRequest request,HttpServletResponse response)
+	{
+		return "redirect:/admin/add_employee";
+	}
+	
+	@RequestMapping(value="/add_salary",method=RequestMethod.POST)
+	public String addSalary(Model model,@Valid @ModelAttribute("salarytype") SalaryType salary,BindingResult result)
+	{
+		if(result.hasErrors())
+		{
+			return "redirect:/admin/add_employee";
+		}
+		if(salarydao.checkTypeExist(salary.getType()))
+		{
+			model.addAttribute("salary_error", "Salary Type already exists");
+			return "redirect:/admin/add_employee";
+		}
+		salarydao.addSalary(salary);
+		model.addAttribute("salary_success","Salary Type Added Successfully");
+		return "redirect:/admin/add_employee";
+	}
+	
 	@RequestMapping(value="/add_seller",method=RequestMethod.GET)
 	public String addSeller(Model model,HttpServletRequest request,HttpServletResponse response)
 	{
@@ -179,9 +247,31 @@ public class AdminController {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("add_employee");
 		Employee employee= new Employee();
+		SalaryType salary=new SalaryType();
 		List <SalaryType> types=salarydao.getAllTypes();
+		String message=request.getParameter("salary_error");
+		if(message!=null) {
+			mv.addObject("salary_error",message);
+			mv.addObject("flag","1");
+		}
+		message=request.getParameter("success");
+		if(message!=null) {
+			mv.addObject("flag","1");
+			mv.addObject("success",message);
+		}
+		message=request.getParameter("employee_error");
+		if(message!=null) {
+			mv.addObject("flag","1");
+			mv.addObject("employee_error",message);
+		}
+		message=request.getParameter("salary_success");
+		if(message!=null) {
+			mv.addObject("flag","1");
+			mv.addObject("salary_success",message);
+		}
 		mv.addObject("employee",employee);
 		mv.addObject("types",types);
+		mv.addObject("salarytype",salary);
 		return mv;
 	}
 	
@@ -190,24 +280,37 @@ public class AdminController {
 	{
 		if(result.hasErrors())
 		{
+			model.addAttribute("form_error","Form Error");
 			return "redirect:/admin/add_employee";
 		}
 		if(employeedao.checkEmployee(employee))
 		{
-			model.addAttribute("error", "Employee already exists");
+			model.addAttribute("employee_error", "Employee already exists");
 			return "redirect:/admin/add_employee";
 		}
 		employeedao.addNewEmployee(employee);
+		model.addAttribute("success","Employee Successfully Added");
 		return "redirect:/admin/employees";
 	}
 	
 	@RequestMapping(value="/employees")
-	public ModelAndView allEmployees()
+	public ModelAndView allEmployees(HttpServletRequest request)
 	{
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("all_employee");
 		Employee employee=new Employee();
 		List<Employee> employees=employeedao.getAllEmployee();
+		Map<Integer, Integer> salary = new HashMap<>();
+		List <SalaryType> salaries=salarydao.getAllTypes();
+		for(SalaryType sal:salaries)
+		{
+			salary.put(sal.getType(),sal.getSalary());
+		}
+		if(request.getParameter("success")!=null)
+		{
+			mv.addObject("success",request.getParameter("success"));
+		}
+		mv.addObject("salary",salary);
 		mv.addObject("employees",employees);
 		mv.addObject("emp",employee);
 		return mv;
@@ -333,11 +436,69 @@ public class AdminController {
 	@RequestMapping("/manageusers")
 	public ModelAndView manageusers(Principal principal) {
 
-		ModelAndView model = new ModelAndView("manageusers");
+		ModelAndView model = new ModelAndView();
+		model.setViewName("manageusers");
 		List<User> allusers = userdao.showallusers();
 	    model.addObject("allusers", allusers);
 	    return model;
 	}
+	
+	@RequestMapping("/user_cart")
+	public ModelAndView adminUserCart()
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("admin_user_cart");
+		List <User> users=userdao.getCartUsers();
+		mv.addObject("allusers",users);
+		return mv;
+	}
+	
+	@RequestMapping("/user_cart/{username}")
+	public ModelAndView adminUserCartInfo(@PathVariable(value="username") String username) throws SQLException
+	{
+		Map<String, String> imgmap = new HashMap<>();
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("admin_user_cart_details");
+		String flag="false";
+		double amount=0.0;
+		double discount=0.0;
+		UserCart usercart=new UserCart();
+		usercart=usercartdao.getCartbyusername(username);
+		List<myproduct> products=usercart.getProducts();
+		for(myproduct product:products)
+		{
+			byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+			String image=Base64.getEncoder().encodeToString(barr);
+			imgmap.put(product.getProduct_name(),image);
+		}
+		amount = usercartdao.getReservedAmount(username);
+		Offer offer=offerdao.getOffer(usercart.getOfferId());
+		discount=(amount*offer.getDiscount())/100;
+		mv.addObject("username",username);
+		mv.addObject("products",products);
+		mv.addObject("offer",offer);
+		mv.addObject("flag",flag);
+		mv.addObject("amount", amount);
+		mv.addObject("discount",discount);
+		mv.addObject("imgmap",imgmap);
+		return mv;
+	}
+	
+	@RequestMapping("/user_cart/{username}/remove")
+	public String removeFromCart(@PathVariable(value = "username") String username)
+	{
+		usercartdao.removeCartByUsername(username);
+		return "redirect:/admin/user_cart";
+	}
+	
+	@RequestMapping("/user_cart/{username}/remove/{product_id}")
+	public String removeCartByUsername(@PathVariable(value = "username") String username,@PathVariable(value = "product_id") int product_id)
+	{
+		usercartdao.removeFromCart(username, product_id);
+		return "redirect:/admin/user_cart/"+username;
+	}
+	
+	
 	
 	@RequestMapping("user_orders/{username}")
 	public ModelAndView user_orders(@PathVariable(value="username") String username)
@@ -392,7 +553,12 @@ public class AdminController {
 	    return "redirect:/admin/manageusers";
 	}
 	
-	
+	@RequestMapping("/reserved_users/{username}/remove")
+	public String removeFromReservedCart(@PathVariable(value = "username") String username)
+	{
+		usercartdao.removeReservedCartByUsername(username);
+		return "redirect:/admin/reserved_users";
+	}
 	
 	
 	@RequestMapping("/reserved_users")
@@ -435,6 +601,8 @@ public class AdminController {
 		mv.addObject("imgmap",imgmap);
 		return mv;
 	}
+	
+	
 	
 	@RequestMapping(value="/feedback/{username}/{order_id}/{id}")
 	public String deleteFeedback(Principal principal,@PathVariable(value="username") String username,@PathVariable(value="id") int feedbackid,@PathVariable(value="order_id") int order_id)
