@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -217,7 +218,7 @@ public class AdminController {
 		mv.addObject("product_names",names);
 		return mv;
 	}
-	
+	@Transactional
 	@RequestMapping(value="/add_product",method = RequestMethod.POST)
 	public String add_productProcess(HttpServletRequest request,Model model,@Valid @ModelAttribute("myproduct") myproduct product,BindingResult result,@RequestParam CommonsMultipartFile file) throws IOException, ClassNotFoundException, SQLException
  	{
@@ -271,7 +272,7 @@ public class AdminController {
 		model.addAttribute("product_success","Products " +success+" Successfully Added");
 		return "redirect:/admin/add_product";
 	}
-	
+	@Transactional
 	@RequestMapping("add_product/increase_quantity")
 	public String increase_quantity(HttpServletRequest request,Model model)
 	{

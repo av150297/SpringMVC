@@ -127,8 +127,15 @@ function submitPayuForm() {
           <td><b>Mandatory Parameters</b></td>
         </tr>
         <tr>
-          <td>Amount: </td>
-          <td><input name="amount" value="<%= (empty(params.get("amount"))) ? "" : params.get("amount") %>" /></td>
+          <td>Amount: ${amt}</td>
+          <td><input type="hidden" name="amount" value="${amt}" /></td>
+          <td colspan="3"><input name="surl" type="hidden" value="http://localhost:8080/dbms/dashboard/my_cart/place_order" size="64" /></td>
+        </tr>
+        <tr>
+          <td colspan="3"><input name="furl" type="hidden" value="http://localhost:8080/dbms/dashboard/my_cart" size="64" /></td>
+        </tr>
+        <tr>
+            
           <td>First Name: </td>
           <td><input name="firstname" id="firstname" value="<%= (empty(params.get("firstname"))) ? "" : params.get("firstname") %>" /></td>
         </tr>
@@ -143,12 +150,11 @@ function submitPayuForm() {
           <td colspan="3"><input name="productinfo" value="<%= (empty(params.get("productinfo"))) ? "" : params.get("productinfo") %>" size="64" /></td>
         </tr>
         <tr>
-          <td>Success URI: </td>
-          <td colspan="3"><input name="surl" value="<%= (empty(params.get("surl"))) ? "" : params.get("surl") %>" size="64" /></td>
+          
+          <td colspan="3"><input type="hidden" name="surl" value="http://localhost:8080/dbms/dashboard/my_cart/place_order" size="64" /></td>
         </tr>
         <tr>
-          <td>Failure URI: </td>
-          <td colspan="3"><input name="furl" value="<%= (empty(params.get("furl"))) ? "" : params.get("furl") %>" size="64" /></td>
+          <td colspan="3"><input type="hidden" name="furl" value="http://localhost:8080/dbms/dashboard/my_cart" size="64" /></td>
         </tr>
         <tr>
           <td><b>Optional Parameters</b></td>

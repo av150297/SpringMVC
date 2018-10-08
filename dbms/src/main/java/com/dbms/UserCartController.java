@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -104,11 +105,12 @@ public class UserCartController {
 		return "redirect:/dashboard/my_cart";
 	}
 	
-	@RequestMapping("/dashboard/my_cart/pay")
-	public ModelAndView paymentPortal()
+	@RequestMapping("/dashboard/my_cart/pay/{amount}")
+	public ModelAndView paymentPortal(@PathVariable(value="amount") int amount)
 	{
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("payment");
+		mv.addObject("amt",amount);
 		return mv;
 	}
 	

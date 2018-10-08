@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dbms.model.UserCart;
 import com.dbms.model.WholeSaleSeller;
@@ -23,7 +24,7 @@ public class UserCartdaoImpl implements UserCartdao {
 	private JdbcTemplate jdbcTemplate;
 	
 	
-	
+	@Transactional
 	@Override
 	public UserCart getCartbyusername(String username) {
 		String sql="select * from myproduct M,product_image I where product_id in (select product_id from user_cart where username='"+username+"' and order_id is NULL and reserved_status=0) and M.product_name=I.product_name";
@@ -44,7 +45,7 @@ public class UserCartdaoImpl implements UserCartdao {
 		}));
 		return usercart;
 	}
-
+	@Transactional
 	@Override
 	public void addToCart(String username, int product_id) {
 		if(isPresentInCart(username, product_id)==true)
@@ -53,7 +54,7 @@ public class UserCartdaoImpl implements UserCartdao {
 		jdbcTemplate.update(sql, new Object[] {username, product_id,null});
 		return ;
 	}
-
+	@Transactional
 	@Override
 	public void removeFromCart(String username, int product_id) {
 		if(isPresentInCart(username, product_id)==false)
@@ -81,7 +82,7 @@ public class UserCartdaoImpl implements UserCartdao {
 			return false;
 		
 	}
-
+	@Transactional
 	@Override
 	public int getamount(String username) {
 		int count=0;
@@ -92,13 +93,13 @@ public class UserCartdaoImpl implements UserCartdao {
 		}
 		return count;
 	}
-
+	
 	@Override
 	public void addToReserve(String username) {
 		String sql="update user_cart set reserved_status=1 where username=? and order_id is NULL";
 		jdbcTemplate.update(sql, new Object[] {username});
 	}
-
+	@Transactional
 	@Override
 	public UserCart getReservedCartbyusername(String username) {
 		String sql="select * from myproduct M,product_image I where product_id in (select product_id from user_cart where username='"+username+"' and order_id is NULL and reserved_status=1) and M.product_name=I.product_name";
@@ -119,7 +120,7 @@ public class UserCartdaoImpl implements UserCartdao {
 		}));
 		return usercart;
 	}
-
+	
 	@Override
 	public int getReserveCountInCart(String username) {
 		String sql="select count(*) from user_cart where username=? and order_id is NULL and reserved_status=1";
@@ -127,6 +128,7 @@ public class UserCartdaoImpl implements UserCartdao {
 		return count;
 	}
 	
+	@Transactional
 	@Override
 	public int getReservedAmount(String username) {
 		int count=0;
@@ -137,7 +139,8 @@ public class UserCartdaoImpl implements UserCartdao {
 		}
 		return count;
 	}
-
+	
+	@Transactional
 	@Override
 	public List<myproduct> getReservedOrdersByUsername(String username) {
 		String sql="select * from myproduct where product_id in (select product_id from user_cart where username='"+username+"' and reserved_status=1 and order_id is null)";

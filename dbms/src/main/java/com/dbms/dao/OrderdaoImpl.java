@@ -12,6 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dbms.model.Employee;
 import com.dbms.model.Feedback;
@@ -42,6 +43,7 @@ public class OrderdaoImpl implements Orderdao{
 		int product_count = jdbcTemplate.queryForObject(sql, new Object [] {}, Integer.class);
 		return product_count;
 	}
+	@Transactional
 	@Override
 	public void placeorder(String username) {
 		UserCart cart=cartdao.getCartbyusername(username);
@@ -66,6 +68,7 @@ public class OrderdaoImpl implements Orderdao{
 		productdao.updateProductStatus(order_id);
 	}
 	
+	@Transactional
 	@Override
 	public void placeReserveOrder(String username)
 	{

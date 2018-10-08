@@ -97,7 +97,9 @@
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong >Total: <strong style="color: green;">${amount-discount}</strong></strong></td>
 							<td><a href="/dbms/dashboard/my_cart/place_order" class="btn btn-success btn-block">Place Order <i class="fa fa-angle-right"></i></a></td>
+							<td><a href="/dbms/dashboard/my_cart/pay/${amount-discount}"><button >Payment</button></a></td>
 						</tr>
+						
 					</tfoot>
 					
 					
@@ -107,10 +109,10 @@
 								<button class="btn btn-success" type="submit" value="Apply">Apply</button>
 							</form>
 
-<a href="/dbms/dashboard/my_cart/pay"><button >Payment</button></a>
+<!--
 </div>
 <div class='pm-button'><a href='https://www.payumoney.com/paybypayumoney/#/BD88A9A2A900A299372B971D2EB7E6AB'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/21.png' /></a></div>
-
+-->
 
 
 

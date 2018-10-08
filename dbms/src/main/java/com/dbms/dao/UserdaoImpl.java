@@ -13,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.transaction.annotation.Transactional;
 
 public class UserdaoImpl implements Userdao{
 	
@@ -27,6 +28,7 @@ public class UserdaoImpl implements Userdao{
 	public UserdaoImpl(DataSource datasource) {
 		this.jdbcTemplate = new JdbcTemplate(datasource);
 	}
+	@Transactional
 	public void saveOrUpdate(User user) {
 		 String sql = "INSERT INTO USERS(username, password) VALUES (?,?)";
 		 jdbcTemplate.update(sql,new Object[] {user.getUsername(),user.getPassword()});
