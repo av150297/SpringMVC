@@ -13,7 +13,7 @@
       <a class="navbar-brand" href="/dbms/dashboard">Sparkle</a>
     </div>
     <ul class="nav navbar-nav" style="display: inline;">
-      <li><a href="/dbms/dashboard/product_category">Products</a></li>
+      <li><a href="/dbms/dashboard/product_category">Category</a></li>
       <li><a href="/dbms/dashboard/my_cart/reserved_products">Reserved Orders</a></li>
       <li><a href="/dbms/dashboard/order_history">Orders</a></li>
     </ul>

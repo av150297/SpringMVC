@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -96,8 +97,7 @@
 							<td><a href="/dbms/dashboard/my_cart/add_in_reserve" class="btn btn-primary"><i class="fa fa-angle-left"></i> Add To Reserve</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong >Total: <strong style="color: green;">${amount-discount}</strong></strong></td>
-							<td><a href="/dbms/dashboard/my_cart/place_order" class="btn btn-success btn-block">Place Order <i class="fa fa-angle-right"></i></a></td>
-							<td><a href="/dbms/dashboard/my_cart/pay/${amount-discount}"><button >Payment</button></a></td>
+							<td><a href="/dbms/dashboard/my_cart/pay/${amount-discount}" class="btn btn-success btn-block">Place Order <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 						
 					</tfoot>
