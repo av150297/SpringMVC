@@ -73,19 +73,3 @@ $(document).ready(function() {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-	<c:forEach items="${products}" var="item">
-		    <tr>      
-		    	<td>${item.product_type}</td><br>
-		        <td>${item.product_name}</td><br>
-		        <td><a href="/dbms/dashboard/product_category/${category}/${item.product_name}">Details</a></td><br>
-		    </tr>
-		    <br>
-		</c:forEach>
-</body>
-</html>

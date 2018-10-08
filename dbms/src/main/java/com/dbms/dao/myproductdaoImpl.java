@@ -28,7 +28,7 @@ public class myproductdaoImpl implements myproductdao{
 	
 	@Override
 	public List<myproduct> showallproducts() {
-		String sql="select * from myproduct";
+		String sql="select Distinct M.product_name,image,description,making_charges,cost_price,category from myproduct M,product_image I where M.product_name=I.product_name";
 		List<myproduct> allproducts= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
 		return allproducts;
 	}

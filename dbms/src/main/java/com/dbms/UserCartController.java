@@ -104,6 +104,15 @@ public class UserCartController {
 		return "redirect:/dashboard/my_cart";
 	}
 	
+	@RequestMapping("/dashboard/my_cart/pay")
+	public ModelAndView paymentPortal()
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("payment");
+		return mv;
+	}
+	
+	
 	@RequestMapping(value="/dashboard/my_cart/place_order")
 	public String order_placed(Principal principal)
 	{

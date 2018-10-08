@@ -18,7 +18,7 @@
       <li><a href="/dbms/dashboard/order_history">Orders</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" style="display: inline;">
-      <li><a href="/dbms/dashbord/about_us"><span class="glyphicon glyphicon-info-sign"></span> About Us</a></li>
+      <li><a href="/dbms/dashboard/about_us"><span class="glyphicon glyphicon-info-sign"></span> About Us</a></li>
       <li><a href="/dbms/dashboard/my_cart"><span class="glyphicon">&#xe116;</span> Cart</a></li>
       <li><a href="/dbms/dashboard/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
       <li><a href="<c:url value="/j_spring_security_logout" />"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>

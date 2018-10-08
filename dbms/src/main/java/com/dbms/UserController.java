@@ -45,13 +45,22 @@ public class UserController {
 	Feedbackdao feedbackdao;
 	
 	@RequestMapping("/dashboard")
-	public ModelAndView user(Principal principal) {
-
-		ModelAndView model = new ModelAndView("dashboard");
+	public ModelAndView user(Principal principal) throws SQLException {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("dashboard");
 		String loggedInUserName = principal.getName();
-		model.addObject("user", loggedInUserName);
-		model.addObject("name", "Spring Security USER Custom Login");
-		model.addObject("description", "Protected page for user !");
+		List <myproduct> products=productdao.showallproducts();
+		Map<String, String> imgmap = new HashMap<>();
+		for(myproduct product:products)
+		{
+			byte[] barr=product.getImage().getBytes(1,(int) product.getImage().length());
+			String image=Base64.getEncoder().encodeToString(barr);
+			imgmap.put(product.getProduct_name(),image);
+			System.out.println(product.getProduct_id());
+		}
+		System.out.println("I m here");
+		model.addObject("products",products);
+		model.addObject("imgmap",imgmap);
 		return model;
 	}
 	
@@ -229,5 +238,13 @@ public class UserController {
 		if(principal.getName().equals(username))
 			feedbackdao.deleteFeedback(feedbackid);
 		return "redirect:/dashboard/order_history/"+Integer.toString(order_id);
+	}
+	
+	@RequestMapping("/dashboard/about_us")
+	public ModelAndView aboutUs()
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("about_us");
+		return mv;
 	}
 }
