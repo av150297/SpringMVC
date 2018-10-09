@@ -52,10 +52,9 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/loginError", method = RequestMethod.GET)
-	public ModelAndView loginError() {
-		ModelAndView model = new ModelAndView("login");
-		model.addObject("error", "true");
-		return model;
+	public String loginError(Model model) {
+		model.addAttribute("error", "true");
+		return "redirect:/";
 
 	}
 	

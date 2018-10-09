@@ -40,12 +40,12 @@
     <td>${user.city}</tdser.>
     <td>${user.email}</td>
     <c:if test="${user.status==0}">
-    <td> <a href="/dbms/admin/manageusers/${user.username}"><p data-placement="top" data-toggle="tooltip" title="Status"><button class="btn btn-success btn-xs" data-title="Enable" data-toggle="modal" data-target="/dbms/admin/manageusers/${user.username}" >Enable</button></p></a></td>
+    <td> <a href="${pageContext.request.contextPath}/admin/manageusers/${user.username}"><p data-placement="top" data-toggle="tooltip" title="Status"><button class="btn btn-success btn-xs" data-title="Enable" data-toggle="modal" data-target="${pageContext.request.contextPath}/admin/manageusers/${user.username}" >Enable</button></p></a></td>
     </c:if>
     <c:if test="${user.status==1}">
-    <td><a href="/dbms/admin/manageusers/${user.username}"><p data-placement="top" data-toggle="tooltip" title="Status"><button class="btn btn-danger btn-xs" data-title="Disable" data-toggle="modal" data-target="/dbms/admin/manageusers/${user.username}" >Disable</button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/manageusers/${user.username}"><p data-placement="top" data-toggle="tooltip" title="Status"><button class="btn btn-danger btn-xs" data-title="Disable" data-toggle="modal" data-target="${pageContext.request.contextPath}/admin/manageusers/${user.username}" >Disable</button></p></a></td>
     </c:if>
-    <td><a href="/dbms/admin/user_orders/${user.username}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/user_orders/${user.username}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
     </tr>
     </c:forEach>
 

@@ -45,7 +45,7 @@
     <td>${orderCounts.get(order.order_id)}</td>
     <td>${order.offer_id}</td>
     <td>${order.subtotal - (offers.get(order.order_id).discount)*(order.subtotal/100)}</td>
-    <td><a href="/dbms/admin/user_orders/${username}/${order.order_id}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/user_orders/${username}/${order.order_id}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
     </tr>
     </c:forEach>
 

@@ -79,7 +79,7 @@
 							<td data-th="Price" class="text-center">${item.making_charges+item.cost_price}</td>
 							<td class="actions" data-th="">
 								
-								<a href="/dbms/dashboard/my_cart/remove/${item.product_id}"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>								
+								<a href="${pageContext.request.contextPath}/dashboard/my_cart/remove/${item.product_id}"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>								
 							</td>
 						</tr>
 					</c:forEach>	
@@ -97,17 +97,17 @@
 							<td class="text-center"><strong>Total 1.99</strong></td>
 						</tr>
 						<tr>
-							<td><a href="/dbms/dashboard/my_cart/add_in_reserve" class="btn btn-primary"><i class="fa fa-angle-left"></i> Add To Reserve</a></td>
+							<td><a href="${pageContext.request.contextPath}/dashboard/my_cart/add_in_reserve" class="btn btn-primary"><i class="fa fa-angle-left"></i> Add To Reserve</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong >Total: <strong style="color: green;">${amount-discount}</strong></strong></td>
-							<td><a href="/dbms/dashboard/my_cart/pay/${amount-discount}" class="btn btn-success btn-block">Place Order <i class="fa fa-angle-right"></i></a></td>
+							<td><a href="${pageContext.request.contextPath}/dashboard/my_cart/pay/${amount-discount}" class="btn btn-success btn-block">Place Order <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 						
 					</tfoot>
 					
 					
 				</table>
-				<form method="POST" action="/dbms/dashboard/my_cart/apply_offer">
+				<form method="POST" action="${pageContext.request.contextPath}/dashboard/my_cart/apply_offer">
 								Coupon code: <input type="text" name="coupon" required>
 								<button class="btn btn-success" type="submit" value="Apply">Apply</button>
 							</form>

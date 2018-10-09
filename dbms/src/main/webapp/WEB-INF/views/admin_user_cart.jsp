@@ -38,7 +38,7 @@
     <td>${user.house}</td>
     <td>${user.city}</tdser.>
     <td>${user.email}</td>
-    <td><a href="/dbms/admin/user_cart/${user.username}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/user_cart/${user.username}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
     </tr>
     </c:forEach>
 

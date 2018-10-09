@@ -19,7 +19,7 @@
 <body>
 	<!-- Form starts here -->
 
-	<form:form method="post" modelAttribute="offer" action="/dbms/admin/add_offer">
+	<form:form method="post" modelAttribute="offer" action="${pageContext.request.contextPath}/admin/add_offer">
   	<div class="container">
     <h1>Add Offer</h1>
     <hr>

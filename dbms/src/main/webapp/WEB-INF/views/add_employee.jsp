@@ -68,7 +68,7 @@
     <br>
     <div style="position: relative; margin-left: 20px; margin-right: 20px">
 
-    <form:form method="post" modelAttribute="salarytype" action="/dbms/admin/add_salary">
+    <form:form method="post" modelAttribute="salarytype" action="${pageContext.request.contextPath}/admin/add_salary">
     
     <label for="typeid"><b>Type Id</b></label>
     <form:input path="type"  type="text" required="required" placeholder="Type ID" style="border-radius: 25px;"/>
@@ -97,7 +97,7 @@
 
 	<!-- Form starts here -->
 
-	<form:form method="post" modelAttribute="employee" action="/dbms/admin/add_employee">
+	<form:form method="post" modelAttribute="employee" action="${pageContext.request.contextPath}/admin/add_employee">
     <h1>Employee Record</h1>
     <hr>
     <label for="empid"><b>Employee Id</b></label>

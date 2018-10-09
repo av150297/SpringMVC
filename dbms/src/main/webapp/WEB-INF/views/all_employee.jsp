@@ -27,7 +27,7 @@
   			<strong>Congrats! </strong>${success}<br>
 		</div>
 </c:if>
-<a href="/dbms/admin/add_employee"><button class="btn btn-primary" style="margin-top:40px;float: right;">Add An Employee</button></a>
+<a href="${pageContext.request.contextPath}/admin/add_employee"><button class="btn btn-primary" style="margin-top:40px;float: right;">Add An Employee</button></a>
 <div class="row">
 		        
 <div class="col-md-12">
@@ -55,12 +55,12 @@
     <td>${employee.address}</td>
     <td>${ employee.number_of_order}</td>
     <c:if test="${employee.status==0}">
-    <td> <a href="/dbms/admin/employees/toggle/${employee.empId}"><p data-placement="top" data-toggle="tooltip" title="Status"><button class="btn btn-success btn-xs" data-title="Enable" data-toggle="modal" data-target="/dbms/admin/employees/toggle/${employee.empId}" >Enable</button></p></a></td>
+    <td> <a href="${pageContext.request.contextPath}/admin/employees/toggle/${employee.empId}"><p data-placement="top" data-toggle="tooltip" title="Status"><button class="btn btn-success btn-xs" data-title="Enable" data-toggle="modal" data-target="${pageContext.request.contextPath}/admin/employees/toggle/${employee.empId}" >Enable</button></p></a></td>
     </c:if>
     <c:if test="${employee.status==1}">
-    <td><a href="/dbms/admin/employees/toggle/${employee.empId}"><p data-placement="top" data-toggle="tooltip" title="Status"><button class="btn btn-danger btn-xs" data-title="Disable" data-toggle="modal" data-target="/dbms/admin/employees/toggle/${employee.empId}" >Disable</button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/employees/toggle/${employee.empId}"><p data-placement="top" data-toggle="tooltip" title="Status"><button class="btn btn-danger btn-xs" data-title="Disable" data-toggle="modal" data-target="${pageContext.request.contextPath}/admin/employees/toggle/${employee.empId}" >Disable</button></p></a></td>
     </c:if>
-    <td><a href="/dbms/admin/employees/${employee.empId}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/employees/${employee.empId}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
     </tr>
     </c:forEach>
 </tbody>

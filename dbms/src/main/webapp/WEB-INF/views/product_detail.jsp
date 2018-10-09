@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-xs-5" style="border:0px solid gray">
                     <h3>${product.product_name}</h3>    
-                    <h5 style="color:#337ab7"><a href="/dbms/dashboard/product_category/${product.category}">${product.category}</a> · <small style="color:#337ab7">${product.product_type}</small></h5>
+                    <h5 style="color:#337ab7"><a href="${pageContext.request.contextPath}/dashboard/product_category/${product.category}">${product.category}</a> · <small style="color:#337ab7">${product.product_type}</small></h5>
         
                     <h6 class="title-price"><small>PRICE</small></h6>
                     <h3 style="margin-top:0px;"> <i class="fa fa-inr"></i> ${product.making_charges+product.cost_price}</h3>
@@ -71,8 +71,8 @@
                                     
         
                     <div class="section" style="padding-bottom:20px; float:left;">
-                        <a href="/dbms/dashboard/my_cart/add_in_cart/${product.category}/${product.product_name}"><button class="btn btn-warning " style="height:30px;width:210px;"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add To Cart</button></a>
-                        <a href="/dbms/dashboard/my_cart"><button class="btn btn-success" style="height:30px;width:210px;"><span style="margin-right:20px " class="glyphicon glyphicon-check" aria-hidden="true"></span> Check Out</button></a>
+                        <a href="${pageContext.request.contextPath}/dashboard/my_cart/add_in_cart/${product.category}/${product.product_name}"><button class="btn btn-warning " style="height:30px;width:210px;"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add To Cart</button></a>
+                        <a href="${pageContext.request.contextPath}/dashboard/my_cart"><button class="btn btn-success" style="height:30px;width:210px;"><span style="margin-right:20px " class="glyphicon glyphicon-check" aria-hidden="true"></span> Check Out</button></a>
                     </div>                                        
                 </div>                              
         

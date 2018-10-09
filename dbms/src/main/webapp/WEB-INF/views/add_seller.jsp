@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-	<form:form method="post" modelAttribute="seller" action="/dbms/admin/add_seller">
+	<form:form method="post" modelAttribute="seller" action="${pageContext.request.contextPath}/admin/add_seller">
 		<table>
 
 				

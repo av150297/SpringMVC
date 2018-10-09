@@ -43,7 +43,7 @@
 <input type="text" id="myInput" onkeyup="myFunction()"  placeholder="Search for Id">
 <c:if test="${seller_id!=null}">
 <h3>Product Bought from Seller Id: ${seller_id}</h3></c:if>
-<a href="/dbms/admin/add_product"><button class="btn btn-primary" style="margin-top:40px;float: right;">Add a Product</button></a>
+<a href="${pageContext.request.contextPath}/admin/add_product"><button class="btn btn-primary" style="margin-top:40px;float: right;">Add a Product</button></a>
 <div class="row">
 		        
 <div class="col-md-12">
@@ -77,9 +77,9 @@
     <c:if test="${item.status==1}">
     <td><a href=""><p data-placement="top" data-toggle="tooltip" title="Status"><button class="btn btn-danger btn-xs" data-title="Disable" data-toggle="modal" data-target="" >Sold</button></p></a></td>
     </c:if>
-    <td><a href="/dbms/admin/seller_info/${item.seller_id}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/seller_info/${item.seller_id}"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
     <c:if test="${item.status==0}">
-    <td><a href="/dbms/admin/products/info/${item.product_id}/edit"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-warning btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-edit"></span></button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/products/info/${item.product_id}/edit"><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-warning btn-xs" data-title="Detail" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-edit"></span></button></p></a></td>
     </c:if>
     <c:if test="${item.status==1}">
     <td></td>

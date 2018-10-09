@@ -129,10 +129,10 @@ function submitPayuForm() {
         <tr>
           <td>Amount: ${amt}</td>
           <td><input type="hidden" name="amount" value="${amt}" /></td>
-          <td colspan="3"><input name="surl" type="hidden" value="http://localhost:8080/dbms/dashboard/my_cart/place_order" size="64" /></td>
+          <td colspan="3"><input name="surl" type="hidden" value="http://localhost:8080${pageContext.request.contextPath}/dashboard/my_cart/place_order" size="64" /></td>
         </tr>
         <tr>
-          <td colspan="3"><input name="furl" type="hidden" value="http://localhost:8080/dbms/dashboard/my_cart" size="64" /></td>
+          <td colspan="3"><input name="furl" type="hidden" value="http://localhost:8080${pageContext.request.contextPath}/dashboard/my_cart" size="64" /></td>
         </tr>
         <tr>
             
@@ -151,10 +151,10 @@ function submitPayuForm() {
         </tr>
         <tr>
           
-          <td colspan="3"><input type="hidden" name="surl" value="http://localhost:8080/dbms/dashboard/my_cart/place_order" size="64" /></td>
+          <td colspan="3"><input type="hidden" name="surl" value="http://localhost:8080${pageContext.request.contextPath}/dashboard/my_cart/place_order" size="64" /></td>
         </tr>
         <tr>
-          <td colspan="3"><input type="hidden" name="furl" value="http://localhost:8080/dbms/dashboard/my_cart" size="64" /></td>
+          <td colspan="3"><input type="hidden" name="furl" value="http://localhost:8080${pageContext.request.contextPath}/dashboard/my_cart" size="64" /></td>
         </tr>
         <tr>
           <td><b>Optional Parameters</b></td>

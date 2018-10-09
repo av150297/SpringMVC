@@ -33,7 +33,7 @@
         
                 <div class=" col-md-9 col-lg-9 "> 
                   
-                  <form method="post" action="/dbms/admin/products/info/${product.product_id}/edit">
+                  <form method="post" action="${pageContext.request.contextPath}/admin/products/info/${product.product_id}/edit">
                     <table class="table table-user-information">
                     <tbody>
                       <tr>
@@ -90,7 +90,7 @@
               </div>
             </div>
                  <div class="panel-footer">
-                        <a href="/dbms/admin/products/info/${product.product_id}" data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger">Back</a>
+                        <a href="${pageContext.request.contextPath}/admin/products/info/${product.product_id}" data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger">Back</a>
                     </div>
             
           </div>

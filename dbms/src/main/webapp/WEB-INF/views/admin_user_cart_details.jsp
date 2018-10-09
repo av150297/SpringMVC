@@ -48,7 +48,7 @@
 							<td data-th="Price" class="text-center">${item.making_charges+item.cost_price}</td>
 							<td class="actions" data-th="">
 								
-								<a href="/dbms/admin/user_cart/${username}/remove/${item.product_id}"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>								
+								<a href="${pageContext.request.contextPath}/admin/user_cart/${username}/remove/${item.product_id}"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>								
 							</td>
 						</tr>
 					</c:forEach>	
@@ -66,10 +66,10 @@
 							<td class="text-center"><strong>Total 1.99</strong></td>
 						</tr>
 						<tr>
-							<td><a href="/dbms/admin/user_cart/${username}/remove" class="btn btn-danger"><i class="fa fa-angle-left"></i>Empty</a></td>
+							<td><a href="${pageContext.request.contextPath}/admin/user_cart/${username}/remove" class="btn btn-danger"><i class="fa fa-angle-left"></i>Empty</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong >Total: <strong style="color: green;">${amount-discount}</strong></strong></td>
-							<td><a href="/dbms/admin/user_cart" class="btn btn-success btn-block">User Carts<i class="fa fa-angle-right"></i></a></td>
+							<td><a href="${pageContext.request.contextPath}/admin/user_cart" class="btn btn-success btn-block">User Carts<i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 					

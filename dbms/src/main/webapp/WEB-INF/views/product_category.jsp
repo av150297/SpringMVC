@@ -51,7 +51,7 @@
                                         Rs ${item.making_charges+item.cost_price}</p>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
-                                    <a class="btn btn-success" href="/dbms/dashboard/product_category/${category}/${item.product_name}">View Product</a>
+                                    <a class="btn btn-success" href="${pageContext.request.contextPath}/dashboard/product_category/${category}/${item.product_name}">View Product</a>
                                 </div>
                             </div>
                         </div>

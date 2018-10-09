@@ -27,7 +27,7 @@
   			<strong>Congrats! </strong>${success}<br>
 		</div>
 		</c:if>
-        <form class="form-horizontal" role="form" action="/dbms/dashboard/edit_profile">
+        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/dashboard/edit_profile">
         	<h3 style="text-align: center;">Personal info</h3><br>
           <div class="form-group">
             <label class="col-lg-3 control-label">Name:</label>

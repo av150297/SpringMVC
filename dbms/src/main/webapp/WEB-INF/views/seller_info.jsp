@@ -52,8 +52,8 @@
                     </tbody>
                   </table>
                   
-                  <a href="/dbms/admin/products" class="btn btn-warning">Back</a>
-                  <a href="/dbms/admin/products/${seller.seller_id}" class="btn btn-success">Products</a>
+                  <a href="${pageContext.request.contextPath}/admin/products" class="btn btn-warning">Back</a>
+                  <a href="${pageContext.request.contextPath}/admin/products/${seller.seller_id}" class="btn btn-success">Products</a>
                 </div>
               </div>
             </div>

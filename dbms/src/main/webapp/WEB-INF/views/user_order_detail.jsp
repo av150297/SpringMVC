@@ -40,7 +40,7 @@
 								<div class="row">
 									<div class="col-sm-2 hidden-xs"><img src="data:image/jpeg;base64,${imgmap[item.product_name]}" alt="..." class="img-responsive"/></div>
 									<div class="col-sm-10">
-										<a href="/dbms/admin/products/info/${item.product_id}"><h4 class="nomargin">${item.product_name}</h4></a>
+										<a href="${pageContext.request.contextPath}/admin/products/info/${item.product_id}"><h4 class="nomargin">${item.product_name}</h4></a>
 										<p>${item.description}</p>
 									</div>
 								</div>
@@ -53,7 +53,7 @@
 							<td class="actions" data-th="Feedbacks">
 								<c:forEach items="${mp[item.product_id]}" var="fb">
 		        				<p>${fb.description}</p>
-		        				<a href="/dbms/admin/feedback/${order.username}/${order.order_id}/${fb.feedbackId}"><button class="btn btn-danger btn-sm"  ><i class="fa fa-trash-o" ></i></button></a>
+		        				<a href="${pageContext.request.contextPath}/admin/feedback/${order.username}/${order.order_id}/${fb.feedbackId}"><button class="btn btn-danger btn-sm"  ><i class="fa fa-trash-o" ></i></button></a>
 		        				<br><br>
 		        				</c:forEach>
 								
@@ -75,11 +75,11 @@
 							<td class="text-center"><strong>Total 1.99</strong></td>
 						</tr>
 						<tr>
-							<td><a href="/dbms/admin/user_orders/${order.username}" class="btn btn-warning"><i class="fa fa-angle-left"></i>User Orders</a></td>
+							<td><a href="${pageContext.request.contextPath}/admin/user_orders/${order.username}" class="btn btn-warning"><i class="fa fa-angle-left"></i>User Orders</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							
 							<td class="hidden-xs text-center"><strong >Total: <strong style="color: green;">${order.subtotal-discount}</strong></strong></td>
-							<td><a href="/dbms/admin/employees/${order.delivered_by}" class="btn btn-success">Employee Orders <i class="fa fa-angle-right"></i></a></td>
+							<td><a href="${pageContext.request.contextPath}/admin/employees/${order.delivered_by}" class="btn btn-success">Employee Orders <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 					

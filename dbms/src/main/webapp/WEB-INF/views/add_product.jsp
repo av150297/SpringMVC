@@ -78,7 +78,7 @@
     </div>
     <br>
     <div style="position: relative; margin-left: 20px; margin-right: 20px">
-    <form:form method="post" modelAttribute="seller" action="/dbms/admin/add_seller">
+    <form:form method="post" modelAttribute="seller" action="${pageContext.request.contextPath}/admin/add_seller">
     
     <label for="Sellerid"><b>Seller Id</b></label>
     <form:input  path="seller_id" type="text" required="required" placeholder="Seller ID" style="border-radius: 25px;"/>
@@ -110,7 +110,7 @@
 <!--  Model Ends here-->
 	
 	
-	<form:form method="post" modelAttribute="product" action="/dbms/admin/add_product" enctype="multipart/form-data">
+	<form:form method="post" modelAttribute="product" action="${pageContext.request.contextPath}/admin/add_product" enctype="multipart/form-data">
     <h1 style="position: center; margin-left: 10px;">Add Product</h1>
     <hr>
     <label for="Productid"><b>Product Id</b></label>
@@ -184,7 +184,7 @@
   </form:form>
   <hr>
   <h1 style="position: center; margin-left: 10px;">Increase the Quantity</h1>
-	<form method="post" action="/dbms/admin/add_product/increase_quantity">
+	<form method="post" action="${pageContext.request.contextPath}/admin/add_product/increase_quantity">
 	<label for="Product Ids"><b>Product Ids</b></label>
 	<input type="text" required="required" name="product_ids" placeholder="Enter comma separated product ids without space">
 	<div class="custom-select" style="width:200px;">

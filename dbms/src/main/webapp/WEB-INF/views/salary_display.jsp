@@ -41,11 +41,11 @@
                    </thead>
 <tbody>
     <c:forEach items="${salaries}" var="salary">
-    <form method="post" action="/dbms/admin/salary/${salary.type}">
+    <form method="post" action="${pageContext.request.contextPath}/admin/salary/${salary.type}">
     <tr>
     <td>${salary.type}</td>
     <td><input type="number" required="required" value="${salary.salary}" name="salary"></td>
-    <td><a href="/dbms/admin/salary/${salary.type}"><p data-placement="top" data-toggle="tooltip" title="Status"><button style="width:60px;" type="submit" class="btn btn-success btn-sm" data-title="Disable" data-toggle="modal" data-target="/dbms/admin/salary/${salary.type}" >Update</button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/salary/${salary.type}"><p data-placement="top" data-toggle="tooltip" title="Status"><button style="width:60px;" type="submit" class="btn btn-success btn-sm" data-title="Disable" data-toggle="modal" data-target="${pageContext.request.contextPath}/admin/salary/${salary.type}" >Update</button></p></a></td>
     </tr>
     </form>
     </c:forEach>

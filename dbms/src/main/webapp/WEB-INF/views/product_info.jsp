@@ -74,15 +74,15 @@
                     </tbody>
                   </table>
                   
-                  <a href="/dbms/admin/products" class="btn btn-warning">Back to Products</a>
-                  <a href="/dbms/admin/" class="btn btn-success">Home</a>
+                  <a href="${pageContext.request.contextPath}/admin/products" class="btn btn-warning">Back to Products</a>
+                  <a href="${pageContext.request.contextPath}/admin/" class="btn btn-success">Home</a>
                 </div>
               </div>
             </div>
                  <div class="panel-footer">
-                        <a href="/dbms/admin/seller_info/${product.seller_id}" data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                        <a href="${pageContext.request.contextPath}/admin/seller_info/${product.seller_id}" data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
                         <span class="pull-right">
-                            <a href="/dbms/admin/products/info/${product.product_id}/edit" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a href="${pageContext.request.contextPath}/admin/products/info/${product.product_id}/edit" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
                             
                         </span>
                     </div>

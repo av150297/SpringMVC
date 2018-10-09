@@ -19,17 +19,17 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/dbms/dashboard">Sparkle</a>
+      <a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard">Sparkle</a>
     </div>
     <ul class="nav navbar-nav" style="display: inline;">
-      <li><a href="/dbms/dashboard/product_category">Products</a></li>
-      <li><a href="/dbms/dashboard/my_cart/reserved_products">Reserved Orders</a></li>
-      <li><a href="/dbms/dashboard/order_history">Orders</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard/product_category">Products</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard/my_cart/reserved_products">Reserved Orders</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard/order_history">Orders</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" style="display: inline;">
-      <li><a href="/dbms/dashbord/about_us"><span class="glyphicon glyphicon-info-sign"></span> About Us</a></li>
-      <li><a href="/dbms/dashboard/my_cart"><span class="glyphicon">&#xe116;</span> Cart</a></li>
-      <li><a href="/dbms/dashboard/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashbord/about_us"><span class="glyphicon glyphicon-info-sign"></span> About Us</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard/my_cart"><span class="glyphicon">&#xe116;</span> Cart</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
       <li><a href="<c:url value="/j_spring_security_logout" />"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
   </div>
@@ -65,7 +65,7 @@
                         
                             <div class="row">
                             	<div class="col-xs-12 col-md-6">
-                                    <a class="btn btn-success" href="/dbms/dashboard/product_category/${item}">View</a>
+                                    <a class="btn btn-success" href="${pageContext.request.contextPath}/dashboard/product_category/${item}">View</a>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
                                     <p class="lead">

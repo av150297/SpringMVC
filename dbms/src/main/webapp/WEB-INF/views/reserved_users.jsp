@@ -59,9 +59,9 @@
     <td>${user.house}</td>
     <td>${user.city}</tdser.>
     <td>${user.email}</td>
-    <td><a href="/dbms/admin/reserved_users/${user.username}"><p data-placement="top" data-toggle="tooltip" title="Products"><button class="btn btn-primary btn-sm" data-title="Products" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
-    <td><a href="/dbms/admin/reserved_users/${user.username}/placed"><p data-placement="top" data-toggle="tooltip" title="Confirm Order"><button class="btn btn-success btn-sm" data-title="Confirm Order" data-toggle="modal" data-target="#edit" >Confirm Order</button></p></a></td>
-    <td><a href="/dbms/admin/reserved_users/${user.username}/remove"><p data-placement="top" data-toggle="tooltip" title="Decline Order"><button class="btn btn-danger btn-sm" data-title="Decline Order" data-toggle="modal" data-target="#edit" >Remove</button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/reserved_users/${user.username}"><p data-placement="top" data-toggle="tooltip" title="Products"><button class="btn btn-primary btn-sm" data-title="Products" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-list-alt"></span></button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/reserved_users/${user.username}/placed"><p data-placement="top" data-toggle="tooltip" title="Confirm Order"><button class="btn btn-success btn-sm" data-title="Confirm Order" data-toggle="modal" data-target="#edit" >Confirm Order</button></p></a></td>
+    <td><a href="${pageContext.request.contextPath}/admin/reserved_users/${user.username}/remove"><p data-placement="top" data-toggle="tooltip" title="Decline Order"><button class="btn btn-danger btn-sm" data-title="Decline Order" data-toggle="modal" data-target="#edit" >Remove</button></p></a></td>
     </tr>
     </c:forEach>
 
