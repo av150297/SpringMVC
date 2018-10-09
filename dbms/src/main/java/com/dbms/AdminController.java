@@ -580,6 +580,29 @@ public class AdminController {
 	    model.addObject("allusers", allusers);
 	    return model;
 	}
+	@RequestMapping("/salary")
+	public ModelAndView salaryDisplay(HttpServletRequest request)
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("salary_display");
+		List <SalaryType> salaries=salarydao.getAllTypes();
+		String message=request.getParameter("success");
+		if(message!=null)
+		{
+			mv.addObject("success",message);
+		}
+		mv.addObject("salaries",salaries);
+		return mv;
+	}
+	
+	@RequestMapping("/salary/{type}")
+	public String UpdateSalary(Model model,HttpServletRequest request,@PathVariable(value="type") int type)
+	{
+		int salary=Integer.parseInt(request.getParameter("salary"));
+		salarydao.updateSalary(type,salary);
+		model.addAttribute("success","Updated Successfuly");
+		return "redirect:/admin/salary";
+	}
 	
 	@RequestMapping("/user_cart")
 	public ModelAndView adminUserCart()

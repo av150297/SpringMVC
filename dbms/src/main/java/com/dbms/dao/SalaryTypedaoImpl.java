@@ -60,4 +60,10 @@ public class SalaryTypedaoImpl implements SalaryTypedao{
 		
 	}
 
+	@Override
+	public void updateSalary(int type, int salary) {
+		String sql = "update salary_type set salary=? where type=?";
+		jdbcTemplate.update(sql,new Object[] {salary,type});
+	}
+
 }

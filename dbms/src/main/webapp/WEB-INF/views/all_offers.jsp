@@ -3,7 +3,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-<jsp:include page="admin_base.jsp"></jsp:include>
 <head>
 <spring:url var="style" value="/style" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,9 +10,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="${style}/css/homepage.css" rel="stylesheet">
-<link href="${style}/css/seller.css" rel="stylesheet">
-<link href="${style}/css/Emp_form.css" rel="stylesheet">
 </head>
+<jsp:include page="admin_base.jsp"></jsp:include>
 <title>Offers</title>
 
 	<!-- Table Starts here -->

@@ -12,4 +12,6 @@ public interface SalaryTypedao {
 	public boolean checkTypeExist(int type);
 
 	public void addSalary(SalaryType salary);
+
+	public void updateSalary(int type, int salary);
 }

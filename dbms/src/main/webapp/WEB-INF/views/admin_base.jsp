@@ -12,6 +12,7 @@
       <li><a href="/dbms/admin/products">Products</a></li>
       <li><a href="/dbms/admin/employees">Employees</a></li>
       <li><a href="/dbms/admin/offers">Offers</a></li>
+      <li><a href="/dbms/admin/salary">Salary Info</a></li>
       <li><a href="/dbms/admin/manageusers">Manage Users</a></li>
       <li><a href="/dbms/admin/reserved_users">Reserved Orders</a></li>
       <li><a href="/dbms/admin/all_orders">Orders</a></li>
