@@ -15,6 +15,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.transaction.annotation.Transactional;
 
 //import com.dbms.model.Product;
 import com.dbms.model.myproduct;
@@ -29,7 +30,7 @@ public class myproductdaoImpl implements myproductdao{
 	
 	@Override
 	public List<myproduct> allproducts() {
-		String sql="select * from myproduct";
+		String sql="select * from myproduct order by status";
 		List<myproduct> allproducts= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
 		return allproducts;
 	}
@@ -50,7 +51,7 @@ public class myproductdaoImpl implements myproductdao{
 
 	@Override
 	public List<myproduct> showallproductsbycategory(String category) {
-		String sql = "select distinct myproduct.product_name,product_type,gold,silver,platinum,stones,cost_price,making_charges,description,category,image from myproduct,product_image where category='"+category+"' and myproduct.product_name=product_image.product_name";
+		String sql = "select distinct myproduct.product_name,product_type,gold,silver,platinum,stones,cost_price,making_charges,description,category,image from myproduct,product_image where category='"+category+"' and myproduct.product_name=product_image.product_name and status=0";
 		List<myproduct> categoryproducts= jdbcTemplate.query(sql, new BeanPropertyRowMapper<myproduct>(myproduct.class));
 		return categoryproducts;
 	}
@@ -84,13 +85,20 @@ public class myproductdaoImpl implements myproductdao{
 			
 		});
 	}
-
+	@Transactional
 	@Override
 	public void addnewproduct(myproduct product) {
 
-		String sql = "insert into myproduct values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		jdbcTemplate.update(sql,new Object[] {product.getProduct_id(),product.getSeller_id(),product.getProduct_name(),product.getProduct_type(),product.getGold(),product.getSilver(),product.getPlatinum(),product.getStones(),product.getCost_price(),product.getMaking_charges(),product.getDescription() ,product.getCategory(),product.getStatus()});
-
+		String sql = "insert into productIdTable values(?,?,?,?,?,?)";
+		jdbcTemplate.update(sql,new Object[] {product.getProduct_id(),product.getProduct_name(),product.getSeller_id(),product.getStatus(),product.getCost_price(),product.getMaking_charges()});
+		
+	}
+	
+	@Override
+	public void addnewProductname(myproduct product)
+	{
+		String sql = "insert into productNameTable values(?,?,?,?,?,?,?,?)";
+		jdbcTemplate.update(sql,new Object[] {product.getProduct_name(),product.getProduct_type(),product.getCategory(),product.getGold(),product.getSilver(),product.getPlatinum(),product.getStones(),product.getDescription()});
 	}
 
 	@Override
@@ -110,7 +118,7 @@ public class myproductdaoImpl implements myproductdao{
 
 	@Override
 	public myproduct getproductbyname(String product_name) {
-		String sql="select * from myproduct P,product_image I where P.product_name='"+product_name+"' and P.product_name=I.product_name";
+		String sql="select * from myproduct P,product_image I where P.product_name='"+product_name+"' and P.product_name=I.product_name and status=0";
 		myproduct product=jdbcTemplate.query(sql,new ResultSetExtractor<myproduct>() {
 			
 			public myproduct extractData(ResultSet rs) throws SQLException,DataAccessException{
@@ -149,7 +157,7 @@ public class myproductdaoImpl implements myproductdao{
 	@Override
 	public void updateProductStatus(int order_id)
 	{
-		String sql="update myproduct M set M.status=1 where M.product_id in (select U.product_id from user_cart U where U.order_id = ?)";
+		String sql="update productIdTable M set M.status=1 where M.product_id in (select U.product_id from user_cart U where U.order_id = ?)";
 		jdbcTemplate.update(sql,new Object[] {order_id});
 	}
 
@@ -195,11 +203,14 @@ public class myproductdaoImpl implements myproductdao{
 		ps.setBinaryStream(2,is,barr.length);
 		ps.executeUpdate();
 	}
-
+	
+	@Transactional
 	@Override
 	public void UpdateProduct(myproduct product) {
-		String sql = "update myproduct set gold=?,silver=?,platinum=?,stones=?,cost_price=?,making_charges=?,description=? where product_name=? and status=0";
-		jdbcTemplate.update(sql,new Object[] {product.getGold(),product.getSilver(),product.getPlatinum(),product.getStones(),product.getCost_price(),product.getMaking_charges(),product.getDescription(),product.getProduct_name()});
+		String sql = "update productNameTable set gold=?,silver=?,platinum=?,stones=?,description=? where product_name=?";
+		jdbcTemplate.update(sql,new Object[] {product.getGold(),product.getSilver(),product.getPlatinum(),product.getStones(),product.getDescription(),product.getProduct_name()});
+		sql = "update productIdTable set cost_price=?,making_charges=? where product_name=? and status=0";
+		jdbcTemplate.update(sql,new Object[] {product.getCost_price(),product.getMaking_charges(),product.getProduct_name()});
 	}
 
 	@Override

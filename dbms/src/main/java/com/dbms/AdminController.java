@@ -243,6 +243,7 @@ public class AdminController {
 		List <Integer> ids=calculateIDs(str);
 		String error="";
 		String success="";
+		int count=0;
 		for(int i:ids)
 		{
 			product.setProduct_id(i);
@@ -252,6 +253,11 @@ public class AdminController {
 			}
 			else
 			{
+				if(count==0)
+				{
+					product_dao.addnewProductname(product);
+				}
+				count++;
 				success=success+" "+Integer.toString(i);
 				product.setProduct_id(i);
 				product_dao.addnewproduct(product);

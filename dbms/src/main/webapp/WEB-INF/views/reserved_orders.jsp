@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <spring:url var="style" value="/style" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -18,6 +19,11 @@
 <html>
 <div class="container">
 <h2> User <strong>${username}</strong> Reserved Items</h2>
+	<c:if test="${products.size()==0}">
+	<center><h2>Reserve Cart is Empty</h2></center>
+	<img src="${style}/images/emptycart.jpg" style="margin-left:320px;">
+	</c:if>
+	<c:if test="${products.size()!=0}">
 	<table id="cart" class="table table-hover table-condensed">
     				<thead>
 						<tr>
@@ -75,5 +81,6 @@
 					
 					
 				</table>
+</c:if>
 </div>
 </html>

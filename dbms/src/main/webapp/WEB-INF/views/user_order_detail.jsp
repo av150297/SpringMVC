@@ -14,7 +14,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-<title>Reserved Products</title>
+<title>Order ${order.order_id}</title>
 </head>
 
 <body>
@@ -40,7 +40,7 @@
 								<div class="row">
 									<div class="col-sm-2 hidden-xs"><img src="data:image/jpeg;base64,${imgmap[item.product_name]}" alt="..." class="img-responsive"/></div>
 									<div class="col-sm-10">
-										<h4 class="nomargin">${item.product_name}</h4>
+										<a href="/dbms/admin/products/info/${item.product_id}"><h4 class="nomargin">${item.product_name}</h4></a>
 										<p>${item.description}</p>
 									</div>
 								</div>

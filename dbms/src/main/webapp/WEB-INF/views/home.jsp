@@ -9,9 +9,10 @@
 
 <body background="${style}/images/home_background1.jpg">
 
-<h1 style="text-align:center; font-size:50px; color:#fff">   </h1>
+<h1 style="text-align:center; font-size:50px; color:#fff"> Welcome To Sparkle Jewellery Shop  </h1>
+<h2 style="text-align:center; font-size:40px; color:#fff"> SignIn to buy our Premium Quality Product</h2>
 
-<button onclick="document.getElementById('modal-wrapper').style.display='block'" style="width:200px; margin-top:200px; margin-left:160px;">
+<button onclick="document.getElementById('modal-wrapper').style.display='block'" style="width:200px; margin-top:200px; margin-left:350px;">
 Login</button>
 
 <div id="modal-wrapper" class="modal">

@@ -60,8 +60,8 @@ public class OrderdaoImpl implements Orderdao{
 			sql = "select MAX(order_id) from orderandbill";
 			order_id = jdbcTemplate.queryForObject(sql, new Object [] {}, Integer.class)+1;
 		}
-		sql="insert into orderandbill(order_id,username,offer_id,address,subtotal,delivered_by) values(?,?,?,?,?,?)";
-		jdbcTemplate.update(sql,new Object[] {order_id,username,cart.getOfferId(),user.getHouse()+", "+user.getCity()+" "+Integer.toString(user.getPin()),amount,employee.getEmpId()});
+		sql="insert into orderandbill(order_id,username,offer_id,address,subtotal,delivered_by,transaction_id) values(?,?,?,?,?,?,?)";
+		jdbcTemplate.update(sql,new Object[] {order_id,username,cart.getOfferId(),user.getHouse()+", "+user.getCity()+" "+Integer.toString(user.getPin()),amount,employee.getEmpId(),554125+Integer.toString(order_id)});
 		sql="update user_cart set order_id= ? where username= ? and order_id is null and reserved_status=0";
 		jdbcTemplate.update(sql,new Object[] {order_id,username});
 		employeedao.updateEmployee(employee);

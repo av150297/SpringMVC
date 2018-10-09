@@ -23,4 +23,5 @@ public interface myproductdao {
 	public List<myproduct> getProductsbySeller(String seller_id);
 	public void UpdateProduct(myproduct product);
 	public List<myproduct> getProductNames();
+	public void addnewProductname(myproduct product);
 }
